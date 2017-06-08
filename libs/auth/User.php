@@ -8,6 +8,7 @@
 
 namespace inhere\libraryPlus\auth;
 
+use inhere\library\collections\CollectionInterface;
 use inhere\library\collections\SimpleCollection;
 use inhere\library\helpers\Obj;
 use inhere\exceptions\InvalidArgumentException;
@@ -46,7 +47,7 @@ class User extends SimpleCollection
     /**
      * @var string
      */
-    public $loggedTo = '/';
+    protected $loggedTo = '/';
 
     /**
      * @var string
@@ -56,14 +57,19 @@ class User extends SimpleCollection
     /**
      * @var string
      */
-    public $logoutTo = '/';
+    protected $logoutTo = '/';
 
     /**
      * @var CheckAccessInterface
      */
     public $accessChecker;
 
+    /**
+     * @var string
+     */
     public $idColumn = 'id';
+    
+//    private $storage;
 
     /**
      * checked permission caching list
@@ -158,6 +164,12 @@ class User extends SimpleCollection
         return $this->canAccess($permission, $params, $caching);
     }
 
+    /**
+     * @param $permission
+     * @param array $params
+     * @param bool $caching
+     * @return bool|mixed
+     */
     public function canAccess($permission, array $params = [], $caching = true)
     {
         if (isset($this->_accesses[$permission])) {
@@ -201,6 +213,9 @@ class User extends SimpleCollection
         return !$this->isLogin();
     }
 
+    /**
+     * clear
+     */
     public function clear()
     {
         $this->data = $this->_accesses = [];
@@ -243,6 +258,10 @@ class User extends SimpleCollection
         }
     }
 
+    /**
+     * @param array $data
+     * @return CollectionInterface
+     */
     public function sets(array $data)
     {
         // except column at set.

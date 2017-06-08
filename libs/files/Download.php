@@ -183,6 +183,11 @@ class Download
         return new static($filePath, $downName);
     }
 
+    /**
+     * Download constructor.
+     * @param string $filePath
+     * @param string $downName
+     */
     public function __construct($filePath = '', $downName = '')
     {
         if ($filePath) {
@@ -195,7 +200,7 @@ class Download
      * @param string $downName
      * @return bool
      */
-    public function start($filePath, $downName = '')
+    public function start($filePath = null, $downName = '')
     {
         if (!$filePath && !$this->filePath) {
             $this->errInfo = $this->_lang['err'] . ':' . $this->_lang['args_empty'];

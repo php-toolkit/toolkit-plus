@@ -9,8 +9,7 @@
 namespace inhere\libraryPlus\files;
 
 use inhere\exceptions\NotFoundException;
-use inhere\library\files\compress\AbstractCompressor;
-use inhere\library\helpers\ObjectHelper;
+use inhere\libraryPlus\files\compress\AbstractCompressor;
 use inhere\library\StdObject;
 use ZipArchive;
 

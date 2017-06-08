@@ -8,6 +8,8 @@
 
 namespace inhere\libraryPlus\files;
 
+use inhere\library\files\FileFinder;
+
 /**
  * Class Backup
  * @package inhere\library\files
