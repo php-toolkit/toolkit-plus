@@ -9,7 +9,7 @@
 namespace inhere\libraryPlus\auth;
 
 use inhere\library\collections\SimpleCollection;
-use inhere\library\helpers\ObjectHelper;
+use inhere\library\helpers\Obj;
 use inhere\exceptions\InvalidArgumentException;
 use inhere\exceptions\InvalidConfigException;
 
@@ -88,7 +88,7 @@ class User extends SimpleCollection
     {
         parent::__construct();
 
-        ObjectHelper::loadAttrs($this, $options);
+        Obj::setAttrs($this, $options);
 
         if ($this->identityClass === null) {
             throw new InvalidConfigException('User::identityClass must be set.');

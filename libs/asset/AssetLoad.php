@@ -8,17 +8,17 @@
 
 namespace inhere\libraryPlus\asset;
 
-use inhere\library\exceptions\FileNotFoundException;
-use inhere\library\exceptions\FileSystemException;
-use inhere\library\exceptions\InvalidArgumentException;
-use inhere\library\exceptions\InvalidOptionException;
-use inhere\library\exceptions\NotFoundException;
+use inhere\exceptions\FileNotFoundException;
+use inhere\exceptions\FileSystemException;
+use inhere\exceptions\InvalidArgumentException;
+use inhere\exceptions\InvalidOptionException;
+use inhere\exceptions\NotFoundException;
 use inhere\library\files\Directory;
 use inhere\library\files\File;
 use inhere\library\helpers\ObjectHelper;
 use inhere\library\helpers\UrlHelper;
-use inhere\library\html\Html;
-use inhere\library\StdBase;
+use inhere\libraryPlus\html\Html;
+use inhere\library\StdObject;
 use MatthiasMullie\Minify;
 
 /**
@@ -34,7 +34,7 @@ use MatthiasMullie\Minify;
  * ])->dump();
  *
  */
-class AssetLoad extends StdBase
+class AssetLoad extends StdObject
 {
     /**
      * 网站域名url地址
@@ -113,11 +113,6 @@ class AssetLoad extends StdBase
         'outPath' => '',       // default output to old file path.
         'webPath' => '',       // web access path.
     ];
-
-    private function __construct(array $config = [])
-    {
-        ObjectHelper::loadAttrs($this, $config);
-    }
 
     /**
      * always return new instance.

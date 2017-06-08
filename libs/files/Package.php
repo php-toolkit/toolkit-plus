@@ -11,7 +11,7 @@ namespace inhere\libraryPlus\files;
 use inhere\exceptions\NotFoundException;
 use inhere\library\files\compress\AbstractCompressor;
 use inhere\library\helpers\ObjectHelper;
-use inhere\library\StdBase;
+use inhere\library\StdObject;
 use ZipArchive;
 
 /**

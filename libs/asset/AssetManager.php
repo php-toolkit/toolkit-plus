@@ -8,11 +8,10 @@
 
 namespace inhere\libraryPlus\asset;
 
-use inhere\library\exceptions\InvalidArgumentException;
-use inhere\library\helpers\ObjectHelper;
+use inhere\exceptions\InvalidArgumentException;
 use inhere\library\helpers\UrlHelper;
-use inhere\library\html\Html;
-use inhere\library\StdBase;
+use inhere\library\StdObject;
+use inhere\libraryPlus\html\Html;
 
 /**
  * 前端资源加载管理
@@ -22,7 +21,7 @@ use inhere\library\StdBase;
  * Class AssetManager
  * @package inhere\library\asset
  */
-class AssetManager extends StdBase
+class AssetManager extends StdObject
 {
     /**
      * asset bag list
@@ -116,11 +115,6 @@ class AssetManager extends StdBase
     const ASSET_JS = 'js';
     const ASSET_CSS_FILE = 'css-file';
     const ASSET_CSS = 'css';
-
-    public function __construct(array $config = [])
-    {
-        ObjectHelper::loadAttrs($this, $config);
-    }
 
 //////////////////////////////////// register ////////////////////////////////////
 

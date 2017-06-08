@@ -8,9 +8,9 @@
 
 namespace inhere\libraryPlus\files\compress;
 
-use inhere\library\exceptions\FileNotFoundException;
-use inhere\library\exceptions\FileSystemException;
-use inhere\library\exceptions\NotFoundException;
+use inhere\exceptions\FileNotFoundException;
+use inhere\exceptions\FileSystemException;
+use inhere\exceptions\NotFoundException;
 use inhere\library\files\FileSystem;
 use Phar;
 use PharData;
@@ -35,8 +35,8 @@ class GzipCompressor extends AbstractCompressor
      * @return bool
      * @throws FileSystemException
      * @throws NotFoundException
-     * @throws \inhere\library\exceptions\IOException
-     * @throws \inhere\library\exceptions\InvalidArgumentException
+     * @throws \inhere\exceptions\IOException
+     * @throws \inhere\exceptions\InvalidArgumentException
      */
     public function encode($sourcePath, $archiveFile, $override = true)
     {

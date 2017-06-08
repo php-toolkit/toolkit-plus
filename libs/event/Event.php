@@ -10,13 +10,13 @@
 
 namespace inhere\libraryPlus\event;
 
-use inhere\library\StdBase;
+use inhere\library\StdObject;
 
 /**
  * Class Event
  * @package inhere\library\event
  */
-class Event extends StdBase implements InterfaceEvent, \ArrayAccess, \Serializable,\Countable
+class Event extends StdObject implements InterfaceEvent, \ArrayAccess, \Serializable,\Countable
 {
     /**
      * @var string 当前的事件名称
@@ -43,6 +43,8 @@ class Event extends StdBase implements InterfaceEvent, \ArrayAccess, \Serializab
     {
         $this->name      = trim($name);
         $this->arguments = $arguments;
+
+        parent::__construct();
     }
 
     /**

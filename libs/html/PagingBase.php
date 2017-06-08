@@ -8,7 +8,7 @@
 
 namespace inhere\libraryPlus\html;
 
-use inhere\library\exceptions\InvalidConfigException;
+use inhere\exceptions\InvalidConfigException;
 
 /**
  * Class PagingBase

@@ -10,9 +10,9 @@
 
 namespace inhere\libraryPlus\event;
 
-use inhere\library\StdBase;
+use inhere\library\StdObject;
 
-class Dispatcher extends StdBase implements InterfaceDispatcher
+class Dispatcher extends StdObject implements InterfaceDispatcher
 {
     /**
      * 1.事件存储

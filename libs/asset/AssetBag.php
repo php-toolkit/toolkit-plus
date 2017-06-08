@@ -8,7 +8,7 @@
 
 namespace inhere\libraryPlus\asset;
 
-use inhere\library\helpers\ObjectHelper;
+use inhere\library\StdObject;
 
 /**
  * 命名资源 -- 保存了指定名称的一组资源 (reference Yii2 AssetBundle)
@@ -18,7 +18,7 @@ use inhere\library\helpers\ObjectHelper;
  * Class AssetBag
  * @package inhere\library\asset
  */
-class AssetBag
+class AssetBag extends StdObject
 {
     /**
      * asset map name
@@ -93,11 +93,6 @@ class AssetBag
      * is being published. This property is used only when [[sourcePath]] is set.
      */
     public $publishOptions = [];
-
-    public function __construct(array $config = [])
-    {
-        ObjectHelper::loadAttrs($this, $config);
-    }
 
     /**
      * @return string

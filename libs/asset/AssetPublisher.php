@@ -8,21 +8,20 @@
 
 namespace inhere\libraryPlus\asset;
 
-use inhere\library\exceptions\FileSystemException;
-use inhere\library\exceptions\InvalidArgumentException;
+use inhere\exceptions\FileSystemException;
+use inhere\exceptions\InvalidArgumentException;
 use inhere\library\files\Directory;
 use inhere\library\files\File;
 use inhere\library\files\FileFinder;
-use inhere\library\helpers\ArrHelper;
-use inhere\library\helpers\ObjectHelper;
-use inhere\library\StdBase;
+use inhere\library\helpers\ArrayHelper;
+use inhere\library\StdObject;
 
 /**
  * 资源发布 -- 将资源发布到可访问目录(e.g. from vendor to web dir)
  * Class AssetPublisher
  * @package inhere\library\asset
  */
-class AssetPublisher extends StdBase
+class AssetPublisher extends StdObject
 {
     /**
      * asset source base path
@@ -69,15 +68,15 @@ class AssetPublisher extends StdBase
 
     public function __construct(array $config = [])
     {
-        $include = ArrHelper::remove('include', $config, $this->defaultOptions()['include']);
-        $exclude = ArrHelper::remove('exclude', $config, $this->defaultOptions()['exclude']);
+        $include = ArrayHelper::remove($config, 'include', $this->defaultOptions()['include']);
+        $exclude = ArrayHelper::remove($config, 'exclude', $this->defaultOptions()['exclude']);
 
         $this->finder = new FileFinder([
             'include' => $include,
             'exclude' => $exclude,
         ]);
 
-        ObjectHelper::loadAttrs($this, $config);
+        parent::__construct($config);
     }
 
     public function defaultOptions()

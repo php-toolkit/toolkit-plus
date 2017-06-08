@@ -10,8 +10,8 @@
 
 namespace inhere\libraryPlus\html;
 
-use inhere\library\StdBase;
-use inhere\library\exceptions\InvalidConfigException;
+use inhere\library\StdObject;
+use inhere\exceptions\InvalidConfigException;
 
 /*
 
@@ -34,7 +34,7 @@ var_dump((string)$form);
  * Class Element
  * @package inhere\library\html
  */
-class Element extends StdBase
+class Element extends StdObject
 {
     /**
      * tag name
@@ -89,6 +89,8 @@ class Element extends StdBase
         $this->attrs = $attrs;
 
         $this->childs = new \SplObjectStorage();
+
+        parent::__construct();
     }
 
 ///////////////////////////////////////// generate element /////////////////////////////////////////

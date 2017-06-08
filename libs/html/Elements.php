@@ -10,21 +10,30 @@
 
 namespace inhere\libraryPlus\html;
 
-use inhere\library\StdBase;
+use inhere\library\StdObject;
 
 /**
  * Class Elements
  * @package inhere\library\html
  */
-class Elements extends StdBase implements \IteratorAggregate
+class Elements extends StdObject implements \IteratorAggregate
 {
     public $elements = [];
 
+    /**
+     * Elements constructor.
+     * @param array $elements
+     */
     public function __construct(array $elements = [])
     {
         $this->elements = $elements;
+
+        parent::__construct();
     }
 
+    /**
+     * @return string
+     */
     public function getString()
     {
         $string = '';
@@ -41,16 +50,26 @@ class Elements extends StdBase implements \IteratorAggregate
         return $this->getString();
     }
 
+    /**
+     * @return \ArrayIterator
+     */
     public function getIterator()
     {
         return new \ArrayIterator($this->elements);
     }
 
+    /**
+     * @return array
+     */
     public function getElements()
     {
         return $this->elements;
     }
 
+    /**
+     * @param array $elements
+     * @return $this
+     */
     public function setElements(array $elements)
     {
         $this->elements = $elements;

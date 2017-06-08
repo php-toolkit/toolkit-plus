@@ -11,13 +11,13 @@ namespace inhere\libraryPlus\files\compress;
 use inhere\exceptions\InvalidArgumentException;
 use inhere\library\files\FileFinder;
 use inhere\library\helpers\ObjectHelper;
-use inhere\library\StdBase;
+use inhere\library\StdObject;
 
 /**
  * Class AbstractCompressor
  * @package inhere\library\files\compress
  */
-abstract class AbstractCompressor extends StdBase
+abstract class AbstractCompressor extends StdObject
 {
     /**
      * @var string
@@ -45,11 +45,6 @@ abstract class AbstractCompressor extends StdBase
      * @var FileFinder
      */
     protected $finder;
-
-    public function __construct(array $config = [])
-    {
-        ObjectHelper::loadAttrs($this, $config);
-    }
 
     /**
      * @return bool
