@@ -347,7 +347,7 @@ class Upload
      * @param $name
      * @return bool
      */
-    public function hasFile($name)
+    public function hasFile($name): bool
     {
         return isset($this->_data[$name]);
     }
@@ -357,9 +357,9 @@ class Upload
      * @param $path
      * @return bool
      */
-    protected function _makeDir($path)
+    protected function _makeDir($path): bool
     {
-        return $path && (is_dir($path) || mkdir($path, 0664, true)) && is_writable($path);
+        return $path && (is_dir($path) || @mkdir($path, 0664, true)) && is_writable($path);
     }
 
     /**
