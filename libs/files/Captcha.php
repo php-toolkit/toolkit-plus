@@ -47,7 +47,7 @@ class Captcha
      * @param array $config
      * @return static
      */
-    public static function make($config = [])
+    public static function make(array $config = [])
     {
         return new static($config);
     }
@@ -60,17 +60,16 @@ class Captcha
     public function __construct(array $config = [])
     {
         if (!$this->checkGd()) {
-            throw new ExtensionMissException('This tool required extension [gd].');
+            throw new ExtensionMissException('This [gd] extension is required.');
         }
 
-        $defaultConfig = $this->defaultConfig();
-        $config = $config ? array_merge($defaultConfig, $config) : $defaultConfig;
+        $config = array_merge($this->defaultConfig(), $config);
 
         $this->config = $config;
         $this->font = $config['font'];
 
         if (!is_file($this->font)) {
-            throw new NotFoundException('验证码字体文件不存在');
+            throw new NotFoundException('Verification code font file does not exist. FILE: ' . $this->font);
         }
 
         if (!empty($config['sessionKey'])) {
@@ -88,6 +87,9 @@ class Captcha
         $this->fontNum = $config['fontNum'];
     }
 
+    /**
+     * @return array
+     */
     public function defaultConfig()
     {
         return [
@@ -97,7 +99,7 @@ class Captcha
             'width' => '120',
             'height' => '45',
             'bgColor' => '#eeeeee',
-            'bgImage' => dirname(__DIR__) . '/resources/images/backgrounds/06.png',
+            'bgImage' => dirname(__DIR__) . '/resources/images/captcha-bg/06.png',
             'length' => '4',
             'fontColor' => '',
             //  验证码字体大小
@@ -117,13 +119,13 @@ class Captcha
     public function drawPixel()
     {
         for ($i = 1; $i <= $this->pixelNum; $i++) {
-            //$pixelColor = imagecolorallocate( $this->img,rand(100,240), mt_rand(100,240), mt_rand(100,
+            //$pixelColor = imagecolorallocate( $this->img,rand(100,240), random_int(100,240), random_int(100,
             //240) );//点颜色
             //imagesetpixel($this->img,rand(0,$this->width),rand(0,$this->height),$pixelColor);
             $char = '.';
-            $pixelColor = imagecolorallocate($this->img, mt_rand(140, 200), mt_rand(140, 200), mt_rand(140, 200));
+            $pixelColor = imagecolorallocate($this->img, random_int(140, 200), random_int(140, 200), random_int(140, 200));
             imagefttext(
-                $this->img, 8, mt_rand(-30, 30), mt_rand(6, $this->width), mt_rand(6, $this->height - 5),
+                $this->img, 8, random_int(-30, 30), random_int(6, $this->width), random_int(6, $this->height - 5),
                 $pixelColor, $this->font, $char
             );
         }
@@ -138,11 +140,11 @@ class Captcha
     public function drawLine()
     {
         for ($i = 1; $i <= $this->lineNum; $i++) {
-            $lineColor = imagecolorallocate($this->img, mt_rand(150, 250), mt_rand(150, 250), mt_rand(150, 250));
+            $lineColor = imagecolorallocate($this->img, random_int(150, 250), random_int(150, 250), random_int(150, 250));
             //($this->img,起点坐标x.y，终点坐标x.y，颜色)
             imageline(
-                $this->img, mt_rand(0, $this->width), mt_rand(0, $this->height),
-                mt_rand(0, $this->width), mt_rand(0, $this->height), $lineColor
+                $this->img, random_int(0, $this->width), random_int(0, $this->height),
+                random_int(0, $this->width), random_int(0, $this->height), $lineColor
             );
         }
 
@@ -156,10 +158,10 @@ class Captcha
     public function drawAec()
     {
         for ($i = 1; $i <= $this->aecNum; $i++) {
-            $arcColor = imagecolorallocate($this->img, mt_rand(150, 250), mt_rand(150, 250), mt_rand(150, 250));
+            $arcColor = imagecolorallocate($this->img, random_int(150, 250), random_int(150, 250), random_int(150, 250));
             imagearc(
-                $this->img, mt_rand(0, $this->width), mt_rand(0, $this->height), mt_rand(0, 100),
-                mt_rand(0, 100), mt_rand(-90, 90), mt_rand(70, 360), $arcColor
+                $this->img, random_int(0, $this->width), random_int(0, $this->height), random_int(0, 100),
+                random_int(0, 100), random_int(-90, 90), random_int(70, 360), $arcColor
             );
         }
 
@@ -173,12 +175,12 @@ class Captcha
         $captchaStr = '';//保存产生的字符串
 
         for ($i = 0; $i < $this->charNum; $i++) {
-            $char = $this->codeStr[mt_rand(0, strlen($this->codeStr) - 1)];
+            $char = $this->codeStr[random_int(0, strlen($this->codeStr) - 1)];
             $captchaStr .= $char;
-            $fontColor = imagecolorallocate($this->img, mt_rand(80, 200), mt_rand(80, 200), mt_rand(80, 200));
+            $fontColor = imagecolorallocate($this->img, random_int(80, 200), random_int(80, 200), random_int(80, 200));
             imagefttext(
-                $this->img, $this->fontSize, mt_rand(-30, 30), $i * $x + mt_rand(6, 10),
-                mt_rand($this->height / 1.3, $this->height - 5), $fontColor,
+                $this->img, $this->fontSize, random_int(-30, 30), $i * $x + random_int(6, 10),
+                random_int($this->height / 1.3, $this->height - 5), $fontColor,
                 $this->font, $char
             );
         }
@@ -196,11 +198,11 @@ class Captcha
     public function drawChars()
     {
         for ($i = 0; $i < $this->fontNum; $i++) {
-            $char = $this->codeStr[mt_rand(0, strlen($this->codeStr) - 1)];
-            $fontColor = imagecolorallocate($this->img, mt_rand(180, 240), mt_rand(180, 240), mt_rand(180, 240));
+            $char = $this->codeStr[random_int(0, strlen($this->codeStr) - 1)];
+            $fontColor = imagecolorallocate($this->img, random_int(180, 240), random_int(180, 240), random_int(180, 240));
             imagefttext(
-                $this->img, mt_rand(4, 8), mt_rand(-30, 40), mt_rand(8, $this->width - 10),
-                mt_rand(10, $this->height - 10), $fontColor, $this->font, $char
+                $this->img, random_int(4, 8), random_int(-30, 40), random_int(8, $this->width - 10),
+                random_int(10, $this->height - 10), $fontColor, $this->font, $char
             );
         }
     }
