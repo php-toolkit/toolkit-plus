@@ -97,7 +97,7 @@ class Picture
         'path' => ''
     ];
 
-    private $_error = null;
+    private $_error;
 
     /**
      * 正在操作的文件记录
@@ -174,6 +174,7 @@ class Picture
         $pos = $pos ?: $this->waterOptions['pos'];
         $alpha = $alpha ?: $this->waterOptions['alpha'];
         $waterImg = $waterImg ?: $this->waterOptions['img'];
+        $waterImgType = $resWaterImg = null;
 
         list($imgWidth, $imgHeight) = getimagesize($img);
 
@@ -213,12 +214,13 @@ class Picture
         }
 
         // create image resource 建立原图资源
-        $resImg = call_user_func("imagecreatefrom{$imgType}", $img);
+        $method = "imagecreatefrom{$imgType}";
+        $resImg = $method($img);
 
         //水印位置处理
         list($x, $y) = $this->_calcWaterCoords($pos, $imgWidth, $waterWidth, $imgHeight, $waterHeight);
 
-        if ($waterImg && isset($waterImgType) && isset($resWaterImg)) {
+        if ($waterImg && $resWaterImg && $waterImgType) {
 
             // is png image. 'IMAGETYPE_PNG' === 3
             if ($waterImgType === self::IMAGE_PNG) {
@@ -254,13 +256,7 @@ class Picture
             call_user_func("image{$imgType}", $resImg, $outFile);
         }
 
-        if (isset($resImg)) {
-            imagedestroy($resImg);
-        }
-
-        if (isset($resThumb)) {
-            imagedestroy($resThumb);
-        }
+        imagedestroy($resImg);
 
         $this->working = [
             'raw' => $img,
@@ -357,13 +353,8 @@ class Picture
         // generate image to dst file. imagepng(), imagegif(), imagejpeg(), imagewbmp()
         call_user_func("image{$imgType}", $resThumb, $outFile);
 
-        if (isset($resImg)) {
-            imagedestroy($resImg);
-        }
-
-        if (isset($resThumb)) {
-            imagedestroy($resThumb);
-        }
+        imagedestroy($resImg);
+        imagedestroy($resThumb);
 
         $this->working = [
             'raw' => $img,
@@ -411,12 +402,31 @@ class Picture
         ob_clean();
         //生成图片,在浏览器中进行显示-格式 $type ，与上面的header声明对应
         // e.g. imagepng($resImg);
-        $success = call_user_func("image{$type}", $resImg);
+        $method = "image{$type}";
+        $success = $method($resImg);
 
         // 已经显示图片后，可销毁，释放内存（可选）
         imagedestroy($resImg);
 
         return $success;
+    }
+
+    /**
+     * @param string $img
+     */
+    public static function display($img)
+    {
+        // 以二进制格式打开文件
+        $fp = fopen($img, 'rb');
+
+        $mimeType = finfo_file(finfo_open(FILEINFO_MIME_TYPE),$img);
+
+        // 发送合适的报头
+        header("Content-Type: $mimeType");
+        header('Content-Length: ' . filesize($img));
+
+        // 发送图片
+        fpassthru($fp);
     }
 
     /*********************************************************************************
@@ -432,7 +442,7 @@ class Picture
     {
         if (!file_exists($img)) {
             $this->_error = 'Image file dom\'t exists! file: ' . $img;
-        } elseif (!($type = pathinfo($img, PATHINFO_EXTENSION)) || !in_array($type, static::getImageTypes())) {
+        } elseif (!($type = pathinfo($img, PATHINFO_EXTENSION)) || !self::isSupportedType($type)) {
             $this->_error = "Image type [$type] is not supported.";
         }
 
@@ -491,8 +501,8 @@ class Picture
                 $y = $imgHeight - $waterHeight;
                 break;
             default :
-                $x = mt_rand(25, $imgWidth - $waterWidth);
-                $y = mt_rand(25, $imgHeight - $waterHeight);
+                $x = random_int(25, $imgWidth - $waterWidth);
+                $y = random_int(25, $imgHeight - $waterHeight);
         }
 
         return [$x, $y];
@@ -584,7 +594,7 @@ class Picture
      */
     public static function isSupportedType($type)
     {
-        return in_array($type, static::getImageTypes());
+        return in_array($type, static::getImageTypes(), true);
     }
 
     /**
