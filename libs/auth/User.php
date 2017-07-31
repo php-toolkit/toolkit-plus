@@ -68,8 +68,9 @@ class User extends SimpleCollection
      * @var string
      */
     public $idColumn = 'id';
-    
-//    private $storage;
+
+    /** @var StorageInterface */
+    private $storage;
 
     /**
      * checked permission caching list
@@ -312,6 +313,38 @@ class User extends SimpleCollection
     public function setLoggedTo($url)
     {
         $this->loggedTo = trim($url);
+    }
+
+    /**
+     * @return StorageInterface
+     */
+    public function getStorage()
+    {
+        return $this->storage;
+    }
+
+    /**
+     * @param StorageInterface $storage
+     */
+    public function setStorage($storage)
+    {
+        $this->storage = $storage;
+    }
+
+    /**
+     * @return array
+     */
+    public function getAccesses(): array
+    {
+        return $this->_accesses;
+    }
+
+    /**
+     * @param array $accesses
+     */
+    public function setAccesses(array $accesses)
+    {
+        $this->_accesses = $accesses;
     }
 
     /**
