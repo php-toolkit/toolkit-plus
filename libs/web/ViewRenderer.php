@@ -1,21 +1,12 @@
 <?php
 /**
- * Slim Framework (http://slimframework.com)
- *
- * @link      https://github.com/slimphp/PHP-View
- * @copyright Copyright (c) 2011-2015 Josh Lockhart
- * @license   https://github.com/slimphp/PHP-View/blob/master/LICENSE.md (MIT License)
  */
 
-namespace micro\web;
-
-use inhere\library\io\Output;
-use Micro;
+namespace inhere\libraryPlus\web;
 
 /**
  * Class ViewRenderer
- * @package micro
- *
+ * @package inhere\libraryPlus\web
  * Render PHP view scripts into a PSR-7 Response object
  */
 class ViewRenderer
@@ -47,7 +38,7 @@ class ViewRenderer
      * @param string $layout
      * @param array $attributes
      */
-    public function __construct($viewsPath = '', $layout = '', $attributes = [])
+    public function __construct($viewsPath = '', $layout = '', array $attributes = [])
     {
         $this->viewsPath = rtrim($viewsPath, '/\\') . '/';
         $this->layout = $layout;
@@ -58,9 +49,9 @@ class ViewRenderer
      * Render a view
      * $data cannot contain view as a key
      * throws RuntimeException if $viewsPath . $view does not exist
-     * @param string             $view
-     * @param array              $data
-     * @return Output
+     * @param string $view
+     * @param array $data
+     * @return string
      * @throws \InvalidArgumentException
      * @throws \RuntimeException
      */
@@ -69,44 +60,40 @@ class ViewRenderer
         $output = $this->fetch($view, $data);
 
         // render layout
-        if ( $this->layout ) {
+        if ($this->layout) {
             $mark = self::CONTENT_MARK;
             $main = $this->fetch($this->layout, $data);
             $output = preg_replace("/$mark/", $output, $main, 1);
         }
 
-        Micro::logger()->debug("Render view: $view");
-
-        return Micro::app()->output->write($output);
+        return $output;
     }
 
     /**
      * @param $view
      * @param array $data
-     * @return Output
+     * @return string
      */
     public function renderPartial($view, array $data = [])
     {
-        $output = $this->fetch($view, $data);
-
-        return Micro::app()->output->write($output);
+        return $this->fetch($view, $data);
     }
 
     /**
      * @param string $output
      * @param array $data
-     * @return Output
+     * @return string
      */
     public function renderBody($output, array $data = [])
     {
         // render layout
-        if ( $this->layout ) {
+        if ($this->layout) {
             $mark = self::CONTENT_MARK;
             $main = $this->fetch($this->layout, $data);
             $output = preg_replace("/$mark/", $output, $main, 1);
         }
 
-        return Micro::app()->output->write($output);
+        return $output;
     }
 
     /**
@@ -132,7 +119,8 @@ class ViewRenderer
      * @param $key
      * @param $value
      */
-    public function addAttribute($key, $value) {
+    public function addAttribute($key, $value)
+    {
         $this->attributes[$key] = $value;
     }
 
@@ -141,7 +129,8 @@ class ViewRenderer
      * @param $key
      * @return mixed
      */
-    public function getAttribute($key) {
+    public function getAttribute($key)
+    {
         if (!isset($this->attributes[$key])) {
             return false;
         }
@@ -198,11 +187,13 @@ class ViewRenderer
     public function fetch($view, array $data = [])
     {
         if (isset($data['view'])) {
-            throw new \InvalidArgumentException("Duplicate view key found");
+            throw new \InvalidArgumentException('Duplicate view key found');
         }
 
-        if (!is_file($this->viewsPath . $view)) {
-            throw new \RuntimeException("View cannot render `$view` because the view does not exist");
+        $file = $this->viewsPath . $view;
+
+        if (!is_file($file)) {
+            throw new \RuntimeException("View cannot render '$view' because the view does not exist");
         }
 
         /*
@@ -216,12 +207,12 @@ class ViewRenderer
 
         try {
             ob_start();
-            $this->protectedIncludeScope($this->viewsPath . $view, $data);
+            $this->protectedIncludeScope($file, $data);
             $output = ob_get_clean();
-        } catch(\Throwable $e) { // PHP 7+
+        } catch (\Throwable $e) { // PHP 7+
             ob_end_clean();
             throw $e;
-        } catch(\Exception $e) { // PHP < 7
+        } catch (\Exception $e) { // PHP < 7
             ob_end_clean();
             throw $e;
         }
@@ -233,9 +224,9 @@ class ViewRenderer
      * @param string $view
      * @param array $data
      */
-    protected function protectedIncludeScope ($view, array $data)
+    protected function protectedIncludeScope($view, array $data)
     {
-        extract($data);
+        extract($data, EXTR_OVERWRITE);
         include $view;
     }
 }
