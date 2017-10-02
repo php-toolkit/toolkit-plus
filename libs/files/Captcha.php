@@ -9,14 +9,14 @@
  *          2. Captcha::make(...)->show()
  */
 
-namespace inhere\libraryPlus\files;
+namespace Inhere\LibraryPlus\Files;
 
-use inhere\exceptions\NotFoundException;
-use inhere\exceptions\ExtensionMissException;
+use Inhere\Exceptions\NotFoundException;
+use Inhere\Exceptions\ExtensionMissException;
 
 /**
  * Class Captcha
- * @package inhere\library\files
+ * @package Inhere\LibraryPlus\Files
  */
 class Captcha
 {

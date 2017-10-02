@@ -6,11 +6,11 @@
  * Time: 9:49
  */
 
-namespace inhere\library\log;
+namespace Inhere\LibraryPlus\Log;
 
 /**
  * Interface ProcessLogInterface
- * @package inhere\library\task
+ * @package Inhere\Library\task
  */
 interface ProcessLogInterface
 {

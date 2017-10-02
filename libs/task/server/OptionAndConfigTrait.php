@@ -6,13 +6,13 @@
  * Time: 13:26
  */
 
-namespace inhere\libraryPlus\task\server;
+namespace Inhere\LibraryPlus\Task\Server;
 
-use inhere\library\helpers\CliHelper;
+use Inhere\Library\Helpers\CliHelper;
 
 /**
  * Class OptionAndConfigTrait
- * @package inhere\libraryPlus\task\server
+ * @package Inhere\LibraryPlus\Task\Server
  */
 trait OptionAndConfigTrait
 {

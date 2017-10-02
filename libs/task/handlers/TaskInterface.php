@@ -6,13 +6,13 @@
  * Time: 上午10:25
  */
 
-namespace inhere\libraryPlus\task\handlers;
+namespace Inhere\LibraryPlus\Task\Handlers;
 
-use inhere\libraryPlus\task\server\TaskWrapper;
+use Inhere\LibraryPlus\Task\Server\TaskWrapper;
 
 /**
  * Interface TaskInterface
- * @package inhere\libraryPlus\task\handlers
+ * @package Inhere\LibraryPlus\Task\Handlers
  */
 interface TaskInterface
 {

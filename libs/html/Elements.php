@@ -8,13 +8,13 @@
  * file: Element.php
  */
 
-namespace inhere\libraryPlus\html;
+namespace Inhere\LibraryPlus\Html;
 
-use inhere\library\StdObject;
+use Inhere\Library\StdObject;
 
 /**
  * Class Elements
- * @package inhere\library\html
+ * @package Inhere\LibraryPlus\Html
  */
 class Elements extends StdObject implements \IteratorAggregate
 {

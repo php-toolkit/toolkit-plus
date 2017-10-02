@@ -6,11 +6,11 @@
  * Time: 下午4:51
  */
 
-namespace inhere\libraryPlus\auth;
+namespace Inhere\LibraryPlus\Auth;
 
 /**
  * Class AccessChecker
- * @package inhere\library\auth
+ * @package Inhere\LibraryPlus\Auth
  */
 class AccessChecker implements CheckAccessInterface
 {

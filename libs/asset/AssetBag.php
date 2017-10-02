@@ -6,9 +6,9 @@
  * Time: 上午11:11
  */
 
-namespace inhere\libraryPlus\asset;
+namespace Inhere\LibraryPlus\Asset;
 
-use inhere\library\StdObject;
+use Inhere\Library\StdObject;
 
 /**
  * 命名资源 -- 保存了指定名称的一组资源 (reference Yii2 AssetBundle)
@@ -16,7 +16,7 @@ use inhere\library\StdObject;
  * AssetManager::loadAsset($name, $assets)
  *
  * Class AssetBag
- * @package inhere\library\asset
+ * @package Inhere\Library\asset
  */
 class AssetBag extends StdObject
 {

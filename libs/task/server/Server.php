@@ -6,17 +6,17 @@
  * Time: 下午11:04
  */
 
-namespace inhere\libraryPlus\task\server;
+namespace Inhere\LibraryPlus\Task\Server;
 
-use inhere\library\process\ProcessLogger;
-use inhere\library\queue\QueueFactory;
-use inhere\library\queue\QueueInterface;
-use inhere\libraryPlus\task\Base;
+use Inhere\Library\process\ProcessLogger;
+use Inhere\Library\queue\QueueFactory;
+use Inhere\Library\queue\QueueInterface;
+use Inhere\LibraryPlus\Task\Base;
 
 /**
  * Class Server - task server
  *
- * @package inhere\libraryPlus\task\server
+ * @package Inhere\LibraryPlus\Task\Server
  */
 class Server extends Base
 {

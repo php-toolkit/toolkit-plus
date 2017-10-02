@@ -6,24 +6,23 @@
  * Time: 下午9:43
  */
 
-namespace inhere\libraryPlus\asset;
+namespace Inhere\LibraryPlus\Asset;
 
-use inhere\exceptions\FileNotFoundException;
-use inhere\exceptions\FileSystemException;
-use inhere\exceptions\InvalidArgumentException;
-use inhere\exceptions\InvalidOptionException;
-use inhere\exceptions\NotFoundException;
-use inhere\library\files\Directory;
-use inhere\library\files\File;
-use inhere\library\helpers\ObjectHelper;
-use inhere\library\helpers\UrlHelper;
-use inhere\libraryPlus\html\Html;
-use inhere\library\StdObject;
+use Inhere\Exceptions\FileNotFoundException;
+use Inhere\Exceptions\FileSystemException;
+use Inhere\Exceptions\InvalidArgumentException;
+use Inhere\Exceptions\InvalidOptionException;
+use Inhere\Exceptions\NotFoundException;
+use Inhere\Library\Files\Directory;
+use Inhere\Library\Files\File;
+use Inhere\Library\Helpers\UrlHelper;
+use Inhere\LibraryPlus\Html\Html;
+use Inhere\Library\StdObject;
 use MatthiasMullie\Minify;
 
 /**
  * Class AssetLoad
- * @package inhere\library\asset
+ * @package Inhere\Library\asset
  *
  * usage (in template file):
  *

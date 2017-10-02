@@ -6,12 +6,12 @@
  * Time: 15:49
  */
 
-namespace inhere\library\log;
+namespace Inhere\LibraryPlus\Log;
 
 
 /**
  * Interface HandlerInterface
- * @package inhere\library\log
+ * @package Inhere\LibraryPlus\Log
  */
 interface HandlerInterface
 {

@@ -6,17 +6,17 @@
  * Time: 21:57
  */
 
-namespace inhere\libraryPlus\auth;
+namespace Inhere\LibraryPlus\Auth;
 
-use inhere\library\collections\CollectionInterface;
-use inhere\library\collections\SimpleCollection;
-use inhere\library\helpers\Obj;
-use inhere\exceptions\InvalidArgumentException;
-use inhere\exceptions\InvalidConfigException;
+use Inhere\Library\Collections\CollectionInterface;
+use Inhere\Library\Collections\SimpleCollection;
+use Inhere\Library\Helpers\Obj;
+use Inhere\Exceptions\InvalidArgumentException;
+use Inhere\Exceptions\InvalidConfigException;
 
 /**
  * Class User
- * @package slimExt\base
+ * @package Inhere\LibraryPlus\Auth
  *
  * @property int id
  */

@@ -6,11 +6,11 @@
  * Time: 下午9:04
  */
 
-namespace inhere\library\log;
+namespace Inhere\LibraryPlus\Log;
 
 /**
  * Class LoggerTrait
- * @package inhere\library\log
+ * @package Inhere\LibraryPlus\Log
  */
 trait LoggerTrait
 {

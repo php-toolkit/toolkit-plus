@@ -8,10 +8,14 @@
  * @From : [windwalker framework](https://github.com/ventoviro/windwalker)
  */
 
-namespace inhere\libraryPlus\event;
+namespace Inhere\LibraryPlus\Event;
 
-use inhere\library\StdObject;
+use Inhere\Library\StdObject;
 
+/**
+ * Class Dispatcher
+ * @package Inhere\LibraryPlus\Event
+ */
 class Dispatcher extends StdObject implements InterfaceDispatcher
 {
     /**

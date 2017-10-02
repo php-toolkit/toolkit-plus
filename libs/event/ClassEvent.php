@@ -6,7 +6,7 @@
  * Time: 9:30
  */
 
-namespace inhere\libraryPlus\event;
+namespace Inhere\LibraryPlus\Event;
 
 /**
  * Class ClassEvent
@@ -14,7 +14,7 @@ namespace inhere\libraryPlus\event;
  *
  * @reference yii2 Event
  *
- * @package inhere\library\event
+ * @package Inhere\LibraryPlus\Event
  */
 class ClassEvent
 {

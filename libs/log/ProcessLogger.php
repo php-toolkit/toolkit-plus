@@ -6,11 +6,11 @@
  * Time: 下午6:47
  */
 
-namespace inhere\library\log;
+namespace Inhere\LibraryPlus\Log;
 
-use inhere\library\files\Directory;
-use inhere\library\helpers\CliHelper;
-use inhere\library\helpers\FormatHelper;
+use Inhere\Library\Files\Directory;
+use Inhere\Library\Helpers\CliHelper;
+use Inhere\Library\Helpers\FormatHelper;
 
 /**
  * Class ProcessLogger

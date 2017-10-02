@@ -12,11 +12,11 @@
  *
  */
 
-namespace inhere\libraryPlus\files;
+namespace Inhere\LibraryPlus\Files;
 
 /**
  * Class Download
- * @package inhere\library\files
+ * @package Inhere\LibraryPlus\Files
  */
 class Download
 {

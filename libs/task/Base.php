@@ -6,16 +6,16 @@
  * Time: 上午1:52
  */
 
-namespace inhere\libraryPlus\task;
+namespace Inhere\LibraryPlus\Task;
 
-use inhere\library\helpers\CliHelper;
-use inhere\library\process\ProcessLogger;
-use inhere\library\queue\QueueInterface;
-use inhere\library\traits\ConfigTrait;
+use Inhere\Library\Helpers\CliHelper;
+use Inhere\Library\process\ProcessLogger;
+use Inhere\Library\queue\QueueInterface;
+use Inhere\Library\Traits\ConfigTrait;
 
 /**
  * Class Base
- * @package inhere\libraryPlus\task
+ * @package Inhere\LibraryPlus\Task
  */
 abstract class Base
 {

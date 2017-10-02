@@ -7,14 +7,14 @@
  * File: Server.php
  */
 
-namespace inhere\libraryPlus\env;
+namespace Inhere\LibraryPlus\Env;
 
-use inhere\library\helpers\PhpHelper;
+use Inhere\Library\Helpers\PhpHelper;
 
 /**
  * 服务端信息 Server
  * Class Server
- * @package inhere\libraryPlus\env
+ * @package Inhere\LibraryPlus\Env
  *
  * @property string path
  * @property string protocol

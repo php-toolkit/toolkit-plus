@@ -7,8 +7,12 @@
  * Use : 监听器优先级级别 部分常量
  */
 
-namespace inhere\libraryPlus\event;
+namespace Inhere\LibraryPlus\Event;
 
+/**
+ * Class ListenerLevel
+ * @package Inhere\LibraryPlus\Event
+ */
 abstract class ListenerLevel
 {
     const MIN          = -300;

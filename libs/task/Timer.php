@@ -6,11 +6,11 @@
  * Time: 上午10:05
  */
 
-namespace inhere\libraryPlus\task;
+namespace Inhere\LibraryPlus\Task;
 
 /**
  * Class Timer
- * @package inhere\libraryPlus\task
+ * @package Inhere\LibraryPlus\Task
  */
 class Timer
 {

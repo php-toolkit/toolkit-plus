@@ -6,12 +6,12 @@
  * Time: 下午9:44
  */
 
-namespace inhere\libraryPlus\asset;
+namespace Inhere\LibraryPlus\Asset;
 
-use inhere\exceptions\InvalidArgumentException;
-use inhere\library\helpers\UrlHelper;
-use inhere\library\StdObject;
-use inhere\libraryPlus\html\Html;
+use Inhere\Exceptions\InvalidArgumentException;
+use Inhere\Library\Helpers\UrlHelper;
+use Inhere\Library\StdObject;
+use Inhere\LibraryPlus\Html\Html;
 
 /**
  * 前端资源加载管理
@@ -19,7 +19,7 @@ use inhere\libraryPlus\html\Html;
  * - 自动注入到HTML中指定位置
  *
  * Class AssetManager
- * @package inhere\library\asset
+ * @package Inhere\Library\asset
  */
 class AssetManager extends StdObject
 {

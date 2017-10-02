@@ -6,16 +6,16 @@
  * Time: 下午6:23
  */
 
-namespace inhere\libraryPlus\files\compress;
+namespace Inhere\LibraryPlus\Files\Compress;
 
-use inhere\exceptions\InvalidArgumentException;
-use inhere\library\files\FileFinder;
-use inhere\library\helpers\ObjectHelper;
-use inhere\library\StdObject;
+use Inhere\Exceptions\InvalidArgumentException;
+use Inhere\Library\Files\FileFinder;
+use Inhere\Library\Helpers\ObjectHelper;
+use Inhere\Library\StdObject;
 
 /**
  * Class AbstractCompressor
- * @package inhere\library\files\compress
+ * @package Inhere\LibraryPlus\Files\Compress
  */
 abstract class AbstractCompressor extends StdObject
 {

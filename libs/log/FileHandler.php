@@ -6,11 +6,11 @@
  * Time: 15:49
  */
 
-namespace inhere\library\log;
+namespace Inhere\LibraryPlus\Log;
 
 /**
  * Class FileHandler
- * @package inhere\library\log
+ * @package Inhere\LibraryPlus\Log
  */
 class FileHandler extends AbstractHandler
 {

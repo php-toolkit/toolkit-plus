@@ -7,14 +7,14 @@
  * File: Environment.php
  */
 
-namespace inhere\libraryPlus\env;
+namespace Inhere\LibraryPlus\Env;
 
-use inhere\library\collections\SimpleCollection;
+use Inhere\Library\Collections\SimpleCollection;
 
 /**
  * 环境信息
  * Class Environment
- * @package inhere\libraryPlus\env
+ * @package Inhere\LibraryPlus\Env
  */
 class Environment extends SimpleCollection
 {

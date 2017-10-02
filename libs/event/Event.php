@@ -8,13 +8,13 @@
  * 用于存储一个事件
  */
 
-namespace inhere\libraryPlus\event;
+namespace Inhere\LibraryPlus\Event;
 
-use inhere\library\StdObject;
+use Inhere\Library\StdObject;
 
 /**
  * Class Event
- * @package inhere\library\event
+ * @package Inhere\LibraryPlus\Event
  */
 class Event extends StdObject implements InterfaceEvent, \ArrayAccess, \Serializable,\Countable
 {

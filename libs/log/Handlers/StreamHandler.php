@@ -8,8 +8,9 @@
  * file that was distributed with this source code.
  */
 
-namespace inhere\library\log\handlers;
+namespace Inhere\LibraryPlus\Log\Handlers;
 
+use Monolog\Handler\AbstractProcessingHandler;
 use Monolog\Logger;
 
 /**

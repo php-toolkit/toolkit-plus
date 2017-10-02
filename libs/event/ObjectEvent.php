@@ -6,7 +6,7 @@
  * Time: 9:30
  */
 
-namespace inhere\libraryPlus\event;
+namespace Inhere\LibraryPlus\Event;
 
 /**
  * Class ClassEvent
@@ -14,7 +14,7 @@ namespace inhere\libraryPlus\event;
  *
  * @reference yii2 Event
  *
- * @package inhere\library\event
+ * @package Inhere\LibraryPlus\Event
  */
 class ObjectEvent
 {
@@ -34,7 +34,7 @@ class ObjectEvent
 
     /**
      * register a event handler
-     * @param string|object $class
+     * @param string|\stdClass $class
      * @param $name
      * @param callable $handler
      */
@@ -110,7 +110,7 @@ class ObjectEvent
      * @param $name
      * @return bool
      */
-    public function isSupportedEvent($name)
+    public static function isSupportedEvent($name)
     {
         if (!$name || !preg_match('/[a-zA-z][\w-]+/', $name)) {
             return false;

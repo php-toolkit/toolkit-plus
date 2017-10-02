@@ -1,23 +1,25 @@
 <?php
 /**
+ *
  */
 
-namespace inhere\libraryPlus\web;
+namespace Inhere\LibraryPlus\Web;
 
 /**
  * Class ViewRenderer
- * @package inhere\libraryPlus\web
+ * @package Inhere\LibraryPlus\Web
  * Render PHP view scripts into a PSR-7 Response object
  */
 class ViewRenderer
 {
     /**
+     * 视图存放基础路径
      * @var string
      */
     protected $viewsPath;
 
     /**
-     * 布局
+     * 默认布局文件
      * @var string
      */
     protected $layout;
@@ -27,46 +29,42 @@ class ViewRenderer
      */
     protected $attributes;
 
-    /*
-    in layout file '...<body>{_CONTENT_}</body>...'
-     */
-    const CONTENT_MARK = '{_CONTENT_}';
+    /** @var string  */
+    protected $suffix = 'php';
 
     /**
-     * SlimRenderer constructor.
+     * in layout file '...<body>{_CONTENT_}</body>...'
+     * @var string
+     */
+    protected $placeholder = '{_CONTENT_}';
+
+    /**
+     * constructor.
      * @param string $viewsPath
      * @param string $layout
      * @param array $attributes
      */
-    public function __construct($viewsPath = '', $layout = '', array $attributes = [])
+    public function __construct($viewsPath = null, $layout = null, array $attributes = [])
     {
-        $this->viewsPath = rtrim($viewsPath, '/\\') . '/';
         $this->layout = $layout;
         $this->attributes = $attributes;
+
+        $this->setViewsPath($this->viewsPath);
     }
 
     /**
-     * Render a view
-     * $data cannot contain view as a key
-     * throws RuntimeException if $viewsPath . $view does not exist
+     * Render a view, if layout file is setting, will use it.
+     * throws RuntimeException if view file does not exist
      * @param string $view
-     * @param array $data
+     * @param array $data extract data to view, cannot contain view as a key
+     * @param string|null $layout override default layout file
      * @return string
-     * @throws \InvalidArgumentException
-     * @throws \RuntimeException
      */
-    public function render($view, array $data = [])
+    public function render($view, array $data = [], $layout = null)
     {
         $output = $this->fetch($view, $data);
 
-        // render layout
-        if ($this->layout) {
-            $mark = self::CONTENT_MARK;
-            $main = $this->fetch($this->layout, $data);
-            $output = preg_replace("/$mark/", $output, $main, 1);
-        }
-
-        return $output;
+        return $this->renderContent($output, $data, $layout);
     }
 
     /**
@@ -80,20 +78,32 @@ class ViewRenderer
     }
 
     /**
-     * @param string $output
+     * @param string $content
      * @param array $data
+     * @param string|null $layout override default layout file
      * @return string
      */
-    public function renderBody($output, array $data = [])
+    public function renderBody($content, array $data = [], $layout = null)
+    {
+        return $this->renderContent($content, $data, $layout);
+    }
+
+    /**
+     * @param string $content
+     * @param array $data
+     * @param string|null $layout override default layout file
+     * @return string
+     */
+    public function renderContent($content, array $data = [], $layout = null)
     {
         // render layout
-        if ($this->layout) {
-            $mark = self::CONTENT_MARK;
-            $main = $this->fetch($this->layout, $data);
-            $output = preg_replace("/$mark/", $output, $main, 1);
+        if ($layout = $layout ?: $this->layout) {
+            $mark = $this->placeholder;
+            $main = $this->fetch($layout, $data);
+            $content = preg_replace("/$mark/", $content, $main, 1);
         }
 
-        return $output;
+        return $content;
     }
 
     /**
@@ -153,7 +163,9 @@ class ViewRenderer
      */
     public function setViewsPath($viewsPath)
     {
-        $this->viewsPath = rtrim($viewsPath, '/\\') . '/';
+        if ($viewsPath) {
+            $this->viewsPath = rtrim($viewsPath, '/\\') . '/';
+        }
     }
 
     /**
@@ -229,4 +241,48 @@ class ViewRenderer
         extract($data, EXTR_OVERWRITE);
         include $view;
     }
+
+    /**
+     * @return string
+     */
+    public function getPlaceholder(): string
+    {
+        return $this->placeholder;
+    }
+
+    /**
+     * @param string $placeholder
+     */
+    public function setPlaceholder(string $placeholder)
+    {
+        $this->placeholder = $placeholder;
+    }
+
+    /**
+     * @param string $view
+     * @return string
+     */
+    protected function getRealView($view)
+    {
+        $ext = ".{$this->suffix}";
+
+        return substr($view, - strlen($ext)) === $ext ? $view : $view . $ext;
+    }
+
+    /**
+     * @return string
+     */
+    public function getSuffix(): string
+    {
+        return $this->suffix;
+    }
+
+    /**
+     * @param string $suffix
+     */
+    public function setSuffix(string $suffix)
+    {
+        $this->suffix = $suffix;
+    }
 }
+

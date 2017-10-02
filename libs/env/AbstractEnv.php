@@ -7,13 +7,13 @@
  * File: AbstructEnv.php
  */
 
-namespace inhere\libraryPlus\env;
+namespace Inhere\LibraryPlus\Env;
 
-use inhere\library\collections\SimpleCollection;
+use Inhere\Library\Collections\SimpleCollection;
 
 /**
  * Class AbstractEnv
- * @package inhere\libraryPlus\env
+ * @package Inhere\LibraryPlus\Env
  */
 abstract class AbstractEnv extends SimpleCollection
 {

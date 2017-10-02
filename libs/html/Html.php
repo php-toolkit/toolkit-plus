@@ -7,13 +7,13 @@
  * Use: 主要功能是 html 标签元素创建
  */
 
-namespace inhere\libraryPlus\html;
+namespace Inhere\LibraryPlus\Html;
 
-//use inhere\library\helpers\ArrHelper;
+//use Inhere\Library\Helpers\ArrHelper;
 
 /**
  * Class Html
- * @package inhere\library\html
+ * @package Inhere\Library\html
  */
 class Html
 {

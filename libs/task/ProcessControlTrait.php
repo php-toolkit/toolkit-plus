@@ -6,13 +6,13 @@
  * Time: 23:39
  */
 
-namespace inhere\libraryPlus\task;
+namespace Inhere\LibraryPlus\Task;
 
-use inhere\library\process\ProcessUtil;
+use Inhere\Library\process\ProcessUtil;
 
 /**
  * Class ProcessControlTrait
- * @package inhere\libraryPlus\task
+ * @package Inhere\LibraryPlus\Task
  *
  */
 trait ProcessControlTrait

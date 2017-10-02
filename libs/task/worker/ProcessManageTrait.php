@@ -6,16 +6,16 @@
  * Time: 10:10
  */
 
-namespace inhere\libraryPlus\task\worker;
+namespace Inhere\LibraryPlus\Task\Worker;
 
-use inhere\library\helpers\CliHelper;
-use inhere\library\process\ProcessLogger;
-use inhere\library\process\ProcessUtil;
-use inhere\library\queue\QueueInterface;
+use Inhere\Library\Helpers\CliHelper;
+use Inhere\Library\process\ProcessLogger;
+use Inhere\Library\process\ProcessUtil;
+use Inhere\Library\queue\QueueInterface;
 
 /**
  * Class ProcessManageTrait
- * @package inhere\libraryPlus\task\worker
+ * @package Inhere\LibraryPlus\Task\Worker
  *
  * @property QueueInterface $queue
  */

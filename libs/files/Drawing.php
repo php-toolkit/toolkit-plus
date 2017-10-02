@@ -3,8 +3,12 @@
  * 画图
  */
 
-namespace inhere\libraryPlus\files;
+namespace Inhere\LibraryPlus\Files;
 
+/**
+ * Class Drawing
+ * @package Inhere\LibraryPlus\Files
+ */
 class Drawing
 {
 }

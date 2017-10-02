@@ -6,11 +6,11 @@
  * Time: 下午10:55
  */
 
-namespace inhere\libraryPlus\network;
+namespace Inhere\LibraryPlus\Network;
 
 /**
  * Class Telnet
- * @package inhere\library\network
+ * @package Inhere\Library\network
  */
 class Telnet
 {

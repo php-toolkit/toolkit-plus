@@ -6,11 +6,11 @@
  * Time: 下午12:38
  */
 
-namespace inhere\libraryPlus\event;
+namespace Inhere\LibraryPlus\Event;
 
 /**
  * Interface InterfaceEvent
- * @package inhere\library\event
+ * @package Inhere\LibraryPlus\Event
  *
  * @property string $name
  */

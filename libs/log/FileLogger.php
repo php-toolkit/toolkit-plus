@@ -6,16 +6,16 @@
  * Time: 14:17
  */
 
-namespace inhere\library\log;
+namespace Inhere\LibraryPlus\Log;
 
-use inhere\exceptions\FileSystemException;
-use inhere\library\helpers\PhpHelper;
+use Inhere\Exceptions\FileSystemException;
+use Inhere\Library\Helpers\PhpHelper;
 use Psr\Log\LoggerInterface;
 
 /**
  * simple file logger handler
  * Class LiteLogger
- * @package inhere\library\utils
+ * @package Inhere\Library\Utils
  * ```
  * $config = [...];
  * $logger = LiteLogger::make($config);

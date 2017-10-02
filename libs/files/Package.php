@@ -6,17 +6,17 @@
  * Time: 下午3:21
  */
 
-namespace inhere\libraryPlus\files;
+namespace Inhere\LibraryPlus\Files;
 
-use inhere\exceptions\NotFoundException;
-use inhere\libraryPlus\files\compress\AbstractCompressor;
-use inhere\library\StdObject;
+use Inhere\Exceptions\NotFoundException;
+use Inhere\LibraryPlus\Files\Compress\AbstractCompressor;
+use Inhere\Library\StdObject;
 use ZipArchive;
 
 /**
  * dir compress | file uncompressed
  * Class Compress
- * @package inhere\library\files
+ * @package Inhere\LibraryPlus\Files
  */
 class Package
 {

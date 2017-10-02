@@ -22,17 +22,17 @@
  *
  */
 
-namespace inhere\libraryPlus\files;
+namespace Inhere\LibraryPlus\Files;
 
-use inhere\exceptions\InvalidArgumentException;
-use inhere\exceptions\InvalidConfigException;
-use inhere\exceptions\ExtensionMissException;
-use inhere\exceptions\FileSystemException;
-use inhere\library\files\Directory;
+use Inhere\Exceptions\InvalidArgumentException;
+use Inhere\Exceptions\InvalidConfigException;
+use Inhere\Exceptions\ExtensionMissException;
+use Inhere\Exceptions\FileSystemException;
+use Inhere\Library\Files\Directory;
 
 /**
  * Class Picture
- * @package inhere\library\files
+ * @package Inhere\LibraryPlus\Files
  */
 class Picture
 {
