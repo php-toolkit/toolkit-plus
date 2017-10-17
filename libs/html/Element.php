@@ -10,8 +10,8 @@
 
 namespace Inhere\LibraryPlus\Html;
 
-use Inhere\Library\StdObject;
 use Inhere\Exceptions\InvalidConfigException;
+use Inhere\Library\StdObject;
 
 /*
 
@@ -122,6 +122,7 @@ class Element extends StdObject
         }
 
         unset($name, $attrString, $content, $parent);
+
         return $eleString;
     }
 

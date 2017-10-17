@@ -8,10 +8,7 @@
 
 namespace Inhere\LibraryPlus\Files;
 
-use Inhere\Exceptions\NotFoundException;
 use Inhere\LibraryPlus\Files\Compress\AbstractCompressor;
-use Inhere\Library\StdObject;
-use ZipArchive;
 
 /**
  * dir compress | file uncompressed

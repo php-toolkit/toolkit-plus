@@ -48,7 +48,7 @@ abstract class AbstractHandler implements HandlerInterface
      */
     private $level = Logger::DEBUG;
 
-    /** @var bool  */
+    /** @var bool */
     protected $stop = false;
 
     /**
@@ -90,7 +90,6 @@ abstract class AbstractHandler implements HandlerInterface
 
     /**
      * Writes the record down to the log of the implementing handler
-     *
      * @param  array $record
      * @return void
      */
@@ -146,12 +145,12 @@ abstract class AbstractHandler implements HandlerInterface
                 unset($logs[$i]);
             }
         }
+
         return $logs;
     }
 
     /**
      * Sets minimum logging level at which this handler will be triggered.
-     *
      * @param  int|string $level Level or level name
      * @return self
      */
@@ -164,7 +163,6 @@ abstract class AbstractHandler implements HandlerInterface
 
     /**
      * Gets minimum logging level at which this handler will be triggered.
-     *
      * @return int
      */
     public function getLevel()

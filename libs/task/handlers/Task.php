@@ -70,7 +70,8 @@ abstract class Task implements TaskInterface
      * @param TaskWrapper $task
      */
     protected function beforeRun($workload, TaskWrapper $task)
-    {}
+    {
+    }
 
     /**
      * doRun

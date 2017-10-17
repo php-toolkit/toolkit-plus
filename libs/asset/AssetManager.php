@@ -17,7 +17,6 @@ use Inhere\LibraryPlus\Html\Html;
  * 前端资源加载管理
  * - 允许设定加载位置
  * - 自动注入到HTML中指定位置
- *
  * Class AssetManager
  * @package Inhere\Library\asset
  */
@@ -26,12 +25,9 @@ class AssetManager extends StdObject
     /**
      * asset bag list
      * @var array
-     *
      * e.g:
-     *
      * $bags  = [
      *  self::POS_BODY => [
-     *
      *  ],
      *  self::POS_END => [
      *      ''
@@ -120,9 +116,7 @@ class AssetManager extends StdObject
 
     /**
      * register named asset
-     *
      * e.g.
-     *
      * $manager->loadAsset('homePage',[
      *   'css' => [
      *          'xx/zz.css',
@@ -134,7 +128,6 @@ class AssetManager extends StdObject
      *   'cssOptions' => [],
      *   'jsOptions'  => [],
      * ]);
-     *
      * @param array|AssetBag $name define zhe asset name. 当前注册资源添加命名标记
      * @param array $config 要添加的资源以及相关选项
      * @return $this
@@ -361,10 +354,8 @@ class AssetManager extends StdObject
 
     /**
      * 自动注入资源到指定的位置
-     *
      * - 在渲染好html后,输出html字符之前调用此方法
      * `$html = $manager->injectAssets($html);`
-     *
      * @param string $html html document string
      * @return mixed|string [type]
      */
@@ -505,7 +496,6 @@ class AssetManager extends StdObject
 
     /**
      * Gets the $baseUrl 对应的物理路径
-     *
      * @return string
      */
     public function getBasePath()
@@ -518,9 +508,7 @@ class AssetManager extends StdObject
      * @example
      * $baseUrl: '/static/'
      * $basePath: 'D:/www/web/static/'.
-     *
      * @param string $basePath the base path
-     *
      * @return self
      */
     protected function setBasePath($basePath)

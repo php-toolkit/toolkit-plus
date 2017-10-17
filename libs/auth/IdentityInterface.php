@@ -10,10 +10,8 @@ namespace Inhere\LibraryPlus\Auth;
 
 /**
  * IdentityInterface is the interface that should be implemented by a class providing identity information.
- *
  * This interface can typically be implemented by a user model class. For example, the following
  * code shows how to implement this interface by a User ActiveRecord class:
- *
  * ```php
  * class User extends RecordModel implements IdentityInterface
  * {
@@ -21,29 +19,24 @@ namespace Inhere\LibraryPlus\Auth;
  *     {
  *         return static::findByPk($id);
  *     }
- *
  *     public static function findIdentityByAccessToken($token, $type = null)
  *     {
  *         return static::findOne(['access_token' => $token]);
  *     }
- *
  *     public function getId()
  *     {
  *         return $this->id;
  *     }
- *
  *     public function getAuthKey()
  *     {
  *         return $this->authKey;
  *     }
- *
  *     public function validateAuthKey($authKey)
  *     {
  *         return $this->authKey === $authKey;
  *     }
  * }
  * ```
- *
  */
 interface IdentityInterface
 {

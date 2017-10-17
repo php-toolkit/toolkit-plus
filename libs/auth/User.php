@@ -8,16 +8,15 @@
 
 namespace Inhere\LibraryPlus\Auth;
 
+use Inhere\Exceptions\InvalidArgumentException;
+use Inhere\Exceptions\InvalidConfigException;
 use Inhere\Library\Collections\CollectionInterface;
 use Inhere\Library\Collections\SimpleCollection;
 use Inhere\Library\Helpers\Obj;
-use Inhere\Exceptions\InvalidArgumentException;
-use Inhere\Exceptions\InvalidConfigException;
 
 /**
  * Class User
  * @package Inhere\LibraryPlus\Auth
- *
  * @property int id
  */
 class User extends SimpleCollection

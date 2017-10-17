@@ -40,7 +40,7 @@ class Timer
 
         pcntl_alarm(1);
 
-        while(true) {
+        while (true) {
             pcntl_signal_dispatch();
             usleep(100000);
         }

@@ -177,10 +177,9 @@ abstract class AbstractLogger implements LoggerInterface
 
     /**
      * Adds a log record.
-     *
-     * @param  int     $level   The logging level
-     * @param  string  $message The log message
-     * @param  array   $context The log context
+     * @param  int $level The logging level
+     * @param  string $message The log message
+     * @param  array $context The log context
      * @return Boolean Whether the record has been processed
      */
     public function addRecord($level, $message, array $context = array())
@@ -194,12 +193,10 @@ abstract class AbstractLogger implements LoggerInterface
 
     /**
      * Adds a log record at an arbitrary level.
-     *
      * This method allows for compatibility with common interfaces.
-     *
-     * @param  int|string   $level   The log level
-     * @param  string  $message The log message
-     * @param  array   $context The log context
+     * @param  int|string $level The log level
+     * @param  string $message The log message
+     * @param  array $context The log context
      * @return Boolean Whether the record has been processed
      */
     public function log($level, $message, array $context = array())
@@ -306,7 +303,6 @@ abstract class AbstractLogger implements LoggerInterface
 
     /**
      * Pushes a handler on to the stack.
-     *
      * @param  HandlerInterface $handler
      * @return $this
      */
@@ -319,7 +315,6 @@ abstract class AbstractLogger implements LoggerInterface
 
     /**
      * Pops a handler from the stack
-     *
      * @return HandlerInterface
      */
     public function popHandler()
@@ -333,9 +328,7 @@ abstract class AbstractLogger implements LoggerInterface
 
     /**
      * Set handlers, replacing all existing ones.
-     *
      * If a map is passed, keys will be ignored.
-     *
      * @param  array $handlers
      * @return $this
      */
@@ -484,14 +477,13 @@ abstract class AbstractLogger implements LoggerInterface
 
     /**
      * Gets the name of the logging level.
-     *
-     * @param  int    $level
+     * @param  int $level
      * @return string
      */
     public static function getLevelName($level)
     {
         if (!isset(static::$levels[$level])) {
-            throw new \InvalidArgumentException('Level "'.$level.'" is not defined, use one of: '.implode(', ', array_keys(static::$levels)));
+            throw new \InvalidArgumentException('Level "' . $level . '" is not defined, use one of: ' . implode(', ', array_keys(static::$levels)));
         }
 
         return static::$levels[$level];
@@ -499,14 +491,13 @@ abstract class AbstractLogger implements LoggerInterface
 
     /**
      * Converts PSR-3 levels to Monolog ones if necessary
-     *
      * @param string|int Level number (monolog) or name (PSR-3)
      * @return int
      */
     public static function toNumberLevel($level)
     {
-        if (is_string($level) && defined(__CLASS__.'::'.strtoupper($level))) {
-            return constant(__CLASS__.'::'.strtoupper($level));
+        if (is_string($level) && defined(__CLASS__ . '::' . strtoupper($level))) {
+            return constant(__CLASS__ . '::' . strtoupper($level));
         }
 
         return $level;

@@ -60,7 +60,6 @@ class BDWeather
 
     /**
      * 天气查询_带历史7天和未来4天
-     *
      * @param string $cityName 城市名(中文) e.g. 北京
      * @param string $cityCode 天气预报城市代码(可通过cityInfo获取到) e.g. 101010100
      * @param string $apikey 百度apikey
@@ -90,7 +89,6 @@ class BDWeather
      *           telAreaCode: "010"     //电话区号
      *       }
      *   }
-     *
      * @param string $cityName 城市名(中文)  e.g. 北京
      * @param string $apikey 百度apikey
      * @return array

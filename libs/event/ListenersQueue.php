@@ -43,25 +43,25 @@ class ListenersQueue implements \IteratorAggregate, \Countable
 
     /**
      * 添加一个监听器, 增加了添加 callback(string|array)
-     * @param $listener \Closure|callback 监听器
+     * @param $listener \Closure|callable|\stdClass 监听器
      * @param $priority integer 优先级
      * @return $this
      */
     public function add($listener, $priority)
     {
-        if ( !$this->has($listener) ) {
+        if (!$this->has($listener)) {
             // Compute the internal priority as an array.计算内部优先级为一个数组。
-            $priority = array($priority, $this->counter--);
+            $priorityData = [$priority, $this->counter--];
 
             // a Callback(string|array)
-            if ( !is_object($listener) && is_callable($listener) ) {
+            if (!is_object($listener) && is_callable($listener)) {
                 $callback = $listener;
                 $listener = new \StdClass;
                 $listener->callback = $callback;
             }
 
-            $this->store->attach($listener, $priority);
-            $this->queue->insert($listener, $priority);
+            $this->store->attach($listener, $priorityData);
+            $this->queue->insert($listener, $priorityData);
         }
 
         return $this;
@@ -80,10 +80,10 @@ class ListenersQueue implements \IteratorAggregate, \Countable
 
             $queue = new \SplPriorityQueue();
 
-            foreach ($this->store as $listener) {
+            foreach ($this->store as $oListener) {
                 // 优先级
                 $priority = $this->store->getInfo();
-                $queue->insert($listener, $priority);
+                $queue->insert($oListener, $priority);
             }
 
             $this->queue = $queue;
@@ -94,8 +94,8 @@ class ListenersQueue implements \IteratorAggregate, \Countable
 
     /**
      * Get the priority of the given listener. 得到指定监听器的优先级
-     * @param   mixed  $listener  The listener.
-     * @param   mixed  $default   The default value to return if the listener doesn't exist.
+     * @param   mixed $listener The listener.
+     * @param   mixed $default The default value to return if the listener doesn't exist.
      * @return  mixed  The listener priority if it exists, null otherwise.
      */
     public function getPriority($listener, $default = null)
@@ -120,7 +120,7 @@ class ListenersQueue implements \IteratorAggregate, \Countable
 
     /**
      * Get all listeners contained in this queue, sorted according to their priority.
-     * @return  object[]  An array of listeners.
+     * @return  array  An array of listeners.
      */
     public function getAll()
     {

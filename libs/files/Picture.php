@@ -13,21 +13,18 @@
  *       'height' => 60,
  *       'suffix' => '_120x60',
  *  ])->thumbnail($img);
- *
  *  if ($pic->hasError()) {
  *      return $res->write($pic->getError());
  *  }
- *
  *  $data = $pic->getResult();
- *
  */
 
 namespace Inhere\LibraryPlus\Files;
 
-use Inhere\Exceptions\InvalidArgumentException;
-use Inhere\Exceptions\InvalidConfigException;
 use Inhere\Exceptions\ExtensionMissException;
 use Inhere\Exceptions\FileSystemException;
+use Inhere\Exceptions\InvalidArgumentException;
+use Inhere\Exceptions\InvalidConfigException;
 use Inhere\Library\Files\Directory;
 
 /**
@@ -243,6 +240,7 @@ class Picture
 
         if (!Directory::create($outPath)) {
             $this->_error = 'Failed to create the output directory path!. OUT-PATH: ' . $outPath;
+
             return $this;
         }
 
@@ -347,6 +345,7 @@ class Picture
 
         if (!Directory::create($outPath)) {
             $this->_error = 'Failed to create the output directory path!. OUT-PATH: ' . $outPath;
+
             return $this;
         }
 
@@ -419,7 +418,7 @@ class Picture
         // 以二进制格式打开文件
         $fp = fopen($img, 'rb');
 
-        $mimeType = finfo_file(finfo_open(FILEINFO_MIME_TYPE),$img);
+        $mimeType = finfo_file(finfo_open(FILEINFO_MIME_TYPE), $img);
 
         // 发送合适的报头
         header("Content-Type: $mimeType");
@@ -509,7 +508,6 @@ class Picture
     }
 
     /**
-     *
      * 计算获得缩略图的尺寸信息
      * @param string $imgWidth 原图宽度
      * @param string $imgHeight 原图高度

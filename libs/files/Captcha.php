@@ -11,8 +11,8 @@
 
 namespace Inhere\LibraryPlus\Files;
 
-use Inhere\Exceptions\NotFoundException;
 use Inhere\Exceptions\ExtensionMissException;
+use Inhere\Exceptions\NotFoundException;
 
 /**
  * Class Captcha

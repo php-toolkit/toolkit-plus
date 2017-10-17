@@ -13,12 +13,9 @@ use Inhere\Library\Files\FileFinder;
 /**
  * Class Backup
  * @package Inhere\LibraryPlus\Files
- *
  * ```
  * $bk = new Backup;
- *
  * ```
- *
  */
 class Backup
 {

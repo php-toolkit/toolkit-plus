@@ -15,29 +15,27 @@ use Inhere\Library\Helpers\PhpHelper;
  * 服务端信息 Server
  * Class Server
  * @package Inhere\LibraryPlus\Env
- *
  * @property string path
  * @property string protocol
  * @property string signature
  * @property string addr
- * @property int    port
+ * @property int port
  * @property string name
  * @property string software
  * @property string documentRoot
  * @property string scriptFilename
  * @property string scriptName
  * @property string phpSelf
- *
  * @property string workDir
  * @property string entry
  * @property string root
- * @property int    isCli
- * @property int    isWeb
+ * @property int isCli
+ * @property int isWeb
  * @property string uname
  * @property string os
- * @property int    isWin
- * @property int    isLinux
- * @property int    isUnix
+ * @property int isWin
+ * @property int isLinux
+ * @property int isUnix
  */
 class Server extends AbstractEnv
 {
@@ -51,37 +49,37 @@ class Server extends AbstractEnv
         // 'scheme' => 'REQUEST_SCHEME',
 
         // $_SERVER['PATH']
-        'path'           => 'PATH',
+        'path' => 'PATH',
 
         // $_SERVER['SERVER_PROTOCOL'] 协议 e.g. HTTP/1.1
-        'protocol'       => 'SERVER_PROTOCOL',
+        'protocol' => 'SERVER_PROTOCOL',
 
         // $_SERVER['SERVER_SIGNATURE'] 签名
-        'signature'      => 'SERVER_SIGNATURE',
+        'signature' => 'SERVER_SIGNATURE',
 
         // $_SERVER['SERVER_ADDR']
-        'addr'           => 'SERVER_ADDR',
+        'addr' => 'SERVER_ADDR',
 
         // $_SERVER['SERVER_PORT']
-        'port'           => 'SERVER_PORT',
+        'port' => 'SERVER_PORT',
 
         // $_SERVER['SERVER_NAME']
-        'name'           => 'SERVER_NAME',
+        'name' => 'SERVER_NAME',
 
         // $_SERVER['SERVER_SOFTWARE']
-        'software'       => 'SERVER_SOFTWARE',
+        'software' => 'SERVER_SOFTWARE',
 
         // $_SERVER['DOCUMENT_ROOT']
-        'documentRoot'   => 'DOCUMENT_ROOT',
+        'documentRoot' => 'DOCUMENT_ROOT',
 
         // $_SERVER['SCRIPT_FILENAME']
         'scriptFilename' => 'SCRIPT_FILENAME',
 
         // $_SERVER['SCRIPT_NAME']
-        'scriptName'     => 'SCRIPT_NAME',
+        'scriptName' => 'SCRIPT_NAME',
 
         // $_SERVER['PHP_SELF']
-        'phpSelf'        => 'PHP_SELF',
+        'phpSelf' => 'PHP_SELF',
     ];
 
     public function init()
@@ -94,18 +92,18 @@ class Server extends AbstractEnv
 
         $this->sets([
             'workDir' => getcwd(),
-            'entry'   => $this->getEntry(),
-            'root'    => $this->getRoot(),
+            'entry' => $this->getEntry(),
+            'root' => $this->getRoot(),
 
-            'isCli'   => PhpHelper::isCli(),
-            'isWeb'   => PhpHelper::isWeb(),
+            'isCli' => PhpHelper::isCli(),
+            'isWeb' => PhpHelper::isWeb(),
 
-             // operate system
-            'os'   => PHP_OS,
-            'osShort'      => strtoupper(substr(PHP_OS, 0, 3)),
-            'isUnix'  => $this->isUnix(),
-        ])->set('isWin',   $this->get('osShort') === 'Win')
-          ->set('isLinux', $this->get('osShort') === 'Lin');
+            // operate system
+            'os' => PHP_OS,
+            'osShort' => strtoupper(substr(PHP_OS, 0, 3)),
+            'isUnix' => $this->isUnix(),
+        ])->set('isWin', $this->get('osShort') === 'Win')
+            ->set('isLinux', $this->get('osShort') === 'Lin');
     }
 
     /**
@@ -126,7 +124,7 @@ class Server extends AbstractEnv
 
         $file = rtrim($file, '.' . DIRECTORY_SEPARATOR);
 
-        if ($full && $this->get('isCli') ) {
+        if ($full && $this->get('isCli')) {
             $file = $wDir . DIRECTORY_SEPARATOR . $file;
         }
 
@@ -169,13 +167,13 @@ class Server extends AbstractEnv
 
     /**
      * check url string
-     * @param  string  $str
+     * @param  string $str
      * @return boolean
      */
     public function isUrl($str)
     {
         $rule = '/^(http|https|ftp):\/\/([A-Z0-9][A-Z0-9_-]*(?:\.[A-Z0-9][A-Z0-9_-]*)+):?(\d+)?\/?/i';
 
-        return preg_match($rule,trim($str))===1;
+        return preg_match($rule, trim($str)) === 1;
     }
 }// end class Server

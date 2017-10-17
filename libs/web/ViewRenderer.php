@@ -29,7 +29,7 @@ class ViewRenderer
      */
     protected $attributes;
 
-    /** @var string  */
+    /** @var string */
     protected $suffix = 'php';
 
     /**
@@ -266,7 +266,7 @@ class ViewRenderer
     {
         $ext = ".{$this->suffix}";
 
-        return substr($view, - strlen($ext)) === $ext ? $view : $view . $ext;
+        return substr($view, -strlen($ext)) === $ext ? $view : $view . $ext;
     }
 
     /**

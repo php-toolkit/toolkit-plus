@@ -15,7 +15,6 @@ use Inhere\LibraryPlus\Task\Base;
 
 /**
  * Class Server - task server
- *
  * @package Inhere\LibraryPlus\Task\Server
  */
 class Server extends Base
@@ -29,7 +28,7 @@ class Server extends Base
         'name' => '',
         'daemon' => false,
 
-        'server'    => '0.0.0.0:9998',
+        'server' => '0.0.0.0:9998',
         'serverType' => 'udp',
 
         // the master process pid save file
@@ -170,6 +169,7 @@ class Server extends Base
         if (!$socket) {
             $this->log("$errStr ($errNo)", ProcessLogger::ERROR);
             $this->stopWork();
+
             return -50;
         }
 
@@ -204,7 +204,7 @@ class Server extends Base
         $data = '';
 
         // push data
-        if (strpos($pkt,' ')) {
+        if (strpos($pkt, ' ')) {
             // return 'ERR data format error';
             list($cmd, $data) = explode(' ', $pkt, 2);
         }
@@ -223,7 +223,7 @@ class Server extends Base
                 break;
 
             default:
-                $ret = 'ERR unsupported command ['. $cmd . ']';
+                $ret = 'ERR unsupported command [' . $cmd . ']';
                 break;
         }
 

@@ -11,9 +11,7 @@ namespace Inhere\LibraryPlus\Event;
 /**
  * Class ClassEvent
  *  the Class Level Event
- *
  * @reference yii2 Event
- *
  * @package Inhere\LibraryPlus\Event
  */
 class ObjectEvent

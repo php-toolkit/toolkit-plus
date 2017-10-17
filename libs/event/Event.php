@@ -16,7 +16,7 @@ use Inhere\Library\StdObject;
  * Class Event
  * @package Inhere\LibraryPlus\Event
  */
-class Event extends StdObject implements InterfaceEvent, \ArrayAccess, \Serializable,\Countable
+class Event extends StdObject implements InterfaceEvent, \ArrayAccess, \Serializable, \Countable
 {
     /**
      * @var string 当前的事件名称
@@ -36,12 +36,12 @@ class Event extends StdObject implements InterfaceEvent, \ArrayAccess, \Serializ
     protected $stopped = false;
 
     /**
-     * @param $name
+     * @param string $name
      * @param array $arguments
      */
     public function __construct($name, array $arguments = [])
     {
-        $this->name      = trim($name);
+        $this->name = trim($name);
         $this->arguments = $arguments;
 
         parent::__construct();
@@ -124,7 +124,7 @@ class Event extends StdObject implements InterfaceEvent, \ArrayAccess, \Serializ
      */
     public function setArgument($name, $value)
     {
-        if (is_null($name)) {
+        if (null === $name) {
             throw new \InvalidArgumentException('The argument name cannot be null.');
         }
 
@@ -138,9 +138,9 @@ class Event extends StdObject implements InterfaceEvent, \ArrayAccess, \Serializ
      * @param null $default
      * @return null
      */
-    public function getArgument($name, $default=null)
+    public function getArgument($name, $default = null)
     {
-        return isset($this->arguments[$name]) ? $this->arguments[$name] : $default;
+        return $this->arguments[$name] ?? $default;
     }
 
     /**
@@ -157,7 +157,7 @@ class Event extends StdObject implements InterfaceEvent, \ArrayAccess, \Serializ
      */
     public function removeArgument($name)
     {
-        if ( isset($this->arguments[$name])) {
+        if (isset($this->arguments[$name])) {
             unset($this->arguments[$name]);
         }
     }
@@ -167,7 +167,7 @@ class Event extends StdObject implements InterfaceEvent, \ArrayAccess, \Serializ
      */
     public function isStopped()
     {
-        return (bool) $this->stopped;
+        return (bool)$this->stopped;
     }
 
     /**
@@ -175,7 +175,7 @@ class Event extends StdObject implements InterfaceEvent, \ArrayAccess, \Serializ
      */
     public function setStopped($value)
     {
-        $this->stopped = (bool) $value;
+        $this->stopped = (bool)$value;
     }
 
     /**
@@ -196,17 +196,17 @@ class Event extends StdObject implements InterfaceEvent, \ArrayAccess, \Serializ
 
     /**
      * Unserialize the event.
-     * @param   string  $serialized  The serialized event.
+     * @param   string $serialized The serialized event.
      * @return  void
      */
     public function unserialize($serialized)
     {
-        list($this->name, $this->arguments, $this->stopped) = unserialize($serialized);
+        list($this->name, $this->arguments, $this->stopped) = unserialize($serialized, []);
     }
 
     /**
      * Tell if the given event argument exists.
-     * @param   string  $name  The argument name.
+     * @param   string $name The argument name.
      * @return  boolean  True if it exists, false otherwise.
      */
     public function offsetExists($name)
@@ -216,7 +216,7 @@ class Event extends StdObject implements InterfaceEvent, \ArrayAccess, \Serializ
 
     /**
      * Get an event argument value.
-     * @param   string  $name  The argument name.
+     * @param   string $name The argument name.
      * @return  mixed  The argument value or null if not existing.
      */
     public function offsetGet($name)
@@ -226,8 +226,8 @@ class Event extends StdObject implements InterfaceEvent, \ArrayAccess, \Serializ
 
     /**
      * Set the value of an event argument.
-     * @param   string  $name   The argument name.
-     * @param   mixed   $value  The argument value.
+     * @param   string $name The argument name.
+     * @param   mixed $value The argument value.
      * @return  void
      */
     public function offsetSet($name, $value)
@@ -237,7 +237,7 @@ class Event extends StdObject implements InterfaceEvent, \ArrayAccess, \Serializ
 
     /**
      * Remove an event argument.
-     * @param   string  $name  The argument name.
+     * @param   string $name The argument name.
      * @return  void
      */
     public function offsetUnset($name)
@@ -258,7 +258,7 @@ class Event extends StdObject implements InterfaceEvent, \ArrayAccess, \Serializ
      */
     public function __get($name)
     {
-        if ( isset($this->arguments[$name]) ) {
+        if (isset($this->arguments[$name])) {
             return $this->arguments[$name];
         }
 
@@ -270,7 +270,7 @@ class Event extends StdObject implements InterfaceEvent, \ArrayAccess, \Serializ
      */
     public function __set($name, $value)
     {
-        if ( isset($this->arguments[$name]) ) {
+        if (isset($this->arguments[$name])) {
             $this->setArgument($name, $value);
         } else {
             parent::__set($name, $value);

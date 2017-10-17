@@ -35,13 +35,11 @@ class Dispatcher extends StdObject implements InterfaceDispatcher
 
     /**
      * @explain :
-     *
      * 1. 事件名(eventName) 和 相关参数存储到 实现 EventInterface 的实例(e.g. Event)中
      * 2. 事件名(eventName) 和 对应的 监听器实例(e.g. XxListener)或者匿名函数(\Closure) 存储到 ListenersQueue
      *  - 监听器实例(XxListener) 中有对应 事件名的(eventName) 方法
      *  - 触发事件时 会调用监听器中的 对应事件方法，参数为 对应的事件实例(Event)[可在其中得到对应的相关参数...]
      *  - 一个事件可以添加多个 监听器，并可以设置优先级；同样一个监听器也能添加到 多个 事件中
-     *
      */
 
 /////////////////////////////////////////////// Event ///////////////////////////////////////////////
@@ -54,14 +52,14 @@ class Dispatcher extends StdObject implements InterfaceDispatcher
      */
     public function addEvent($event, array $args = [])
     {
-        if ( is_string($event) ) {
-            $event = new Event(trim($event), $args );
+        if (is_string($event)) {
+            $event = new Event(trim($event), $args);
         }
 
         /**
          * @var $event Event
          */
-        if ( ($event instanceof InterfaceEvent) && !isset($this->_events[$event->name])) {
+        if (($event instanceof InterfaceEvent) && !isset($this->_events[$event->name])) {
             $this->_events[$event->name] = $event;
         }
 
@@ -70,32 +68,38 @@ class Dispatcher extends StdObject implements InterfaceDispatcher
 
     /**
      * 设定一个事件处理
-     * @param $event InterfaceEvent
+     * @param string|InterfaceEvent $event
      * @param array $args
      * @return $this
      */
     public function setEvent($event, array $args = [])
     {
-        if ( is_string($event) ) {
-            $event = new Event(trim($event), $args );
+        if (is_string($event)) {
+            $event = new Event(trim($event), $args);
         }
 
-        /**
-         * @var $event Event
-         */
-        if ( $event instanceof InterfaceEvent ) {
+        /**  @var $event Event */
+        if ($event instanceof InterfaceEvent) {
             $this->_events[$event->name] = $event;
         }
 
         return $this;
     }
 
-    public function getEvent($name, $default=null)
+    /**
+     * @param $name
+     * @param null $default
+     * @return mixed|null
+     */
+    public function getEvent($name, $default = null)
     {
-        return isset($this->_events[$name]) ? $this->_events[$name] : $default;
+        return $this->_events[$name] ?? $default;
     }
 
-
+    /**
+     * @param $event
+     * @return $this
+     */
     public function removeEvent($event)
     {
         if ($event instanceof InterfaceEvent) {
@@ -142,7 +146,7 @@ class Dispatcher extends StdObject implements InterfaceDispatcher
     /**
      * @param $events
      */
-    public function setEvents($events)
+    public function setEvents(array $events)
     {
         foreach ($events as $key => $event) {
             $this->setEvent($event);
@@ -175,7 +179,7 @@ class Dispatcher extends StdObject implements InterfaceDispatcher
      * OR
      *     $definition = 1 // The priority of the listener 监听器的优先级
      */
-    public function addListener($listener, $definition = [])
+    public function addListener($listener, $definition = null)
     {
         if (!is_object($listener)) {
             throw new \InvalidArgumentException('The given listener must is an object or a Closure.');
@@ -187,13 +191,13 @@ class Dispatcher extends StdObject implements InterfaceDispatcher
             $defaultLevel = (int)$definition;
             $definition = null;
         } elseif (is_string($definition)) { // 仅是个 事件名称
-            $definition = [ $definition => $defaultLevel];
-        } elseif ( $definition instanceof Event) { // 仅是个 事件对象,取出名称
-            $definition = [ $definition->getName() => $defaultLevel];
+            $definition = [$definition => $defaultLevel];
+        } elseif ($definition instanceof Event) { // 仅是个 事件对象,取出名称
+            $definition = [$definition->getName() => $defaultLevel];
         }
 
         // 1. is a Closure or callback(String|Array)
-        if ( is_callable($listener) ) {
+        if (is_callable($listener)) {
             if (!$definition) {
                 // 设置要将监听器关联到什么事件?
                 throw new \InvalidArgumentException('Please set the listener to events associated with?');
@@ -203,7 +207,7 @@ class Dispatcher extends StdObject implements InterfaceDispatcher
             foreach ($definition as $eventName => $level) {
                 $eventName = trim($eventName);
 
-                if ( !isset($this->_listeners[$eventName]) ) {
+                if (!isset($this->_listeners[$eventName])) {
                     $this->_listeners[$eventName] = new ListenersQueue;
                 }
 
@@ -228,11 +232,11 @@ class Dispatcher extends StdObject implements InterfaceDispatcher
 
         // 循环: 将 监听器 关联到 各个事件
         foreach ($eventNames as $name) {
-            if ( !isset($this->_listeners[$name]) ) {
+            if (!isset($this->_listeners[$name])) {
                 $this->_listeners[$name] = new ListenersQueue;
             }
 
-            $level = isset($definition[$name]) ? $definition[$name]: $defaultLevel;
+            $level = $definition[$name] ?? $defaultLevel;
 
             $this->_listeners[$name]->add($listener, (int)$level);
         }
@@ -242,7 +246,7 @@ class Dispatcher extends StdObject implements InterfaceDispatcher
 
     /**
      * 是否存在 对事件的 监听队列
-     * @param  InterfaceEvent|string  $event
+     * @param  InterfaceEvent|string $event
      * @return boolean
      */
     public function hasListenerQueue($event)
@@ -256,7 +260,7 @@ class Dispatcher extends StdObject implements InterfaceDispatcher
 
     /**
      * @see self::hasListenerQueue() alias method
-     * @param  InterfaceEvent|string  $event
+     * @param  InterfaceEvent|string $event
      * @return boolean
      */
     public function hasListeners($event)
@@ -284,7 +288,7 @@ class Dispatcher extends StdObject implements InterfaceDispatcher
 
         } else {
             foreach ($this->_listeners as $queue) {
-                if ( $queue->has($listener) ) {
+                if ($queue->has($listener)) {
                     return true;
                 }
             }
@@ -354,7 +358,7 @@ class Dispatcher extends StdObject implements InterfaceDispatcher
      * 否则，则移除对事件 $event 的监听者
      * @return $this
      */
-    public function removeListener($listener, $event=null)
+    public function removeListener($listener, $event = null)
     {
         if ($event) {
             if ($event instanceof InterfaceEvent) {
@@ -383,7 +387,7 @@ class Dispatcher extends StdObject implements InterfaceDispatcher
      * @param  null|string|InterfaceEvent $event
      * @return self
      */
-    public function clearListeners($event=null)
+    public function clearListeners($event = null)
     {
         if ($event) {
             if ($event instanceof InterfaceEvent) {
@@ -402,7 +406,7 @@ class Dispatcher extends StdObject implements InterfaceDispatcher
         return $this;
     }
 
-    public function removeListeners($event=null)
+    public function removeListeners($event = null)
     {
         return $this->clearListeners($event);
     }
@@ -412,10 +416,10 @@ class Dispatcher extends StdObject implements InterfaceDispatcher
      * @param array $args
      * @return bool|mixed
      */
-    public function triggerEvent($event, array $args=[])
+    public function triggerEvent($event, array $args = [])
     {
-        if ( !($event instanceof InterfaceEvent) ) {
-            if ( isset($this->_events[$event]) ) {
+        if (!($event instanceof InterfaceEvent)) {
+            if (isset($this->_events[$event])) {
                 $event = $this->_events[$event];
             } else {
                 $event = new Event($event);
@@ -425,7 +429,7 @@ class Dispatcher extends StdObject implements InterfaceDispatcher
         $arguments = array_merge($event->getArguments(), $args);
         $event->setArguments($arguments);
 
-        if ( isset($this->_listeners[$event->name]) ) {
+        if (isset($this->_listeners[$event->name])) {
 
             // 循环调用监听器，处理事件
             foreach ($this->_listeners[$event->name] as $listener) {
@@ -436,9 +440,9 @@ class Dispatcher extends StdObject implements InterfaceDispatcher
                 /**
                  * @var callable|\Closure|Callback $listener
                  */
-                if ( $listener instanceof \StdClass ) {
+                if ($listener instanceof \StdClass) {
                     call_user_func($listener->callback, $event);
-                } elseif ( is_callable($listener) ) {
+                } elseif (is_callable($listener)) {
                     $listener($event);
                 } else {
                     $listener->{$event->name}($event);
@@ -449,7 +453,7 @@ class Dispatcher extends StdObject implements InterfaceDispatcher
         return $event;
     }
 
-    public function trigger($event, array $args=[])
+    public function trigger($event, array $args = [])
     {
         return $this->triggerEvent($event, $args);
     }

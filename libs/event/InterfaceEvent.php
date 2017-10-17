@@ -11,7 +11,6 @@ namespace Inhere\LibraryPlus\Event;
 /**
  * Interface InterfaceEvent
  * @package Inhere\LibraryPlus\Event
- *
  * @property string $name
  */
 interface InterfaceEvent

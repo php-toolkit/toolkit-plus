@@ -13,10 +13,7 @@
  *     'total'     => $total
  * ];
  * $paging    = new \Inhere\Library\html\Paging($params);
- *
  * $pagingString = $paging->useStyle()->toString();
- *
- *
  */
 
 namespace Inhere\LibraryPlus\Html;

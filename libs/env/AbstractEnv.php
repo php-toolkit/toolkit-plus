@@ -26,7 +26,7 @@ abstract class AbstractEnv extends SimpleCollection
      * 初始化信息
      * @param array $data
      */
-    public function __construct(array $data=[])
+    public function __construct(array $data = [])
     {
         parent::__construct($data);
 
@@ -38,5 +38,6 @@ abstract class AbstractEnv extends SimpleCollection
     }
 
     public function init()
-    {}
+    {
+    }
 }

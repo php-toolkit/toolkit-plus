@@ -13,7 +13,6 @@ use Inhere\Library\process\ProcessUtil;
 /**
  * Class ProcessControlTrait
  * @package Inhere\LibraryPlus\Task
- *
  */
 trait ProcessControlTrait
 {
@@ -39,7 +38,7 @@ trait ProcessControlTrait
      */
     protected $stat = [
         'startTime' => 0,
-        'stopTime'  => 0,
+        'stopTime' => 0,
         'startTimes' => 0,
     ];
 

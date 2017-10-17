@@ -33,7 +33,6 @@ class BDApi
 
     /**
      * 手机号码归属地的查询，获取号码在的省份以及对应的运营商
-     *
      * API JSON返回示例 :
      *   {
      *       errNum: 0,
@@ -57,7 +56,6 @@ class BDApi
 
     /**
      * 查询手机号的归属地信息
-     *
      * api JSON返回示例 :
      *   {
      *       "errNum": 0,
@@ -102,7 +100,6 @@ class BDApi
 
     /**
      * 提供彩票最新开奖、历史开奖结果查询
-     *
      * @param string $lotteryCode 彩票编号，通过彩票种类查询接口可获得
      * @param string $apikey 百度apikey
      * @param int $recordcnt 记录条数，范围为1~20

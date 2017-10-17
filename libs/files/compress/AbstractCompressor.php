@@ -10,7 +10,6 @@ namespace Inhere\LibraryPlus\Files\Compress;
 
 use Inhere\Exceptions\InvalidArgumentException;
 use Inhere\Library\Files\FileFinder;
-use Inhere\Library\Helpers\ObjectHelper;
 use Inhere\Library\StdObject;
 
 /**

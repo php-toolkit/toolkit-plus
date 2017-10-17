@@ -9,7 +9,6 @@
  * $down = new Download($file,$as);
  * 或
  * $down = new Download();
- *
  */
 
 namespace Inhere\LibraryPlus\Files;
@@ -241,7 +240,7 @@ class Download
         header('Content-Encoding: none');
         // HTTP头信息: 如果为attachment, 则告诉浏览器, 在访问时弹出”文件下载”对话框, 并指定保存时文件的默认名称(可以与服务器的文件名不同)
         // 如果要让浏览器直接显示内容, 则要指定为inline, 如图片, 文本
-        header('Content-Disposition: ' . $attachment . '; filename="' . $as. '"');
+        header('Content-Disposition: ' . $attachment . '; filename="' . $as . '"');
 
         // 打开文件(二进制只读模式)
 //        $fp = fopen($file, 'rb');

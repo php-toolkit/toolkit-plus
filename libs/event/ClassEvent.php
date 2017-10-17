@@ -11,9 +11,7 @@ namespace Inhere\LibraryPlus\Event;
 /**
  * Class ClassEvent
  *  the Class Level Event
- *
  * @reference yii2 Event
- *
  * @package Inhere\LibraryPlus\Event
  */
 class ClassEvent
@@ -29,7 +27,7 @@ class ClassEvent
 
     /**
      * register a event handler
-     * @param string|object $class
+     * @param string|mixed $class
      * @param $event
      * @param callable $handler
      */
@@ -120,11 +118,7 @@ class ClassEvent
      */
     public static function isSupportedEvent($event)
     {
-        if (!$event || !preg_match('/[a-zA-z][\w-]+/', $event)) {
-            return false;
-        }
-
-        return true;
+        return $event && preg_match('/[a-zA-z][\w-]+/', $event);
     }
 
     /**

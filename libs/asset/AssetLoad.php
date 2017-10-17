@@ -16,22 +16,18 @@ use Inhere\Exceptions\NotFoundException;
 use Inhere\Library\Files\Directory;
 use Inhere\Library\Files\File;
 use Inhere\Library\Helpers\UrlHelper;
-use Inhere\LibraryPlus\Html\Html;
 use Inhere\Library\StdObject;
+use Inhere\LibraryPlus\Html\Html;
 use MatthiasMullie\Minify;
 
 /**
  * Class AssetLoad
  * @package Inhere\Library\asset
- *
  * usage (in template file):
- *
  * <?php
- *
  * echo AssetLoad::css([
  *  'xx/zz.css',
  * ])->dump();
- *
  */
 class AssetLoad extends StdObject
 {
@@ -146,9 +142,7 @@ class AssetLoad extends StdObject
     }
 
     /**
-     *
      * @param string|array $assets 要加载的资源
-     *
      * 1. $assets = 'file path' 加载一个文件
      * 2. $assets = 'a,b,c' 加载 a,b,c 多个文件
      * 3. 直接使用数组配置
@@ -159,7 +153,6 @@ class AssetLoad extends StdObject
      *        'file4',
      *         ...
      *   ]
-     *
      * @param string $assetType 资源文件类型 css js
      * @return $this
      * @throws InvalidArgumentException
@@ -486,10 +479,8 @@ class AssetLoad extends StdObject
 
     /**
      * get base path
-     *
      * maybe path use alias. (e.g. like '@app' --> '/xx/yy/app')
      * you can define
-     *
      * $this->resolvePath = function($path) {
      *   if ( $path{0} ==='@' ) {
      *       // some handle logic ... ...
@@ -497,7 +488,6 @@ class AssetLoad extends StdObject
      *   }
      *   return $path;
      * }
-     *
      * @return string
      */
     public function getBasePath()

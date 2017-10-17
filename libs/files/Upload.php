@@ -289,11 +289,13 @@ class Upload
 
         if (!$this->_makeDir($dir)) {
             $this->error = "目录创建失败或者不可写. DIR: [$dir]";
+
             return false;
         }
 
         if (!move_uploaded_file($file['tmp_name'], $targetFile)) {
             $this->error = '移动上传文件失败！';
+
             return false;
         }
 
@@ -307,13 +309,10 @@ class Upload
      * @param array $file 上传文件信息数组
      * @param string $targetDir 目标目录
      * @param \Closure $nameHandler 使用闭包回调自定义存储文件的命名
-     *
      * e.g:
-     *
      * $nameHandler = function ($fileInfo) {
      *      return date('Ymd'). '.' . $file['ext'];
      * };
-     *
      * @return bool|array
      */
     private function moveToDir(array $file, $targetDir = '', \Closure $nameHandler = null)
@@ -329,11 +328,13 @@ class Upload
 
         if (!$this->_makeDir($dir)) {
             $this->error = "目录创建失败或者不可写.[$dir]";
+
             return false;
         }
 
         if (!move_uploaded_file($file['tmp_name'], $filePath)) {
             $this->error = '移动上传文件失败！';
+
             return false;
         }
 

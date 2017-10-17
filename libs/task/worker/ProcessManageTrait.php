@@ -16,7 +16,6 @@ use Inhere\Library\queue\QueueInterface;
 /**
  * Class ProcessManageTrait
  * @package Inhere\LibraryPlus\Task\Worker
- *
  * @property QueueInterface $queue
  */
 trait ProcessManageTrait
@@ -84,7 +83,7 @@ trait ProcessManageTrait
      */
     protected function startWorker($tasks, $id, $first = true)
     {
-        return ProcessUtil::fork($id, function ($id, $pid) use($first) {
+        return ProcessUtil::fork($id, function ($id, $pid) use ($first) {
             $this->runWorker($id, $pid);
         });
     }
@@ -121,7 +120,7 @@ trait ProcessManageTrait
         while (!$this->stopWork) {
             $this->dispatchSignals();
 
-            if($data = $queue->pop()) {
+            if ($data = $queue->pop()) {
                 $this->log("read queue workerId=$this->id data=$data", ProcessLogger::WORKER_INFO);
                 $this->handleTask($data);
             } elseif ($err = $queue->getErrMsg()) {
@@ -250,6 +249,7 @@ trait ProcessManageTrait
     {
         if (!$this->workers) {
             $this->log('No child process(worker) need to stop', ProcessLogger::PROC_INFO);
+
             return false;
         }
 
