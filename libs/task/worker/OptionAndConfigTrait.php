@@ -8,7 +8,7 @@
 
 namespace Inhere\LibraryPlus\Task\Worker;
 
-use Inhere\Library\Helpers\CliHelper;
+use Inhere\Library\Helpers\Cli;
 
 /**
  * Class OptionAndConfigTrait
@@ -68,7 +68,7 @@ trait OptionAndConfigTrait
      */
     protected function parseCliOptions()
     {
-        $result = CliHelper::parseOptArgs([
+        $result = Cli::parseOptArgs([
             'd', 'daemon', 'w', 'watch', 'h', 'help', 'V', 'version', 'no-test', 'watch-status'
         ]);
         $this->fullScript = implode(' ', $GLOBALS['argv']);

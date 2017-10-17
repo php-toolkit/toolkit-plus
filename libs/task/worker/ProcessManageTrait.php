@@ -8,7 +8,7 @@
 
 namespace Inhere\LibraryPlus\Task\Worker;
 
-use Inhere\Library\Helpers\CliHelper;
+use Inhere\Library\Helpers\Cli;
 use Inhere\Library\process\ProcessLogger;
 use Inhere\Library\process\ProcessUtil;
 use Inhere\Library\queue\QueueInterface;
@@ -215,7 +215,7 @@ trait ProcessManageTrait
         ProcessUtil::killAndWait($pid, SIGTERM, 'manager');
 
         // stop success
-        $this->stdout(sprintf("\n%s\n"), CliHelper::color("The manager process stopped", CliHelper::FG_GREEN));
+        $this->stdout(sprintf("\n%s\n"), Cli::color("The manager process stopped", Cli::FG_GREEN));
 
         if ($quit) {
             $this->quit();

@@ -9,7 +9,7 @@
 namespace Inhere\LibraryPlus\Log;
 
 use Inhere\Library\Files\Directory;
-use Inhere\Library\Helpers\CliHelper;
+use Inhere\Library\Helpers\Cli;
 use Inhere\Library\Helpers\FormatHelper;
 
 /**
@@ -178,7 +178,7 @@ class ProcessLogger implements ProcessLogInterface
 
         if ($this->fileHandle) {
             $this->count++;
-            $this->cache[] = CliHelper::clearColor($logString);
+            $this->cache[] = Cli::clearColor($logString);
 
             if ($this->count >= $this->logThreshold || $this->fileIsChanged()) {
                 $this->flush();
@@ -332,7 +332,7 @@ class ProcessLogger implements ProcessLogInterface
      */
     protected function stdout($text, $nl = true, $quit = false)
     {
-        CliHelper::stdout($text, $nl, $quit);
+        Cli::stdout($text, $nl, $quit);
     }
 
     /**
@@ -343,7 +343,7 @@ class ProcessLogger implements ProcessLogInterface
      */
     protected function stderr($text, $nl = true, $quit = -200)
     {
-        CliHelper::stderr($text, $nl, $quit);
+        Cli::stderr($text, $nl, $quit);
     }
 
     /**

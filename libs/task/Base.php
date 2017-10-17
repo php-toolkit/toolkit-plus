@@ -8,7 +8,7 @@
 
 namespace Inhere\LibraryPlus\Task;
 
-use Inhere\Library\Helpers\CliHelper;
+use Inhere\Library\Helpers\Cli;
 use Inhere\Library\process\ProcessLogger;
 use Inhere\Library\queue\QueueInterface;
 use Inhere\Library\Traits\ConfigTrait;
@@ -92,7 +92,7 @@ abstract class Base
      */
     protected function stdout($text, $nl = true, $quit = false)
     {
-        CliHelper::stdout($text, $nl, $quit);
+        Cli::stdout($text, $nl, $quit);
     }
 
     /**
@@ -103,7 +103,7 @@ abstract class Base
      */
     protected function stderr($text, $nl = true, $quit = -200)
     {
-        CliHelper::stderr($text, $nl, $quit);
+        Cli::stderr($text, $nl, $quit);
     }
 
     /**

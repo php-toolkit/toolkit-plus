@@ -2,7 +2,7 @@
 
 namespace Inhere\LibraryPlus\Task\Worker;
 
-use Inhere\Library\Helpers\CliHelper;
+use Inhere\Library\Helpers\Cli;
 use Inhere\Library\Helpers\PhpHelper;
 use Inhere\Library\process\ProcessLogger;
 use Inhere\Library\queue\QueueFactory;
@@ -236,7 +236,7 @@ class Manager extends Base
      */
     protected function showVersion()
     {
-        printf("Gearman worker manager script tool. Version %s\n", CliHelper::color(self::VERSION, 'green'));
+        printf("Gearman worker manager script tool. Version %s\n", Cli::color(self::VERSION, 'green'));
 
         $this->quit();
     }
@@ -248,16 +248,16 @@ class Manager extends Base
      */
     protected function showHelp($msg = '', $code = 0)
     {
-        $usage = CliHelper::color('USAGE:', 'brown');
-        $commands = CliHelper::color('COMMANDS:', 'brown');
-        $sOptions = CliHelper::color('SPECIAL OPTIONS:', 'brown');
-        $pOptions = CliHelper::color('PUBLIC OPTIONS:', 'brown');
-        $version = CliHelper::color(self::VERSION, 'green');
+        $usage = Cli::color('USAGE:', 'brown');
+        $commands = Cli::color('COMMANDS:', 'brown');
+        $sOptions = Cli::color('SPECIAL OPTIONS:', 'brown');
+        $pOptions = Cli::color('PUBLIC OPTIONS:', 'brown');
+        $version = Cli::color(self::VERSION, 'green');
         $script = $this->getScript();
 
         if ($msg) {
             $code = $code ?: self::CODE_UNKNOWN_ERROR;
-            echo CliHelper::color('ERROR:', 'light_red') . "\n  " . wordwrap($msg, 108, "\n  ") . "\n\n";
+            echo Cli::color('ERROR:', 'light_red') . "\n  " . wordwrap($msg, 108, "\n  ") . "\n\n";
         }
 
         echo <<<EOF
