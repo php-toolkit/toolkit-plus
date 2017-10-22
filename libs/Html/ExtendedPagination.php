@@ -22,7 +22,7 @@ namespace Inhere\LibraryPlus\Html;
  * Class Paging
  * @package Inhere\LibraryPlus\Html
  */
-class Paging extends PagingBase
+class ExtendedPagination extends Pagination
 {
     /**
      * @var array
@@ -231,7 +231,7 @@ class Paging extends PagingBase
         onchange="javascript:location.href=\'' . $this->getUrl() . '\'+this.value;">';
 
         for ($i = 1; $i <= $this->pageTotal; $i++) {
-            $select .= ($page == $i) ?
+            $select .= ($page === $i) ?
                 '<option value="' . $i . '" selected="selected"">' . $i . '</option>' :
                 '<option value="' . $i . '" >' . $i . '</option>';
         }
@@ -279,9 +279,9 @@ class Paging extends PagingBase
     }
 
     // 添加 a 的外部元素 li
-    private function hasListElement($ele, $attrs = [])
+    private function hasListElement($ele, array $attrs = [])
     {
-        if ($this->elements['list']['tag'] != '') {
+        if ($this->elements['list']['tag'] !== '') {
             $listEle = $this->elements['list']['tag'];
 
             return Html::tag($listEle, $ele, $attrs);

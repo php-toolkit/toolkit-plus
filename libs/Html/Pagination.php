@@ -11,10 +11,10 @@ namespace Inhere\LibraryPlus\Html;
 use Inhere\Exceptions\InvalidConfigException;
 
 /**
- * Class PagingBase
+ * Class Pagination
  * @package Inhere\LibraryPlus\Html
  */
-class PagingBase
+class Pagination
 {
     /**
      * 总的页数
