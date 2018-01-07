@@ -14,7 +14,7 @@ use Inhere\Library\Helpers\FormatHelper;
 
 /**
  * Class ProcessLogger
- * @package inhere\process
+ * @package Inhere\process
  */
 class ProcessLogger implements ProcessLogInterface
 {
