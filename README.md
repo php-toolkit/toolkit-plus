@@ -19,7 +19,7 @@ php的一些有用的工具库实现。
 - html元素
 - 命令行应用 - 已独立为 `inhere/console`
 - 验证库 - 已独立为 `inhere/validate`
-- http请求库  - 已独立为 `inhere/http`
+- http请求库  - 已独立为 `inhere/http-client`
 - 队列 - 已独立为 `inhere/queue`
 - 共享内存 - 已独立为 `inhere/shm`
 - 锁 -  - 已独立为 `inhere/lock`
