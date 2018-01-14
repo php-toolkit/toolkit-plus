@@ -35,7 +35,7 @@ class Html
      */
     public static function isAloneTag($name)
     {
-        return in_array(trim($name), static::$aloneTags);
+        return \in_array(trim($name), static::$aloneTags);
     }
 
     /**
@@ -57,7 +57,7 @@ class Html
     public static function css($href, array $attrs = [])
     {
         $attrs = array_merge([
-            'type' => "text/css",
+            'type' => 'text/css',
             'rel' => 'stylesheet',
             'href' => $href,
         ],
@@ -74,7 +74,7 @@ class Html
      */
     public static function style($content, array $attrs = [])
     {
-        $attrs = array_merge(['type' => "text/css"], $attrs);
+        $attrs = array_merge(['type' => 'text/css'], $attrs);
 
         return static::tag('style', PHP_EOL . trim($content) . PHP_EOL, $attrs);
     }
@@ -285,16 +285,16 @@ EOF;
      */
     protected static function _buildAttr($attr, $value = '')
     {
-        if (is_string($attr)) {
+        if (\is_string($attr)) {
 
-            if (is_bool($value)) {
+            if (\is_bool($value)) {
                 $value = $value ? 'true' : 'false';
             }
 
             return "{$attr}=\"{$value}\"";
         }
 
-        if (is_array($attr)) {
+        if (\is_array($attr)) {
             $attrs = [];
 
             foreach ($attr as $name => $val) {

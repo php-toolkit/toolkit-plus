@@ -126,7 +126,7 @@ trait ProcessManageTrait
             } elseif ($err = $queue->getErrMsg()) {
                 $this->log("queue errCode={$queue->getErrCode()} errMsg=$err", ProcessLogger::ERROR);
             } else {
-                $this->log("queue is empty, sleep 5s. wait next read.", ProcessLogger::CRAZY);
+                $this->log('queue is empty, sleep 5s. wait next read.', ProcessLogger::CRAZY);
                 sleep(5);
                 continue;
             }
@@ -156,7 +156,7 @@ trait ProcessManageTrait
     protected function runWorkersMonitor()
     {
         // Main processing loop for the parent process
-        while (!$this->stopWork || count($this->workers)) {
+        while (!$this->stopWork || \count($this->workers)) {
             $this->dispatchSignals();
 
             // Check for exited workers
@@ -215,7 +215,7 @@ trait ProcessManageTrait
         ProcessUtil::killAndWait($pid, SIGTERM, 'manager');
 
         // stop success
-        $this->stdout(sprintf("\n%s\n"), Cli::color("The manager process stopped", Cli::FG_GREEN));
+        $this->stdout(sprintf("\n%s\n"), Cli::color('The manager process stopped', Cli::FG_GREEN));
 
         if ($quit) {
             $this->quit();
@@ -233,7 +233,7 @@ trait ProcessManageTrait
      */
     protected function reloadWorkers($masterPid)
     {
-        $this->stdout("Workers reloading ...");
+        $this->stdout('Workers reloading ...');
 
         $this->sendSignal($masterPid, SIGHUP);
 

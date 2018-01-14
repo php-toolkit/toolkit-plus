@@ -88,7 +88,7 @@ class Server extends Base
 
         $this->stopWork = false;
         $this->stat['startTime'] = time();
-        $this->setProcessTitle(sprintf("php-ts: master process%s (%s)", $this->getShowName(), getcwd() . '/' . $this->fullScript));
+        $this->setProcessTitle(sprintf('php-ts: master process%s (%s)', $this->getShowName(), getcwd() . '/' . $this->fullScript));
 
         $this->prepare();
 
@@ -184,7 +184,7 @@ class Server extends Base
             $pkt = stream_socket_recvfrom($socket, $this->config['bufferSize'], 0, $peer);
 
             if ($pkt === false) {
-                $this->log("udp error", ProcessLogger::ERROR);
+                $this->log('udp error', ProcessLogger::ERROR);
                 continue;
             }
 

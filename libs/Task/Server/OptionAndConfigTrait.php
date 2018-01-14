@@ -46,7 +46,7 @@ trait OptionAndConfigTrait
         $command = $this->command;
         $supported = ['start', 'stop', 'restart', 'reload', 'status'];
 
-        if (!in_array($command, $supported, true)) {
+        if (!\in_array($command, $supported, true)) {
             $this->showHelp("The command [{$command}] is don't supported!");
         }
 
@@ -68,7 +68,7 @@ trait OptionAndConfigTrait
      */
     protected function parseCliOptions()
     {
-        $result = Cli::parseOptArgs([
+        $result = Cli::argOptParse([
             'd', 'daemon', 'w', 'watch', 'h', 'help', 'V', 'version', 'no-test', 'watch-status'
         ]);
         $this->fullScript = implode(' ', $GLOBALS['argv']);

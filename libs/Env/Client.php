@@ -136,9 +136,9 @@ class Client extends AbstractEnv
     public function getHeaders()
     {
         if ($this->_headers === null) {
-            if (function_exists('getallheaders')) {
+            if (\function_exists('getallheaders')) {
                 $this->_headers = getallheaders();
-            } elseif (function_exists('http_get_request_headers')) {
+            } elseif (\function_exists('http_get_request_headers')) {
                 $this->_headers = http_get_request_headers();
             } else {
                 foreach ($_SERVER as $name => $value) {
@@ -182,7 +182,7 @@ class Client extends AbstractEnv
         // }
 
         if (strpos($string, 'HTTP_') !== false) {
-            $string = substr($string, strlen('HTTP_'));
+            $string = substr($string, \strlen('HTTP_'));
         } else {
             return false;
         }

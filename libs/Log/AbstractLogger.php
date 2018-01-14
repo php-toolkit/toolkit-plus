@@ -394,7 +394,7 @@ abstract class AbstractLogger implements LoggerInterface
     protected function write($str)
     {
         $file = $this->getLogPath() . $this->getFilename();
-        $dir = dirname($file);
+        $dir = \dirname($file);
 
         if (!is_dir($dir) && !@mkdir($dir, 0775, true)) {
             throw new FileSystemException("Create log directory failed. $dir");
@@ -425,7 +425,7 @@ abstract class AbstractLogger implements LoggerInterface
      */
     protected function convertToString($data)
     {
-        if (null === $data || is_bool($data)) {
+        if (null === $data || \is_bool($data)) {
             return var_export($data, true);
         }
 
@@ -496,8 +496,8 @@ abstract class AbstractLogger implements LoggerInterface
      */
     public static function toNumberLevel($level)
     {
-        if (is_string($level) && defined(__CLASS__ . '::' . strtoupper($level))) {
-            return constant(__CLASS__ . '::' . strtoupper($level));
+        if (\is_string($level) && \defined(__CLASS__ . '::' . strtoupper($level))) {
+            return \constant(__CLASS__ . '::' . strtoupper($level));
         }
 
         return $level;

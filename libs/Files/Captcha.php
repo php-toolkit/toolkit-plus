@@ -94,12 +94,12 @@ class Captcha
     {
         return [
             // 字体文件
-            'font' => dirname(__DIR__) . '/resources/fonts/Montserrat-Bold.ttf',
+            'font' => \dirname(__DIR__) . '/resources/fonts/Montserrat-Bold.ttf',
             'randStr' => '23456789abcdefghigkmnpqrstuvwxyzABCDEFGHJKLMNPQRSTUVWXYZ',
             'width' => '120',
             'height' => '45',
             'bgColor' => '#eeeeee',
-            'bgImage' => dirname(__DIR__) . '/resources/images/captcha-bg/06.png',
+            'bgImage' => \dirname(__DIR__) . '/resources/images/captcha-bg/06.png',
             'length' => '4',
             'fontColor' => '',
             //  验证码字体大小
@@ -175,7 +175,7 @@ class Captcha
         $captchaStr = '';//保存产生的字符串
 
         for ($i = 0; $i < $this->charNum; $i++) {
-            $char = $this->codeStr[random_int(0, strlen($this->codeStr) - 1)];
+            $char = $this->codeStr[random_int(0, \strlen($this->codeStr) - 1)];
             $captchaStr .= $char;
             $fontColor = imagecolorallocate($this->img, random_int(80, 200), random_int(80, 200), random_int(80, 200));
             imagefttext(
@@ -198,7 +198,7 @@ class Captcha
     public function drawChars()
     {
         for ($i = 0; $i < $this->fontNum; $i++) {
-            $char = $this->codeStr[random_int(0, strlen($this->codeStr) - 1)];
+            $char = $this->codeStr[random_int(0, \strlen($this->codeStr) - 1)];
             $fontColor = imagecolorallocate($this->img, random_int(180, 240), random_int(180, 240), random_int(180, 240));
             imagefttext(
                 $this->img, random_int(4, 8), random_int(-30, 40), random_int(8, $this->width - 10),
@@ -288,6 +288,6 @@ class Captcha
 
     private function checkGd()
     {
-        return extension_loaded('gd') && function_exists('imagepng');
+        return \extension_loaded('gd') && \function_exists('imagepng');
     }
 }

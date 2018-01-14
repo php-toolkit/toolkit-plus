@@ -143,7 +143,7 @@ if (false !== $userCommand) {
     $command = "cd $currentDir && $command";
     list($output, $error, $code) = executeCommand($command);
 
-    header("Content-Type: text/plain; charset=utf-8");
+    header('Content-Type: text/plain; charset=utf-8');
     echo formatOutput($userCommand, htmlspecialchars($output));
     echo htmlspecialchars($error);
 
@@ -186,10 +186,10 @@ function searchCommand($userCommand, array $commands, &$found = false, $inValues
 function executeCommand($command)
 {
     $descriptors = array(
-        0 => array("pipe", "r"), // stdin - read channel
-        1 => array("pipe", "w"), // stdout - write channel
-        2 => array("pipe", "w"), // stdout - error channel
-        3 => array("pipe", "r"), // stdin - This is the pipe we can feed the password into
+        0 => array('pipe', 'r'), // stdin - read channel
+        1 => array('pipe', 'w'), // stdout - write channel
+        2 => array('pipe', 'w'), // stdout - error channel
+        3 => array('pipe', 'r'), // stdin - This is the pipe we can feed the password into
     );
 
     $process = proc_open($command, $descriptors, $pipes);
@@ -218,7 +218,7 @@ function executeCommand($command)
 
 function formatOutput($command, $output)
 {
-    if (preg_match("%^(git )?diff%is", $command) || preg_match("%^status.*?-.*?v%is", $command)) {
+    if (preg_match('%^(git )?diff%is', $command) || preg_match('%^status.*?-.*?v%is', $command)) {
         $output = formatDiff($output);
     }
     $output = formatHelp($output);
@@ -230,19 +230,19 @@ function formatDiff($output)
 {
     $lines = explode("\n", $output);
     foreach ($lines as $key => $line) {
-        if (strpos($line, "-") === 0) {
+        if (strpos($line, '-') === 0) {
             $lines[$key] = '<span class="diff-deleted">' . $line . '</span>';
         }
 
-        if (strpos($line, "+") === 0) {
+        if (strpos($line, '+') === 0) {
             $lines[$key] = '<span class="diff-added">' . $line . '</span>';
         }
 
-        if (preg_match("%^@@.*?@@%is", $line)) {
+        if (preg_match('%^@@.*?@@%is', $line)) {
             $lines[$key] = '<span class="diff-sub-header">' . $line . '</span>';
         }
 
-        if (preg_match("%^index\s[^.]*?\.\.\S*?\s\S*?%is", $line) || preg_match("%^diff.*?a.*?b%is", $line)) {
+        if (preg_match("%^index\s[^.]*?\.\.\S*?\s\S*?%is", $line) || preg_match('%^diff.*?a.*?b%is', $line)) {
             $lines[$key] = '<span class="diff-header">' . $line . '</span>';
         }
     }
@@ -253,9 +253,9 @@ function formatDiff($output)
 function formatHelp($output)
 {
     // Underline words with _0x08* symbols.
-    $output = preg_replace('/_[\b](.)/is', "<u>$1</u>", $output);
+    $output = preg_replace('/_[\b](.)/is', '<u>$1</u>', $output);
     // Highlight backslash words with *0x08* symbols.
-    $output = preg_replace('/.[\b](.)/is', "<strong>$1</strong>", $output);
+    $output = preg_replace('/.[\b](.)/is', '<strong>$1</strong>', $output);
 
     return $output;
 }
@@ -384,7 +384,7 @@ $autocomplete = array(
       color: #a33;
     }
   </style>
-    <?php if ($theme == "ubuntu") { ?>
+    <?php if ($theme == 'ubuntu') { ?>
       <style type="text/css">
         body {
           color: #FFFFFF;
@@ -399,7 +399,7 @@ $autocomplete = array(
           color: #FFF;
         }
       </style>
-    <?php } elseif ($theme == "grey") { ?>
+    <?php } elseif ($theme == 'grey') { ?>
       <style type="text/css">
         body {
           color: #B8B8B8;
@@ -423,7 +423,7 @@ $autocomplete = array(
           color: #cbcbcb;
         }
       </style>
-    <?php } elseif ($theme == "far") { ?>
+    <?php } elseif ($theme == 'far') { ?>
       <style type="text/css">
         body {
           color: #CCCCCC;
@@ -443,7 +443,7 @@ $autocomplete = array(
           color: #1f7184;
         }
       </style>
-    <?php } elseif ($theme == "white") { ?>
+    <?php } elseif ($theme == 'white') { ?>
       <style type="text/css">
         body {
           color: #FFFFFF;
@@ -459,7 +459,7 @@ $autocomplete = array(
           color: #FFF;
         }
       </style>
-    <?php } elseif ($theme == "green") { ?>
+    <?php } elseif ($theme == 'green') { ?>
       <style type="text/css">
         body {
           background-color: #000000;

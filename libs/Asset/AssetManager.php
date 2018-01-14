@@ -200,7 +200,7 @@ class AssetManager extends StdObject
             $asset = trim($asset);
 
             // check asset url
-            if (in_array($type, [self::ASSET_JS_FILE, self::ASSET_CSS_FILE], true)) {
+            if (\in_array($type, [self::ASSET_JS_FILE, self::ASSET_CSS_FILE], true)) {
                 $asset = AssetLoad::buildUrl($asset, $this->getBaseUrl(), $this->basePath, false);
             }
 
@@ -267,11 +267,11 @@ class AssetManager extends StdObject
         $positions = $this->getPositions();
         $types = $this->getAssetTypes();
 
-        if (!in_array($pos, $positions, true)) {
+        if (!\in_array($pos, $positions, true)) {
             throw new InvalidArgumentException('资源注册位置允许设置 [' . implode(', ', $positions) . '] 中的一个。');
         }
 
-        if (!in_array($type, $types, true)) {
+        if (!\in_array($type, $types, true)) {
             throw new InvalidArgumentException('资源类型可选 [' . implode(', ', $types) . '] 中的一个。');
         }
     }
@@ -438,7 +438,7 @@ class AssetManager extends StdObject
     {
         $assets = $this->getAssetsByPos($pos);
 
-        foreach ((array)$assets as $link) {
+        foreach ($assets as $link) {
             echo $link;
         }
     }

@@ -46,7 +46,7 @@ trait OptionAndConfigTrait
         $command = $this->command;
         $supported = ['start', 'stop', 'restart', 'reload', 'status'];
 
-        if (!in_array($command, $supported, true)) {
+        if (!\in_array($command, $supported, true)) {
             $this->showHelp("The command [{$command}] is don't supported!");
         }
 

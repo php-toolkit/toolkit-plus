@@ -39,9 +39,9 @@ class StreamHandler extends AbstractProcessingHandler
     public function __construct($stream, $level = Logger::DEBUG, $bubble = true, $filePermission = null, $useLocking = false)
     {
         parent::__construct($level, $bubble);
-        if (is_resource($stream)) {
+        if (\is_resource($stream)) {
             $this->stream = $stream;
-        } elseif (is_string($stream)) {
+        } elseif (\is_string($stream)) {
             $this->url = $stream;
         } else {
             throw new \InvalidArgumentException('A stream must either be a resource or a string.');
@@ -56,7 +56,7 @@ class StreamHandler extends AbstractProcessingHandler
      */
     public function close()
     {
-        if ($this->url && is_resource($this->stream)) {
+        if ($this->url && \is_resource($this->stream)) {
             fclose($this->stream);
         }
         $this->stream = null;
@@ -85,19 +85,19 @@ class StreamHandler extends AbstractProcessingHandler
      */
     protected function write(array $record)
     {
-        if (!is_resource($this->stream)) {
+        if (!\is_resource($this->stream)) {
             if (null === $this->url || '' === $this->url) {
                 throw new \LogicException('Missing stream url, the stream can not be opened. This may be caused by a premature call to close().');
             }
             $this->createDir();
             $this->errorMessage = null;
             set_error_handler(array($this, 'customErrorHandler'));
-            $this->stream = fopen($this->url, 'a');
+            $this->stream = fopen($this->url, 'ab');
             if ($this->filePermission !== null) {
                 @chmod($this->url, $this->filePermission);
             }
             restore_error_handler();
-            if (!is_resource($this->stream)) {
+            if (!\is_resource($this->stream)) {
                 $this->stream = null;
                 throw new \UnexpectedValueException(sprintf('The stream or file "%s" could not be opened: ' . $this->errorMessage, $this->url));
             }
@@ -138,11 +138,11 @@ class StreamHandler extends AbstractProcessingHandler
     {
         $pos = strpos($stream, '://');
         if ($pos === false) {
-            return dirname($stream);
+            return \dirname($stream);
         }
 
         if ('file://' === substr($stream, 0, 7)) {
-            return dirname(substr($stream, 7));
+            return \dirname(substr($stream, 7));
         }
 
         return;

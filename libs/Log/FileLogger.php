@@ -203,7 +203,7 @@ class FileLogger implements LoggerInterface
      */
     public static function make(array $config = [], $name = '')
     {
-        if (!is_array($config)) {
+        if (!\is_array($config)) {
             throw new \InvalidArgumentException('Logger config is must be an array and not allow empty.');
         }
 
@@ -249,7 +249,7 @@ class FileLogger implements LoggerInterface
      */
     public static function count()
     {
-        return count(self::$loggers) > 0;
+        return \count(self::$loggers) > 0;
     }
 
     /**
@@ -330,7 +330,7 @@ class FileLogger implements LoggerInterface
      */
     public static function getLevelName($level)
     {
-        if (is_string($level) && !is_numeric($level)) {
+        if (\is_string($level) && !is_numeric($level)) {
             return $level;
         }
 
@@ -479,7 +479,7 @@ class FileLogger implements LoggerInterface
             $e->getMessage(),
             $e->getFile(),
             $e->getLine(),
-            get_class($e),
+            \get_class($e),
             $e->getTraceAsString()
         );
 
@@ -609,14 +609,14 @@ class FileLogger implements LoggerInterface
 
         // serve is running in php build in server env.
         if ($this->logConsole && (PhpHelper::isBuiltInServer() || PhpHelper::isCli())) {
-            defined('STDOUT') or define('STDOUT', fopen('php://stdout', 'wb'));
+            \defined('STDOUT') or \define('STDOUT', fopen('php://stdout', 'wb'));
             fwrite(STDOUT, "[{$record['datetime']}] [$levelName] $message\n");
         }
 
         $this->_records[] = $record;
 
         // 检查阀值
-        if ($this->logThreshold > 0 && count($this->_records) >= $this->logThreshold) {
+        if ($this->logThreshold > 0 && \count($this->_records) >= $this->logThreshold) {
             return $this->flush();
         }
 
@@ -685,7 +685,7 @@ class FileLogger implements LoggerInterface
     protected function write($str)
     {
         $file = $this->getLogPath() . $this->getFilename();
-        $dir = dirname($file);
+        $dir = \dirname($file);
 
         if (!is_dir($dir) && !@mkdir($dir, 0775, true)) {
             throw new FileSystemException("Create log directory failed. $dir");
@@ -705,9 +705,9 @@ class FileLogger implements LoggerInterface
      */
     public function setLevels($levels)
     {
-        if (is_array($levels)) {
+        if (\is_array($levels)) {
             $this->levels = $levels;
-        } elseif (is_string($levels)) {
+        } elseif (\is_string($levels)) {
             $levels = trim($levels, ', ');
 
             $this->levels = strpos($levels, ',') ? array_map('trim', explode(',', $levels)) : [$levels];
@@ -721,7 +721,7 @@ class FileLogger implements LoggerInterface
     protected function isCanRecord($level)
     {
         // 不在记录的级别内
-        return $this->levels && in_array(self::getLevelName($level), $this->levels, true);
+        return $this->levels && \in_array(self::getLevelName($level), $this->levels, true);
     }
 
     /**
@@ -844,7 +844,7 @@ class FileLogger implements LoggerInterface
      */
     protected function convertToString($data)
     {
-        if (null === $data || is_bool($data)) {
+        if (null === $data || \is_bool($data)) {
             return var_export($data, true);
         }
 
@@ -921,7 +921,7 @@ class FileLogger implements LoggerInterface
         }
 
         $logFiles = glob($path . "{$this->name}*.log");
-        if ($this->maxFiles >= count($logFiles)) {
+        if ($this->maxFiles >= \count($logFiles)) {
             // no files to remove
             return;
         }
@@ -931,7 +931,7 @@ class FileLogger implements LoggerInterface
             return strcmp($b, $a);
         });
 
-        foreach (array_slice($logFiles, $this->maxFiles) as $file) {
+        foreach (\array_slice($logFiles, $this->maxFiles) as $file) {
             if (is_writable($file)) {
                 // suppress errors here as unlink() might fail if two processes
                 // are cleaning up/rotating at the same time

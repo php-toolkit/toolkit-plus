@@ -25,7 +25,7 @@ class GzipCompressor extends AbstractCompressor
 
     public function isSupported()
     {
-        return extension_loaded('zlib') && 0 === ini_get('phar.readonly');
+        return \extension_loaded('zlib') && 0 === ini_get('phar.readonly');
     }
 
     /**
@@ -45,7 +45,7 @@ class GzipCompressor extends AbstractCompressor
         }
 
         // 是一些指定文件
-        if (is_array($sourcePath)) {
+        if (\is_array($sourcePath)) {
             $files = new \ArrayObject($sourcePath);
         } else {
             $files = $this->finder->findAll(true, $sourcePath)->getFiles();
@@ -56,8 +56,8 @@ class GzipCompressor extends AbstractCompressor
             return false;
         }
 
-        $archiveFile = FileSystem::isAbsPath($archiveFile) ? $archiveFile : dirname($sourcePath) . '/' . $archiveFile;
-        $archiveFileDir = dirname($archiveFile);
+        $archiveFile = FileSystem::isAbsPath($archiveFile) ? $archiveFile : \dirname($sourcePath) . '/' . $archiveFile;
+        $archiveFileDir = \dirname($archiveFile);
 
         FileSystem::mkdir($archiveFileDir);
 
@@ -99,7 +99,7 @@ class GzipCompressor extends AbstractCompressor
             throw new FileNotFoundException('Open the zip file [' . $archiveFile . '] failure!!');
         }
 
-        $za->extractTo($extractTo ?: dirname($archiveFile));
+        $za->extractTo($extractTo ?: \dirname($archiveFile));
 
         return $za->close();
     }

@@ -202,7 +202,7 @@ class User extends SimpleCollection
      */
     public function isLogin()
     {
-        return count($this->data) !== 0;
+        return \count($this->data) !== 0;
     }
 
     /**

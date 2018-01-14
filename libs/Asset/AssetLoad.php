@@ -166,12 +166,12 @@ class AssetLoad extends StdObject
         $this->compressed = false;
 
         // is string
-        if ($assets && is_string($assets)) {
+        if ($assets && \is_string($assets)) {
             // 是否是以逗号连接的多个文件名
             $assets = (strpos($assets, ',') && false === strpos($assets, 'http')) ? explode(',', $assets) : [$assets];
         }
 
-        if (!is_array($assets)) {
+        if (!\is_array($assets)) {
             throw new InvalidArgumentException('The param $asset type only allow string or array.');
         }
 
@@ -198,7 +198,7 @@ class AssetLoad extends StdObject
         foreach ($assets as $url) {
             $url = self::buildUrl(trim($url), $this->baseUrl, $this->getBasePath(), $hostUrl);
 
-            $tags[] = $this->assetType === self::TYPE_CSS ? Html::css($url) : Html::script($url);;
+            $tags[] = $this->assetType === self::TYPE_CSS ? Html::css($url) : Html::script($url);
         }
 
         return implode("\n", $tags);
@@ -262,7 +262,7 @@ class AssetLoad extends StdObject
      */
     public function compressAndMerge(array $assets, $saveFile, $webPath = '')
     {
-        $saveDir = dirname($saveFile);
+        $saveDir = \dirname($saveFile);
         $oldKey = '';
 
         // create path.
@@ -342,14 +342,14 @@ class AssetLoad extends StdObject
 
         // maybe need create directory.
         if ($saveFile) {
-            $saveDir = dirname($saveFile);
+            $saveDir = \dirname($saveFile);
 
             // create path.
             if (!Directory::create($saveDir)) {
                 throw new FileSystemException("Create dir path [$saveDir] failure!!");
             }
         } else {
-            $saveFile = substr($sourceFile, 0, -strlen($this->assetType)) . 'min.' . $this->assetType;
+            $saveFile = substr($sourceFile, 0, -\strlen($this->assetType)) . 'min.' . $this->assetType;
         }
 
         // check target file exists
@@ -454,7 +454,7 @@ class AssetLoad extends StdObject
     {
         $types = [self::TYPE_CSS, self::TYPE_JS];
 
-        if (!in_array($assetType, $types, true)) {
+        if (!\in_array($assetType, $types, true)) {
             throw new InvalidArgumentException('param must be is in array(' . implode(',', $types) . ')');
         }
 

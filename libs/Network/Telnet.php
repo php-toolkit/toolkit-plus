@@ -87,7 +87,7 @@ class Telnet
 
         if (!$driver || !isset(self::$availableDrivers[$driver])) {
             foreach (self::$availableDrivers as $name => $funcName) {
-                if (function_exists($funcName)) {
+                if (\function_exists($funcName)) {
                     $driver = $name;
                     break;
                 }
@@ -199,7 +199,7 @@ class Telnet
             echo "\033[2JThe {$count} times watch {$command} result(refresh interval: {$interval}ms):\n{$result}\n";
 
             if ($maxTime > 0 && time() - $activeTime >= $maxTime) {
-                echo "watch time end. ";
+                echo 'watch time end. ';
                 break;
             }
 
@@ -217,7 +217,7 @@ class Telnet
         echo "welcome! please input command('quit' or 'exit' to Quit).\n ";
 
         while (true) {
-            echo "> ";
+            echo '> ';
             if ($cmd = trim(fgets(\STDIN))) {
                 // echo "input command: $cmd\n";
                 if ($cmd === 'quit' || $cmd === 'exit') {
@@ -260,7 +260,7 @@ class Telnet
     public function write($buffer)
     {
         if ($this->driver === self::DRIVER_SOCKET) {
-            return socket_write($this->sock, $buffer, strlen($buffer));
+            return socket_write($this->sock, $buffer, \strlen($buffer));
         } else {
             // $buffer = str_replace(chr(255), chr(255) . chr(255), $buffer);
             return fwrite($this->sock, $buffer);

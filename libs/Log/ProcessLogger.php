@@ -110,7 +110,7 @@ class ProcessLogger implements ProcessLogInterface
             $this->toSyslog = true;
         }
 
-        if ($this->spiltType && !in_array($this->spiltType, [self::SPLIT_DAY, self::SPLIT_HOUR], true)) {
+        if ($this->spiltType && !\in_array($this->spiltType, [self::SPLIT_DAY, self::SPLIT_HOUR], true)) {
             $this->spiltType = self::SPLIT_DAY;
         }
 

@@ -309,7 +309,7 @@ class Element extends StdObject
      */
     protected function isValidRule($value)
     {
-        return in_array($value, $this->getChildAddRules());
+        return \in_array($value, $this->getChildAddRules());
     }
 
 ///////////////////////////////////////// property /////////////////////////////////////////
@@ -571,7 +571,7 @@ class Element extends StdObject
 
         if ($attrs) {
             array_map(function ($value) use (&$default) {
-                if (!in_array($value, $default)) {
+                if (!\in_array($value, $default)) {
                     $default[] = $value;
                 }
             }, $attrs);
@@ -585,7 +585,7 @@ class Element extends StdObject
 
         foreach ($attrs as $attr) {
 
-            if (in_array($attr, $intersectAttrs)) {
+            if (\in_array($attr, $intersectAttrs)) {
                 $merges[$attr] = $old[$attr] . ' ' . $new[$attr];
             }
         }

@@ -149,7 +149,7 @@ class Upload
 
         $filename = $sourceFile['name'];
 
-        if (is_array($filename)) {
+        if (\is_array($filename)) {
             $metas = [];
             $file = $this->_decodeData([
                 $filename,
@@ -195,7 +195,7 @@ class Upload
         !$targetDir && ($targetDir = $this->config['path']);
 
         foreach ($this->_data as $key => $file) {
-            if ($names && !in_array($key, $names)) {
+            if ($names && !\in_array($key, $names)) {
                 continue;
             }
 
@@ -219,7 +219,7 @@ class Upload
 
         $filename = $sourceFile['name'];
 
-        if (is_array($filename)) {
+        if (\is_array($filename)) {
             $result = [];
             $file = $this->_decodeData([
                 $filename,
@@ -258,7 +258,7 @@ class Upload
     {
         $result = [];
 
-        if (is_array($data[0])) {
+        if (\is_array($data[0])) {
             foreach ($data[0] as $k => $v) {
                 $result[$k] = $this->_decodeData([
                     $data[0][$k], $data[1][$k], $data[2][$k], $data[3][$k], $data[4][$k]
@@ -285,7 +285,7 @@ class Upload
      */
     private function moveToFile(array $file, $targetFile)
     {
-        $dir = dirname($targetFile);
+        $dir = \dirname($targetFile);
 
         if (!$this->_makeDir($dir)) {
             $this->error = "目录创建失败或者不可写. DIR: [$dir]";
@@ -320,11 +320,11 @@ class Upload
         if ($nameHandler) {
             $nowName = $nameHandler($file, $targetDir);
         } else {
-            $nowName = time() . '_' . mt_rand(1000, 9999) . '.' . $file['ext'];
+            $nowName = time() . '_' . random_int(1000, 9999) . '.' . $file['ext'];
         }
 
         $filePath = ($targetDir ?: $this->config['path']) . DIRECTORY_SEPARATOR . $nowName;
-        $dir = dirname($filePath);
+        $dir = \dirname($filePath);
 
         if (!$this->_makeDir($dir)) {
             $this->error = "目录创建失败或者不可写.[$dir]";
@@ -400,7 +400,7 @@ class Upload
         $extList = $this->config['ext'];
         $fileExt = strtolower($file['ext']);
 
-        if ($extList && !in_array($fileExt, $extList)) {
+        if ($extList && !\in_array($fileExt, $extList)) {
             $this->error = '不允许的上传文件类型！';
         } elseif ($maxSize && $file['size'] > $maxSize) {
             $this->error = '上传文件超出允许大小！';

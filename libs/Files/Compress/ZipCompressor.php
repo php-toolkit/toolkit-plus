@@ -43,7 +43,7 @@ class ZipCompressor extends AbstractCompressor
         }
 
         // 是一些指定文件
-        if (is_array($sourcePath)) {
+        if (\is_array($sourcePath)) {
             $files = new \ArrayObject();
         } else {
             $files = $this->finder->findAll(true, $sourcePath)->getFiles();
@@ -54,9 +54,9 @@ class ZipCompressor extends AbstractCompressor
             return false;
         }
 
-        $archiveFile = FileSystem::isAbsPath($archiveFile) ? $archiveFile : dirname($sourcePath) . '/' . $archiveFile;
+        $archiveFile = FileSystem::isAbsPath($archiveFile) ? $archiveFile : \dirname($sourcePath) . '/' . $archiveFile;
 
-        FileSystem::mkdir(dirname($archiveFile));
+        FileSystem::mkdir(\dirname($archiveFile));
 
         try {
             $za = $this->getDriver();
@@ -97,7 +97,7 @@ class ZipCompressor extends AbstractCompressor
             throw new FileSystemException('Open the zip file [' . $archiveFile . '] failure!!');
         }
 
-        $za->extractTo($extractTo ?: dirname($archiveFile));
+        $za->extractTo($extractTo ?: \dirname($archiveFile));
 
         return $za->close();
     }

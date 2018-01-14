@@ -121,7 +121,7 @@ class AssetPublisher extends StdObject
             return $this;
         }
 
-        if (is_array($from)) {
+        if (\is_array($from)) {
             array_walk($from, function ($f, $t) {
                 $this->add($f, $t);
             });
@@ -182,8 +182,8 @@ class AssetPublisher extends StdObject
         //$targetFile = $to . '/' . basename($from);
 
         if (!file_exists($targetFile) || $override) {
-            if (!Directory::create(dirname($targetFile), 0775)) {
-                throw new FileSystemException('Create dir path [' . dirname($targetFile) . '] failure.');
+            if (!Directory::create(\dirname($targetFile), 0775)) {
+                throw new FileSystemException('Create dir path [' . \dirname($targetFile) . '] failure.');
             }
 
             File::copy($from, $targetFile);
@@ -212,7 +212,7 @@ class AssetPublisher extends StdObject
 
     public function hasAssetToPublish()
     {
-        return 0 < count($this->publishAssets['files']) || 0 < count($this->publishAssets['dirs']);
+        return 0 < \count($this->publishAssets['files']) || 0 < \count($this->publishAssets['dirs']);
     }
 
     ////////////////////////////// getter/setter method //////////////////////////////

@@ -119,7 +119,7 @@ class Server extends AbstractEnv
         $file = $this->get($key);
 
         if (strpos($file, $wDir) === 0) {
-            $file = substr($file, strlen($wDir));
+            $file = substr($file, \strlen($wDir));
         }
 
         $file = rtrim($file, '.' . DIRECTORY_SEPARATOR);
@@ -137,7 +137,7 @@ class Server extends AbstractEnv
      */
     public function getRoot($full = true)
     {
-        return dirname($this->getEntry($full));
+        return \dirname($this->getEntry($full));
     }
 
     /**
@@ -162,7 +162,7 @@ class Server extends AbstractEnv
     {
         $uNames = array('CYG', 'DAR', 'FRE', 'HP-', 'IRI', 'LIN', 'NET', 'OPE', 'SUN', 'UNI');
 
-        return in_array($this->get('osShort'), $uNames);
+        return \in_array($this->get('osShort'), $uNames);
     }
 
     /**

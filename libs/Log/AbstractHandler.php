@@ -71,7 +71,7 @@ abstract class AbstractHandler implements HandlerInterface
     public function handle(array $logs, $final)
     {
         $this->logs = array_merge($this->logs, static::filterLogs($logs, $this->getLevel(), $this->categories, $this->except));
-        $count = count($this->logs);
+        $count = \count($this->logs);
 
         if ($count > 0 && ($final || ($this->exportInterval > 0 && $count >= $this->exportInterval))) {
             if ($collector = $this->contextCollector) {

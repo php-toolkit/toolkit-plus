@@ -88,7 +88,7 @@ class Timer
                 if ($current == $time) {
 
                     //调用回调函数,并传递参数
-                    call_user_func_array($func, $argv);
+                    \call_user_func_array($func, $argv);
 
                     //删除该任务
                     unset(self::$tasks[$time][$k]);
@@ -111,7 +111,7 @@ class Timer
      */
     public static function add($interval, $func, $argv = [], $persist = false)
     {
-        if (is_null($interval)) {
+        if (\is_null($interval)) {
             return;
         }
         $time = time() + $interval;

@@ -154,7 +154,7 @@ class Manager extends Base
         $this->isMaster = true;
         $this->stopWork = false;
         $this->stat['startTime'] = time();
-        $this->setProcessTitle(sprintf("php-twm: master process%s (%s)", $this->getShowName(), getcwd() . '/' . $this->fullScript));
+        $this->setProcessTitle(sprintf('php-twm: master process%s (%s)', $this->getShowName(), getcwd() . '/' . $this->fullScript));
 
         $this->prepare();
 
@@ -227,7 +227,7 @@ class Manager extends Base
     public function handleTask($data)
     {
         if ($cb = $this->taskHandler) {
-            call_user_func($cb, $data);
+            \call_user_func($cb, $data);
         }
     }
 
@@ -353,7 +353,7 @@ EOF;
             pcntl_signal(SIGCHLD, [$this, 'signalHandler'], false);
 
         } else {
-            $this->log("Registering signal handlers for current worker process", ProcessLogger::DEBUG);
+            $this->log('Registering signal handlers for current worker process', ProcessLogger::DEBUG);
 
             pcntl_signal(SIGTERM, [$this, 'signalHandler'], false);
         }

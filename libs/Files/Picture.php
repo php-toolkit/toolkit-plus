@@ -128,11 +128,11 @@ class Picture
      */
     public function __construct(array $waterOptions = [], array $thumbOptions = [])
     {
-        if (!extension_loaded('gd')) {
+        if (!\extension_loaded('gd')) {
             throw new ExtensionMissException('This tool required extension [gd].');
         }
 
-        $this->waterOptions['fontFile'] = dirname(__DIR__) . '/resources/fonts/Montserrat-Bold.ttf';
+        $this->waterOptions['fontFile'] = \dirname(__DIR__) . '/resources/fonts/Montserrat-Bold.ttf';
 
         $this->setWaterOptions($waterOptions)->setThumbOptions($thumbOptions);
 
@@ -167,7 +167,7 @@ class Picture
 
         $imgInfo = pathinfo($img);
         $imgType = $this->_handleImageType($imgInfo['extension']);
-        $outPath = $outPath ?: ($this->waterOptions['path'] ?: dirname($img));
+        $outPath = $outPath ?: ($this->waterOptions['path'] ?: \dirname($img));
         $pos = $pos ?: $this->waterOptions['pos'];
         $alpha = $alpha ?: $this->waterOptions['alpha'];
         $waterImg = $waterImg ?: $this->waterOptions['img'];
@@ -192,7 +192,7 @@ class Picture
             }
 
             // create water image resource
-            $resWaterImg = call_user_func("imagecreatefrom{$waterImgType}", $waterImg);
+            $resWaterImg = \call_user_func("imagecreatefrom{$waterImgType}", $waterImg);
         } else {
             //水印文字
             $text = $text ?: $this->waterOptions['text'];
@@ -201,7 +201,7 @@ class Picture
                 throw new InvalidConfigException('请配置正确的水印文字资源路径');
             }
 
-            if (!$text || strlen($this->waterOptions['fontColor']) !== 6) {
+            if (!$text || \strlen($this->waterOptions['fontColor']) !== 6) {
                 throw new InvalidConfigException('The watermark font color length must equal to 6.');
             }
 
@@ -251,7 +251,7 @@ class Picture
         } elseif ($imgType === self::IMAGE_PNG) {
             imagepng($resImg, $outFile, ceil($this->waterOptions['quality'] / 10));
         } else {
-            call_user_func("image{$imgType}", $resImg, $outFile);
+            \call_user_func("image{$imgType}", $resImg, $outFile);
         }
 
         imagedestroy($resImg);
@@ -308,7 +308,7 @@ class Picture
         $thumbType = $thumbType ?: $this->thumbOptions['type'];
         $thumbWidth = $thumbWidth ?: $this->thumbOptions['width'];
         $thumbHeight = $thumbHeight ?: $this->thumbOptions['height'];
-        $outPath = $outPath ?: ($this->thumbOptions['path'] ?: dirname($img));
+        $outPath = $outPath ?: ($this->thumbOptions['path'] ?: \dirname($img));
 
         //获得图像信息
         list($imgWidth, $imgHeight) = getimagesize($img);
@@ -319,7 +319,7 @@ class Picture
 
         //原始图像资源
         // imagecreatefromgif() imagecreatefrompng() imagecreatefromjpeg() imagecreatefromwbmp()
-        $resImg = call_user_func("imagecreatefrom{$imgType}", $img);
+        $resImg = \call_user_func("imagecreatefrom{$imgType}", $img);
 
         //缩略图的资源
         if ($imgType === static::IMAGE_GIF) {
@@ -333,7 +333,7 @@ class Picture
         }
 
         // 绘制缩略图X
-        if (function_exists('imagecopyresampled')) {
+        if (\function_exists('imagecopyresampled')) {
             imagecopyresampled($resThumb, $resImg, 0, 0, 0, 0, $thumbSize[0], $thumbSize[1], $thumbSize[2], $thumbSize[3]);
         } else {
             imagecopyresized($resThumb, $resImg, 0, 0, 0, 0, $thumbSize[0], $thumbSize[1], $thumbSize[2], $thumbSize[3]);
@@ -350,7 +350,7 @@ class Picture
         }
 
         // generate image to dst file. imagepng(), imagegif(), imagejpeg(), imagewbmp()
-        call_user_func("image{$imgType}", $resThumb, $outFile);
+        \call_user_func("image{$imgType}", $resThumb, $outFile);
 
         imagedestroy($resImg);
         imagedestroy($resThumb);
@@ -387,7 +387,7 @@ class Picture
         }
 
         /** @var resource $resImg */
-        $resImg = call_user_func("imagecreatefrom{$type}", $img);
+        $resImg = \call_user_func("imagecreatefrom{$type}", $img);
 
         // 保持png图片的透明度
         if ($type === self::IMAGE_PNG) {
@@ -592,7 +592,7 @@ class Picture
      */
     public static function isSupportedType($type)
     {
-        return in_array($type, static::getImageTypes(), true);
+        return \in_array($type, static::getImageTypes(), true);
     }
 
     /**

@@ -163,8 +163,8 @@ trait ProcessControlTrait
      */
     protected function checkEnvironment()
     {
-        $e1 = function_exists('posix_kill');
-        $e2 = function_exists('pcntl_fork');
+        $e1 = \function_exists('posix_kill');
+        $e2 = \function_exists('pcntl_fork');
 
         if (!$e1 || !$e2) {
             $this->supportPC = false;
