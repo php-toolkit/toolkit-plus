@@ -57,8 +57,11 @@ trait OptionAndConfigTrait
         $this->initConfigAndProperties($this->config);
 
         // Debug option to dump the config and exit
-        if (isset($result['D']) || isset($result['dump'])) {
-            $val = isset($result['D']) ? $result['D'] : (isset($result['dump']) ? $result['dump'] : '');
+        if (isset($this->cliOpts['D'])) {
+            $val = $this->cliOpts['D'];
+            $this->dumpInfo($val === 'all');
+        } elseif (isset($this->cliOpts['dump'])) {
+            $val = $this->cliOpts['dump'];
             $this->dumpInfo($val === 'all');
         }
     }
@@ -73,7 +76,7 @@ trait OptionAndConfigTrait
         ]);
         $this->fullScript = implode(' ', $GLOBALS['argv']);
         $this->script = strpos($result[0], '.php') ? "php {$result[0]}" : $result[0];
-        $this->command = $command = isset($result[1]) ? $result[1] : 'start';
+        $this->command = $result[1] ?? 'start';
 
         unset($result[0], $result[1]);
 
@@ -116,8 +119,8 @@ trait OptionAndConfigTrait
                 $this->reloadWorkers($masterPid);
                 break;
             case 'status':
-                $cmd = isset($result['cmd']) ? $result['cmd'] : 'status';
-                $this->showStatus($cmd, isset($result['watch-status']));
+                $cmd = $this->cliOpts['cmd'] ?? 'status';
+                $this->showStatus($cmd, isset($this->cliOpts['watch-status']));
                 break;
             default:
                 $this->showHelp("The command [{$command}] is don't supported!");

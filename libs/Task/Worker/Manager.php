@@ -234,7 +234,7 @@ class Manager extends Base
     /**
      * showVersion
      */
-    protected function showVersion()
+    public function showVersion()
     {
         printf("Gearman worker manager script tool. Version %s\n", Cli::color(self::VERSION, 'green'));
 
@@ -312,7 +312,7 @@ EOF;
      * @param string $command
      * @param bool $watch
      */
-    protected function showStatus($command, $watch = false)
+    public function showStatus($command, $watch = false)
     {
         $this->stdout("un-completed! $command, $watch", true, 0);
     }
@@ -321,7 +321,7 @@ EOF;
      * dumpInfo
      * @param bool $allInfo
      */
-    protected function dumpInfo($allInfo = false)
+    public function dumpInfo($allInfo = false)
     {
         if ($allInfo) {
             $this->stdout("There are all information of the manager:\n" . PhpHelper::printVar($this));
