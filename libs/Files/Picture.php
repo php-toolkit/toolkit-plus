@@ -98,7 +98,7 @@ class Picture
 
     /**
      * 正在操作的文件记录
-     * @var string
+     * @var array
      */
     public $working = [
         'raw' => '', // 正在操作的原文件
