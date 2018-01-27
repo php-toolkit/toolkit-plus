@@ -84,7 +84,6 @@ class AssetPublisher extends StdObject
         return [
             /**
              * 包含的可发布的 文件 文件扩展匹配 目录
-             * 比 {@see $exlude} 优先级更高
              * @var array
              */
             'include' => [
@@ -99,6 +98,7 @@ class AssetPublisher extends StdObject
 
             /**
              * 排除发布的 文件 文件扩展匹配 目录
+             * 比 include 优先级更高
              * @var array
              */
             'exclude' => [
@@ -149,6 +149,7 @@ class AssetPublisher extends StdObject
      * target path is {@see $publishPath} + $path ( is param of the method `source($path)` )
      * @param bool|false $override
      * @return $this
+     * @throws FileSystemException
      */
     public function publish($override = false)
     {
@@ -198,6 +199,8 @@ class AssetPublisher extends StdObject
      * @param $fromDir
      * @param $toDir
      * @param bool|false $override
+     * @throws FileSystemException
+     * @throws InvalidArgumentException
      */
     public function publishDir($fromDir, $toDir, $override = false)
     {
