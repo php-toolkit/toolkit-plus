@@ -16,11 +16,11 @@
  * $pagingString = $paging->useStyle()->toString();
  */
 
-namespace Inhere\LibraryPlus\Html;
+namespace ToolkitPlus\Html;
 
 /**
  * Class Paging
- * @package Inhere\LibraryPlus\Html
+ * @package ToolkitPlus\Html
  */
 class ExtendedPagination extends Pagination
 {

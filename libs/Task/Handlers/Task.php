@@ -1,12 +1,12 @@
 <?php
 
-namespace Inhere\LibraryPlus\Task\Handlers;
+namespace ToolkitPlus\Task\Handlers;
 
-use Inhere\LibraryPlus\Task\Server\TaskWrapper;
+use ToolkitPlus\Task\Server\TaskWrapper;
 
 /**
  * Class Task
- * @package Inhere\LibraryPlus\Task\Handlers
+ * @package ToolkitPlus\Task\Handlers
  */
 abstract class Task implements TaskInterface
 {

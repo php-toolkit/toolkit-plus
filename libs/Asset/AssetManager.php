@@ -6,12 +6,12 @@
  * Time: 下午9:44
  */
 
-namespace Inhere\LibraryPlus\Asset;
+namespace ToolkitPlus\Asset;
 
 use Inhere\Exceptions\InvalidArgumentException;
 use Inhere\Library\Helpers\UrlHelper;
 use Inhere\Library\StdObject;
-use Inhere\LibraryPlus\Html\Html;
+use ToolkitPlus\Html\Html;
 
 /**
  * 前端资源加载管理

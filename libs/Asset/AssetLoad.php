@@ -6,7 +6,7 @@
  * Time: 下午9:43
  */
 
-namespace Inhere\LibraryPlus\Asset;
+namespace ToolkitPlus\Asset;
 
 use Inhere\Exceptions\FileNotFoundException;
 use Inhere\Exceptions\FileSystemException;
@@ -17,7 +17,7 @@ use Inhere\Library\Files\Directory;
 use Inhere\Library\Files\File;
 use Inhere\Library\Helpers\UrlHelper;
 use Inhere\Library\StdObject;
-use Inhere\LibraryPlus\Html\Html;
+use ToolkitPlus\Html\Html;
 use MatthiasMullie\Minify;
 
 /**

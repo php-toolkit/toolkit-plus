@@ -19,7 +19,7 @@
  *  $data = $pic->getResult();
  */
 
-namespace Inhere\LibraryPlus\Files;
+namespace ToolkitPlus\File;
 
 use Inhere\Exceptions\ExtensionMissException;
 use Inhere\Exceptions\FileSystemException;
@@ -29,7 +29,7 @@ use Inhere\Library\Files\Directory;
 
 /**
  * Class Picture
- * @package Inhere\LibraryPlus\Files
+ * @package ToolkitPlus\File
  */
 class Picture
 {

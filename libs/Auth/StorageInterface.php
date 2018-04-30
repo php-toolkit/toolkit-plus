@@ -6,11 +6,11 @@
  * Time: 上午11:08
  */
 
-namespace Inhere\LibraryPlus\Auth;
+namespace ToolkitPlus\Auth;
 
 /**
  * Interface StorageInterface
- * @package Inhere\LibraryPlus\Auth
+ * @package ToolkitPlus\Auth
  */
 interface StorageInterface
 {

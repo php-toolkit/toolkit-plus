@@ -6,11 +6,11 @@
  * Time: 9:29
  */
 
-namespace Inhere\LibraryPlus\Log;
+namespace ToolkitPlus\Log;
 
 /**
  * Class Logger
- * @package Inhere\LibraryPlus\Log
+ * @package ToolkitPlus\Log
  */
 class Logger extends AbstractLogger
 {

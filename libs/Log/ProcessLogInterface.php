@@ -6,7 +6,7 @@
  * Time: 9:49
  */
 
-namespace Inhere\LibraryPlus\Log;
+namespace ToolkitPlus\Log;
 
 /**
  * Interface ProcessLogInterface

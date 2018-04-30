@@ -6,7 +6,7 @@
  * Time: 上午11:11
  */
 
-namespace Inhere\LibraryPlus\Asset;
+namespace ToolkitPlus\Asset;
 
 use Inhere\Library\StdObject;
 

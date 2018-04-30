@@ -6,11 +6,11 @@
  * Time: 下午3:57
  */
 
-namespace Inhere\LibraryPlus\Html;
+namespace ToolkitPlus\Html;
 
 /**
  * Class Html5
- * @package Inhere\LibraryPlus\Html
+ * @package ToolkitPlus\Html
  */
 class Html5 extends Html
 {

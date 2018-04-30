@@ -6,7 +6,7 @@
  * Time: 上午1:45
  */
 
-namespace Inhere\LibraryPlus\Files\Compress;
+namespace ToolkitPlus\File\Compress;
 
 use Inhere\Exceptions\FileNotFoundException;
 use Inhere\Exceptions\FileSystemException;
@@ -17,7 +17,7 @@ use PharData;
 
 /**
  * Class GzipCompressor
- * @package Inhere\LibraryPlus\Files\Compress
+ * @package ToolkitPlus\File\Compress
  */
 class GzipCompressor extends AbstractCompressor
 {

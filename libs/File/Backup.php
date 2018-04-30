@@ -6,13 +6,13 @@
  * Time: 10:33
  */
 
-namespace Inhere\LibraryPlus\Files;
+namespace ToolkitPlus\File;
 
 use Inhere\Library\Files\FileFinder;
 
 /**
  * Class Backup
- * @package Inhere\LibraryPlus\Files
+ * @package ToolkitPlus\File
  * ```
  * $bk = new Backup;
  * ```

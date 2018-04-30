@@ -7,13 +7,13 @@
  * File: Client.php
  */
 
-namespace Inhere\LibraryPlus\Env;
+namespace ToolkitPlus\Env;
 
 
 /**
  * 客户端信息(e.g. 浏览器)
  * Class Client
- * @package Inhere\LibraryPlus\Env
+ * @package ToolkitPlus\Env
  * @property string uri
  * @property string method
  * @property string conn

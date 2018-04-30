@@ -8,7 +8,7 @@
  * file: Element.php
  */
 
-namespace Inhere\LibraryPlus\Html;
+namespace ToolkitPlus\Html;
 
 use Inhere\Exceptions\InvalidConfigException;
 use Inhere\Library\StdObject;
@@ -32,7 +32,7 @@ var_dump((string)$form);
 
 /**
  * Class Element
- * @package Inhere\LibraryPlus\Html
+ * @package ToolkitPlus\Html
  */
 class Element extends StdObject
 {

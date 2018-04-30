@@ -6,7 +6,7 @@
  * Time: 下午10:55
  */
 
-namespace Inhere\LibraryPlus\Network;
+namespace ToolkitPlus\Network;
 
 /**
  * Class Telnet

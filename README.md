@@ -1,15 +1,6 @@
-# php library plus
+# php toolkit plus
 
-php的一些有用的工具库实现。 
-
-基础库： 
-
-- 数据收集器(in `inhere/library`)
-- 依赖注入容器(in `inhere/library`)
-- 基础文件系统工具(in `inhere/library`)
-- 各种帮助类库(in `inhere/library`)
-
-扩展库：
+php的一些有用的扩展工具库实现。 
 
 - 静态资源加载
 - 认证

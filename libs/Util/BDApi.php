@@ -7,7 +7,7 @@
  * BDApi.php baidu public api
  */
 
-namespace Inhere\LibraryPlus\Utils;
+namespace ToolkitPlus\Util;
 
 use Inhere\Library\Helpers\CurlHelper;
 

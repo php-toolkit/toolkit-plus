@@ -6,11 +6,11 @@
  * Time: 上午2:14
  */
 
-namespace Inhere\LibraryPlus\Files\Compress;
+namespace ToolkitPlus\File\Compress;
 
 /**
  * Class TgzCompressor
- * @package Inhere\LibraryPlus\Files\Compress
+ * @package ToolkitPlus\File\Compress
  */
 class TgzCompressor extends GzipCompressor
 {

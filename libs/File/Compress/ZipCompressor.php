@@ -6,7 +6,7 @@
  * Time: 下午6:23
  */
 
-namespace Inhere\LibraryPlus\Files\Compress;
+namespace ToolkitPlus\File\Compress;
 
 use Inhere\Exceptions\FileSystemException;
 use Inhere\Exceptions\NotFoundException;
@@ -15,7 +15,7 @@ use ZipArchive;
 
 /**
  * Class ZipCompressor
- * @package Inhere\LibraryPlus\Files\Compress
+ * @package ToolkitPlus\File\Compress
  */
 class ZipCompressor extends AbstractCompressor
 {

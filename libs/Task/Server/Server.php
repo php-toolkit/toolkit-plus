@@ -6,16 +6,16 @@
  * Time: 下午11:04
  */
 
-namespace Inhere\LibraryPlus\Task\Server;
+namespace ToolkitPlus\Task\Server;
 
 use Inhere\Library\process\ProcessLogger;
 use Inhere\Library\queue\QueueFactory;
 use Inhere\Library\queue\QueueInterface;
-use Inhere\LibraryPlus\Task\Base;
+use ToolkitPlus\Task\Base;
 
 /**
  * Class Server - task server
- * @package Inhere\LibraryPlus\Task\Server
+ * @package ToolkitPlus\Task\Server
  */
 class Server extends Base
 {

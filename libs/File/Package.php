@@ -6,14 +6,14 @@
  * Time: 下午3:21
  */
 
-namespace Inhere\LibraryPlus\Files;
+namespace ToolkitPlus\File;
 
-use Inhere\LibraryPlus\Files\Compress\AbstractCompressor;
+use ToolkitPlus\File\Compress\AbstractCompressor;
 
 /**
  * dir compress | file uncompressed
  * Class Compress
- * @package Inhere\LibraryPlus\Files
+ * @package ToolkitPlus\File
  */
 class Package
 {

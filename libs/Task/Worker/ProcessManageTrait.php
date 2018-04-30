@@ -6,7 +6,7 @@
  * Time: 10:10
  */
 
-namespace Inhere\LibraryPlus\Task\Worker;
+namespace ToolkitPlus\Task\Worker;
 
 use Inhere\Library\Helpers\Cli;
 use Inhere\Library\process\ProcessLogger;
@@ -15,7 +15,7 @@ use Inhere\Library\queue\QueueInterface;
 
 /**
  * Class ProcessManageTrait
- * @package Inhere\LibraryPlus\Task\Worker
+ * @package ToolkitPlus\Task\Worker
  * @property QueueInterface $queue
  */
 trait ProcessManageTrait

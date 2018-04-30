@@ -6,13 +6,13 @@
  * Time: 13:11
  */
 
-namespace Inhere\LibraryPlus\Html;
+namespace ToolkitPlus\Html;
 
 use Inhere\Exceptions\InvalidConfigException;
 
 /**
  * Class Pagination
- * @package Inhere\LibraryPlus\Html
+ * @package ToolkitPlus\Html
  */
 class Pagination
 {

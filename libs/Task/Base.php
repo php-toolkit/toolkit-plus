@@ -6,7 +6,7 @@
  * Time: 上午1:52
  */
 
-namespace Inhere\LibraryPlus\Task;
+namespace ToolkitPlus\Task;
 
 use Inhere\Library\Helpers\Cli;
 use Inhere\Library\process\ProcessLogger;
@@ -15,7 +15,7 @@ use Inhere\Library\Traits\ConfigTrait;
 
 /**
  * Class Base
- * @package Inhere\LibraryPlus\Task
+ * @package ToolkitPlus\Task
  */
 abstract class Base
 {

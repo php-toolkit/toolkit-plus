@@ -7,7 +7,7 @@
  * Use: 主要功能是 html 标签元素创建
  */
 
-namespace Inhere\LibraryPlus\Html;
+namespace ToolkitPlus\Html;
 
 //use Inhere\Library\Helpers\ArrHelper;
 

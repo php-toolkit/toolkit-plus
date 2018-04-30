@@ -32,7 +32,7 @@ $port = $argv[2] ?? 80;
 
 printf("Connect to the server {$host}:{$port}");
 
-$tt = new \Inhere\LibraryPlus\Network\Telnet($host, $port);
+$tt = new \ToolkitPlus\Network\Telnet($host, $port);
 
 // var_dump($tt);die;
 

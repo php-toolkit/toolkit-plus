@@ -6,11 +6,11 @@
  * Time: 上午1:52
  */
 
-namespace Inhere\LibraryPlus\Task;
+namespace ToolkitPlus\Task;
 
 /**
  * Class Client
- * @package Inhere\LibraryPlus\Task
+ * @package ToolkitPlus\Task
  */
 class Client
 {

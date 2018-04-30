@@ -6,11 +6,11 @@
  * Time: 下午9:50
  */
 
-namespace Inhere\LibraryPlus\Task\Worker;
+namespace ToolkitPlus\Task\Worker;
 
 /**
  * Class TaskHandleTrait
- * @package Inhere\LibraryPlus\Task\Worker
+ * @package ToolkitPlus\Task\Worker
  */
 trait TaskHandleTrait
 {

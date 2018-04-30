@@ -8,7 +8,7 @@
  * file that was distributed with this source code.
  */
 
-namespace Inhere\LibraryPlus\Log\Handlers;
+namespace ToolkitPlus\Log\Handlers;
 
 use Monolog\Handler\AbstractProcessingHandler;
 use Monolog\Logger;

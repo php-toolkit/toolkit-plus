@@ -6,11 +6,11 @@
  * Time: 下午4:53
  */
 
-namespace Inhere\LibraryPlus\Auth;
+namespace ToolkitPlus\Auth;
 
 /**
  * Interface CheckAccessInterface
- * @package Inhere\LibraryPlus\Auth
+ * @package ToolkitPlus\Auth
  */
 interface CheckAccessInterface
 {

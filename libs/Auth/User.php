@@ -6,7 +6,7 @@
  * Time: 21:57
  */
 
-namespace Inhere\LibraryPlus\Auth;
+namespace ToolkitPlus\Auth;
 
 use Inhere\Exceptions\InvalidArgumentException;
 use Inhere\Exceptions\InvalidConfigException;
@@ -16,7 +16,7 @@ use Inhere\Library\Helpers\Obj;
 
 /**
  * Class User
- * @package Inhere\LibraryPlus\Auth
+ * @package ToolkitPlus\Auth
  * @property int id
  */
 class User extends SimpleCollection

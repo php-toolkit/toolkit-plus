@@ -6,13 +6,13 @@
  * Time: 16:46
  */
 
-namespace Inhere\LibraryPlus\Log;
+namespace ToolkitPlus\Log;
 
 use Psr\Log\LogLevel;
 
 /**
  * Class AbstractHandler
- * @package Inhere\LibraryPlus\Log
+ * @package ToolkitPlus\Log
  */
 abstract class AbstractHandler implements HandlerInterface
 {

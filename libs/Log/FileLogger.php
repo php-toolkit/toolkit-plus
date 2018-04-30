@@ -6,7 +6,7 @@
  * Time: 14:17
  */
 
-namespace Inhere\LibraryPlus\Log;
+namespace ToolkitPlus\Log;
 
 use Inhere\Exceptions\FileSystemException;
 use Inhere\Library\Helpers\PhpHelper;

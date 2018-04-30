@@ -1,18 +1,18 @@
 <?php
 
-namespace Inhere\LibraryPlus\Task\Worker;
+namespace ToolkitPlus\Task\Worker;
 
 use Inhere\Library\Helpers\Cli;
 use Inhere\Library\Helpers\PhpHelper;
 use Inhere\Library\process\ProcessLogger;
 use Inhere\Library\queue\QueueFactory;
 use Inhere\Library\queue\SysVQueue;
-use Inhere\LibraryPlus\Task\Base;
-use Inhere\LibraryPlus\Task\ProcessControlTrait;
+use ToolkitPlus\Task\Base;
+use ToolkitPlus\Task\ProcessControlTrait;
 
 /**
  * Class Manager - task workers manager
- * @package Inhere\LibraryPlus\Task\Worker
+ * @package ToolkitPlus\Task\Worker
  */
 class Manager extends Base
 {

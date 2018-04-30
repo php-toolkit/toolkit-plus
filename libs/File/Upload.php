@@ -7,11 +7,11 @@
  * 文件上传
  */
 
-namespace Inhere\LibraryPlus\Files;
+namespace ToolkitPlus\File;
 
 /**
  * Class Upload
- * @package Inhere\LibraryPlus\Files
+ * @package ToolkitPlus\File
  */
 class Upload
 {

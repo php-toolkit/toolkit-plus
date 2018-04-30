@@ -6,7 +6,7 @@
  * Time: 上午12:33
  */
 
-namespace Inhere\LibraryPlus\Asset;
+namespace ToolkitPlus\Asset;
 
 /**
  * Class AssetHelper

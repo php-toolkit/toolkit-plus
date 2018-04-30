@@ -6,11 +6,11 @@
  * Time: 上午10:08
  */
 
-namespace Inhere\LibraryPlus\Task;
+namespace ToolkitPlus\Task;
 
 /**
  * Class CronTab
- * @package Inhere\LibraryPlus\Task
+ * @package ToolkitPlus\Task
  */
 class CronTab
 {

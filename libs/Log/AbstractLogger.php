@@ -6,15 +6,15 @@
  * Time: 15:19
  */
 
-namespace Inhere\LibraryPlus\Log;
+namespace ToolkitPlus\Log;
 
 use Inhere\Exceptions\FileSystemException;
-use Inhere\LibraryPlus\Log\Handlers\StreamHandler;
+use ToolkitPlus\Log\Handlers\StreamHandler;
 use Psr\Log\LoggerInterface;
 
 /**
  * Class AbstractLogger
- * @package Inhere\LibraryPlus\Log
+ * @package ToolkitPlus\Log
  */
 abstract class AbstractLogger implements LoggerInterface
 {

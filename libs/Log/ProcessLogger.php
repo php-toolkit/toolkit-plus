@@ -6,7 +6,7 @@
  * Time: 下午6:47
  */
 
-namespace Inhere\LibraryPlus\Log;
+namespace ToolkitPlus\Log;
 
 use Inhere\Library\Files\Directory;
 use Inhere\Library\Helpers\Cli;

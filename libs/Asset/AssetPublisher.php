@@ -6,7 +6,7 @@
  * Time: 下午9:53
  */
 
-namespace Inhere\LibraryPlus\Asset;
+namespace ToolkitPlus\Asset;
 
 use Inhere\Exceptions\FileSystemException;
 use Inhere\Exceptions\InvalidArgumentException;
