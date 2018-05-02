@@ -8,7 +8,7 @@
 
 namespace ToolkitPlus\Task\Worker;
 
-use Inhere\Library\Helpers\Cli;
+use Toolkit\Sys\Cli;
 
 /**
  * Class OptionAndConfigTrait

@@ -12,7 +12,7 @@
  *     'pageSize'  => $pageSize,
  *     'total'     => $total
  * ];
- * $paging    = new \Inhere\Library\html\Paging($params);
+ * $paging    = new \ToolkitPlus\Html\Paging($params);
  * $pagingString = $paging->useStyle()->toString();
  */
 

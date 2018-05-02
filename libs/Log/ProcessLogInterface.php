@@ -10,7 +10,7 @@ namespace ToolkitPlus\Log;
 
 /**
  * Interface ProcessLogInterface
- * @package Inhere\Library\task
+ * @package ToolkitPlus\Log
  */
 interface ProcessLogInterface
 {

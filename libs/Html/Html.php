@@ -7,13 +7,11 @@
  * Use: 主要功能是 html 标签元素创建
  */
 
-namespace Inhere\LibraryPlus\Html;
-
-//use Inhere\Library\Helpers\ArrHelper;
+namespace ToolkitPlus\Html;
 
 /**
  * Class Html
- * @package Inhere\Library\html
+ * @package ToolkitPlus\html
  */
 class Html
 {
@@ -279,8 +277,8 @@ EOF;
 
     /**
      * 属性添加
-     * @param string $attr
-     * @param string $value
+     * @param string|array $attr
+     * @param string|bool $value
      * @return string
      */
     protected static function _buildAttr($attr, $value = '')
@@ -295,6 +293,7 @@ EOF;
         }
 
         if (\is_array($attr)) {
+            /** @var array $attr */
             $attrs = [];
 
             foreach ($attr as $name => $val) {

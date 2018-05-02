@@ -20,7 +20,7 @@ use MatthiasMullie\Minify;
 
 /**
  * Class AssetLoad
- * @package Inhere\Library\asset
+ * @package ToolkitPlus\Asset
  * usage (in template file):
  * <?php
  * echo AssetLoad::css([

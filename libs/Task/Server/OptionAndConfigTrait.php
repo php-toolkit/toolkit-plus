@@ -8,7 +8,7 @@
 
 namespace ToolkitPlus\Task\Server;
 
-use Inhere\Library\Helpers\Cli;
+use Toolkit\Sys\Cli;
 
 /**
  * Class OptionAndConfigTrait
@@ -30,6 +30,10 @@ trait OptionAndConfigTrait
      * @var string
      */
     private $command;
+
+    protected $workerNum = 2;
+
+    protected $maxLifetime = 3600;
 
     /**
      * @var array

@@ -8,7 +8,7 @@
 
 namespace ToolkitPlus\Task\Worker;
 
-use Inhere\Library\Helpers\Cli;
+use Toolkit\Sys\Cli;
 use Inhere\Library\process\ProcessLogger;
 use Inhere\Library\process\ProcessUtil;
 use Inhere\Library\queue\QueueInterface;

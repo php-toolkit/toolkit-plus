@@ -8,10 +8,10 @@
 
 namespace ToolkitPlus\Task;
 
-use Inhere\Library\Helpers\Cli;
+use Toolkit\Sys\Cli;
 use Inhere\Library\process\ProcessLogger;
 use Inhere\Library\queue\QueueInterface;
-use Inhere\Library\Traits\ConfigTrait;
+use Toolkit\Traits\Config\ConfigTrait;
 
 /**
  * Class Base

@@ -10,7 +10,7 @@ namespace ToolkitPlus\Asset;
 
 /**
  * Class AssetHelper
- * @package Inhere\Library\asset
+ * @package ToolkitPlus\Asset
  */
 class AssetHelper
 {

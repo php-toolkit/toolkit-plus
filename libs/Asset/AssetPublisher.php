@@ -19,7 +19,7 @@ use Toolkit\ObjUtil\Configurable;
 /**
  * 资源发布 -- 将资源发布到可访问目录(e.g. from vendor to web dir)
  * Class AssetPublisher
- * @package Inhere\Library\asset
+ * @package ToolkitPlus\Asset
  */
 class AssetPublisher extends Configurable
 {

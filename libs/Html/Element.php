@@ -8,10 +8,11 @@
  * file: Element.php
  */
 
-namespace Inhere\LibraryPlus\Html;
+namespace ToolkitPlus\Html;
 
-use Inhere\Exceptions\InvalidConfigException;
-use Inhere\Library\StdObject;
+use Toolkit\ObjUtil\Configurable;
+use Toolkit\ObjUtil\Traits\ArrayAccessByPropertyTrait;
+use Traversable;
 
 /*
 
@@ -27,15 +28,16 @@ $div2 = $form->addChild('div','test-iddf',['id'=>'div-2']);
 $div2->addContent('add content');
 
 var_dump((string)$form);
-
 */
 
 /**
  * Class Element
- * @package Inhere\LibraryPlus\Html
+ * @package ToolkitPlus\Html
  */
-class Element extends StdObject
+class Element extends Configurable implements \ArrayAccess, \IteratorAggregate
 {
+    use ArrayAccessByPropertyTrait;
+
     /**
      * tag name
      * @var string
@@ -97,11 +99,12 @@ class Element extends StdObject
 
     /**
      * generate element sting
+     * @throws \InvalidArgumentException
      */
     public function getString()
     {
         if (!$name = strtolower(trim($this->name))) {
-            throw new InvalidConfigException('请设置标签元素的名称！');
+            throw new \InvalidArgumentException('请设置标签元素的名称！');
         }
 
         $attrString = $this->getAttrs(true);
@@ -114,7 +117,7 @@ class Element extends StdObject
         if ($parent = $this->parent) {
 
             if ($this->isAloneTag($parent->name)) {
-                throw new InvalidConfigException('不能设置单标签元素 ' . $parent->name . '为父元素！');
+                throw new \InvalidArgumentException('不能设置单标签元素 ' . $parent->name . '为父元素！');
             }
 
             $parent->setContent($eleString);
@@ -126,9 +129,17 @@ class Element extends StdObject
         return $eleString;
     }
 
+    /**
+     * @return string
+     */
     public function __toString()
     {
-        return $this->getString();
+        try {
+            return $this->getString();
+        } catch (\Throwable $e) {
+            // return $e->getMessage();
+            return '';
+        }
     }
 
     /**
@@ -292,9 +303,9 @@ class Element extends StdObject
     }
 
     /**
-     * @return string
+     * @return array
      */
-    public function getChildAddRules()
+    public function getChildAddRules(): array
     {
         return [
             self::AFTER_TEXT,
@@ -490,7 +501,7 @@ class Element extends StdObject
     {
         if ($this->existsAttr($name)) {
 
-            if ($name == 'class') {
+            if ($name === 'class') {
                 $separator = ' ';
             }
 
@@ -557,13 +568,15 @@ class Element extends StdObject
      * @param  array $old [原属性组]
      * @param mixed $new [传入的新增属性组]
      * @param  array $attrs [需要合并的属性]
-     * @return string
+     * @return array
      */
     public function attrMerge($old, $new, array $attrs = [])
     {
         if (!$old && !$new) {
             return [];
-        } else if (!$new) {
+        }
+
+        if (!$new) {
             return $old;
         }
 
@@ -594,5 +607,16 @@ class Element extends StdObject
     }
 
 
+    /**
+     * Retrieve an external iterator
+     * @link http://php.net/manual/en/iteratoraggregate.getiterator.php
+     * @return Traversable An instance of an object implementing <b>Iterator</b> or
+     * <b>Traversable</b>
+     * @since 5.0.0
+     */
+    public function getIterator()
+    {
+        // TODO: Implement getIterator() method.
+    }
 }// end class Element
 

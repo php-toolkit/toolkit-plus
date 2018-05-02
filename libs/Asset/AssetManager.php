@@ -19,7 +19,7 @@ use ToolkitPlus\Html\Html;
  * - 允许设定加载位置
  * - 自动注入到HTML中指定位置
  * Class AssetManager
- * @package Inhere\Library\asset
+ * @package ToolkitPlus\Asset
  */
 class AssetManager extends Configurable
 {

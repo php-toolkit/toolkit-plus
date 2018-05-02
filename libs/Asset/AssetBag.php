@@ -14,7 +14,7 @@ use Toolkit\ObjUtil\Traits\PropertyAccessByGetterSetterTrait;
  * 命名资源 -- 保存了指定名称的一组资源 (reference Yii2 AssetBundle)
  * AssetManager::loadAsset($name, $assets)
  * Class AssetBag
- * @package Inhere\Library\asset
+ * @package ToolkitPlus\Asset
  */
 class AssetBag
 {

@@ -9,7 +9,7 @@
 
 namespace ToolkitPlus\Util;
 
-use Inhere\Library\Helpers\CurlHelper;
+use Toolkit\Web\Helper\CurlHelper;
 
 /**
  * Baidu 提供的免费api,查询一些公共信息(ip, 天气...)

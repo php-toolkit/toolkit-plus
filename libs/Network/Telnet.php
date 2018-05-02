@@ -10,7 +10,7 @@ namespace ToolkitPlus\Network;
 
 /**
  * Class Telnet
- * @package Inhere\Library\network
+ * @package ToolkitPlus\Network
  */
 class Telnet
 {

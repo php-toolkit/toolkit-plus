@@ -9,7 +9,7 @@
 
 namespace ToolkitPlus\Util;
 
-use Inhere\Library\Helpers\CurlHelper;
+use Toolkit\WebUtil\Helper\CurlHelper;
 
 /**
  * Baidu 天气/空气质量查询

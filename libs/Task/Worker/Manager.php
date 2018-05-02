@@ -2,8 +2,8 @@
 
 namespace ToolkitPlus\Task\Worker;
 
-use Inhere\Library\Helpers\Cli;
-use Inhere\Library\Helpers\PhpHelper;
+use Toolkit\Sys\Cli;
+use Toolkit\PhpUtil\PhpHelper;
 use Inhere\Library\process\ProcessLogger;
 use Inhere\Library\queue\QueueFactory;
 use Inhere\Library\queue\SysVQueue;
@@ -115,10 +115,6 @@ class Manager extends Base
             'toSyslog' => false,
         ],
     ];
-
-    protected $workerNum = 2;
-
-    protected $maxLifetime = 3600;
 
     /**
      * TaskManager constructor.
@@ -246,7 +242,7 @@ class Manager extends Base
      * @param string $msg
      * @param int $code The exit code
      */
-    protected function showHelp($msg = '', $code = 0)
+    public function showHelp($msg = '', $code = 0)
     {
         $usage = Cli::color('USAGE:', 'brown');
         $commands = Cli::color('COMMANDS:', 'brown');
