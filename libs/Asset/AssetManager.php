@@ -8,9 +8,10 @@
 
 namespace ToolkitPlus\Asset;
 
-use Inhere\Exceptions\InvalidArgumentException;
-use Inhere\Library\Helpers\UrlHelper;
-use Inhere\Library\StdObject;
+use InvalidArgumentException;
+use Toolkit\StrUtil\UrlHelper;
+use Toolkit\ObjUtil\Configurable;
+use Toolkit\ObjUtil\Traits\PropertyAccessByGetterSetterTrait;
 use ToolkitPlus\Html\Html;
 
 /**
@@ -20,8 +21,10 @@ use ToolkitPlus\Html\Html;
  * Class AssetManager
  * @package Inhere\Library\asset
  */
-class AssetManager extends StdObject
+class AssetManager extends Configurable
 {
+    use PropertyAccessByGetterSetterTrait;
+
     /**
      * asset bag list
      * @var array

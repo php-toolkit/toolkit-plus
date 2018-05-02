@@ -8,15 +8,13 @@
 
 namespace ToolkitPlus\Asset;
 
-use Inhere\Exceptions\FileNotFoundException;
-use Inhere\Exceptions\FileSystemException;
-use Inhere\Exceptions\InvalidArgumentException;
-use Inhere\Exceptions\InvalidOptionException;
-use Inhere\Exceptions\NotFoundException;
-use Inhere\Library\Files\Directory;
-use Inhere\Library\Files\File;
-use Inhere\Library\Helpers\UrlHelper;
-use Inhere\Library\StdObject;
+use Toolkit\File\Exception\FileNotFoundException;
+use Toolkit\File\Exception\FileSystemException;
+use InvalidArgumentException;
+use Toolkit\File\Directory;
+use Toolkit\File\File;
+use Toolkit\StrUtil\UrlHelper;
+use Toolkit\ObjUtil\Configurable;
 use ToolkitPlus\Html\Html;
 use MatthiasMullie\Minify;
 
@@ -29,7 +27,7 @@ use MatthiasMullie\Minify;
  *  'xx/zz.css',
  * ])->dump();
  */
-class AssetLoad extends StdObject
+class AssetLoad extends Configurable
 {
     /**
      * 网站域名url地址

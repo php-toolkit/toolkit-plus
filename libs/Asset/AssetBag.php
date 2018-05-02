@@ -8,7 +8,7 @@
 
 namespace ToolkitPlus\Asset;
 
-use Inhere\Library\StdObject;
+use Toolkit\ObjUtil\Traits\PropertyAccessByGetterSetterTrait;
 
 /**
  * 命名资源 -- 保存了指定名称的一组资源 (reference Yii2 AssetBundle)
@@ -16,8 +16,10 @@ use Inhere\Library\StdObject;
  * Class AssetBag
  * @package Inhere\Library\asset
  */
-class AssetBag extends StdObject
+class AssetBag
 {
+    use PropertyAccessByGetterSetterTrait;
+
     /**
      * asset map name
      * @var string

@@ -10,7 +10,7 @@
 
 namespace ToolkitPlus\Html;
 
-use Inhere\Library\StdObject;
+use Toolkit\ObjUtil\StdObject;
 
 /**
  * Class Elements

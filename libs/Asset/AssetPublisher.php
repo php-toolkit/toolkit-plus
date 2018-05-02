@@ -8,20 +8,20 @@
 
 namespace ToolkitPlus\Asset;
 
-use Inhere\Exceptions\FileSystemException;
-use Inhere\Exceptions\InvalidArgumentException;
-use Inhere\Library\Files\Directory;
-use Inhere\Library\Files\File;
-use Inhere\Library\Files\FileFinder;
-use Inhere\Library\Helpers\ArrayHelper;
-use Inhere\Library\StdObject;
+use Toolkit\File\Exception\FileSystemException;
+use InvalidArgumentException;
+use Toolkit\File\Directory;
+use Toolkit\File\File;
+use Toolkit\File\FileFinder;
+use Toolkit\ArrUtil\ArrayHelper;
+use Toolkit\ObjUtil\Configurable;
 
 /**
  * 资源发布 -- 将资源发布到可访问目录(e.g. from vendor to web dir)
  * Class AssetPublisher
  * @package Inhere\Library\asset
  */
-class AssetPublisher extends StdObject
+class AssetPublisher extends Configurable
 {
     /**
      * asset source base path

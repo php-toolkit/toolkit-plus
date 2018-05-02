@@ -8,9 +8,9 @@
 
 namespace ToolkitPlus\Log;
 
-use Inhere\Library\Files\Directory;
-use Inhere\Library\Helpers\Cli;
-use Inhere\Library\Helpers\FormatHelper;
+use Toolkit\File\Directory;
+use Toolkit\Sys\Cli;
+use Toolkit\Helper\FormatHelper;
 
 /**
  * Class ProcessLogger

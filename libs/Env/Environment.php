@@ -9,7 +9,7 @@
 
 namespace ToolkitPlus\Env;
 
-use Inhere\Library\Collections\SimpleCollection;
+use Toolkit\Collection\SimpleCollection;
 
 /**
  * 环境信息

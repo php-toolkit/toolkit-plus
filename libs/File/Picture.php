@@ -25,7 +25,7 @@ use Inhere\Exceptions\ExtensionMissException;
 use Inhere\Exceptions\FileSystemException;
 use Inhere\Exceptions\InvalidArgumentException;
 use Inhere\Exceptions\InvalidConfigException;
-use Inhere\Library\Files\Directory;
+use Toolkit\File\Directory;
 
 /**
  * Class Picture

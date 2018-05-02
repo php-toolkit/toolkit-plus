@@ -8,14 +8,14 @@
 
 namespace ToolkitPlus\Log;
 
-use Inhere\Exceptions\FileSystemException;
-use Inhere\Library\Helpers\PhpHelper;
+use Toolkit\File\Exception\FileSystemException;
+use Toolkit\PhpUtil\PhpHelper;
 use Psr\Log\LoggerInterface;
 
 /**
  * simple file logger handler
  * Class LiteLogger
- * @package Inhere\Library\Utils
+ * @package ToolkitPlus\Log
  * ```
  * $config = [...];
  * $logger = LiteLogger::make($config);

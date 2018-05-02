@@ -10,7 +10,7 @@ namespace ToolkitPlus\File\Compress;
 
 use Inhere\Exceptions\FileSystemException;
 use Inhere\Exceptions\NotFoundException;
-use Inhere\Library\Files\FileSystem;
+use Toolkit\File\FileSystem;
 use ZipArchive;
 
 /**

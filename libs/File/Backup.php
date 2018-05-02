@@ -8,7 +8,7 @@
 
 namespace ToolkitPlus\File;
 
-use Inhere\Library\Files\FileFinder;
+use Toolkit\File\FileFinder;
 
 /**
  * Class Backup

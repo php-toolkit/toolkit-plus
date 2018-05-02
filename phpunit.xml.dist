@@ -11,7 +11,7 @@
          syntaxCheck="false"
 >
     <testsuites>
-        <testsuite name="Php Library Test Suite">
+        <testsuite name="Php Toolkit-plus Test Suite">
             <directory>test/</directory>
         </testsuite>
     </testsuites>

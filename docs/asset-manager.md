@@ -3,13 +3,13 @@
 ## AssetLoad
 
 this is a asset load tool.
-class is at `Inhere\Library\asset\AssetLoad`
+class is at `ToolkitPlus\Asset\AssetLoad`
 
 usage:
 
 ```
 <?php
-use Inhere\Library\asset\AssetLoad;
+use ToolkitPlus\Asset\AssetLoad;
 
 echo AssetLoad::css([
     'xx/ss.css',
@@ -29,7 +29,7 @@ echo AssetLoad::js([
 It can also compress asset:
 
 ```
-use Inhere\Library\asset\AssetLoad;
+use ToolkitPlus\Asset\AssetLoad;
 
 $config = [
     'useFullUrl' => false,
@@ -63,7 +63,7 @@ $as1 = AssetLoad::js([
 
 ## AssetManager
 
-class is at `Inhere\Library\asset\AssetManager`
+class is at `ToolkitPlus\Asset\AssetManager`
 
 usage:
 
@@ -96,12 +96,12 @@ echo $html;
 
 ## AssetPublisher
 
-class is at `Inhere\Library\asset\AssetPublisher`
+class is at `ToolkitPlus\Asset\AssetPublisher`
 
 usage:
 
 ```
-use Inhere\Library\asset\AssetPublisher;
+use ToolkitPlus\Asset\AssetPublisher;
 
 $publisher = new AssetPublisher([
     'sourcePath'  => '/var/www/project/vendor/bower',

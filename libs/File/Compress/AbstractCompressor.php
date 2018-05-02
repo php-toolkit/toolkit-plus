@@ -8,16 +8,18 @@
 
 namespace ToolkitPlus\File\Compress;
 
-use Inhere\Exceptions\InvalidArgumentException;
-use Inhere\Library\Files\FileFinder;
-use Inhere\Library\StdObject;
+use InvalidArgumentException;
+use Toolkit\File\FileFinder;
+use Toolkit\ObjUtil\Traits\PropertyAccessByGetterSetterTrait;
 
 /**
  * Class AbstractCompressor
  * @package ToolkitPlus\File\Compress
  */
-abstract class AbstractCompressor extends StdObject
+abstract class AbstractCompressor
 {
+    use PropertyAccessByGetterSetterTrait;
+
     /**
      * @var string
      */

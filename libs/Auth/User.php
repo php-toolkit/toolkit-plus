@@ -8,11 +8,10 @@
 
 namespace ToolkitPlus\Auth;
 
-use Inhere\Exceptions\InvalidArgumentException;
-use Inhere\Exceptions\InvalidConfigException;
-use Inhere\Library\Collections\CollectionInterface;
-use Inhere\Library\Collections\SimpleCollection;
-use Inhere\Library\Helpers\Obj;
+use InvalidArgumentException;
+use Toolkit\Collection\CollectionInterface;
+use Toolkit\Collection\SimpleCollection;
+use Toolkit\ObjUtil\Obj;
 
 /**
  * Class User
