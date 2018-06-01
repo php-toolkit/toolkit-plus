@@ -100,7 +100,7 @@ abstract class AbstractHandler implements HandlerInterface
     /**
      * @return string
      */
-    protected function getContextLog()
+    protected function getContextLog(): string
     {
         return '';
     }
@@ -112,7 +112,7 @@ abstract class AbstractHandler implements HandlerInterface
      * @param array $except except category
      * @return array
      */
-    public static function filterLogs(array $logs, $levels = 0, array $categories = [], array $except = [])
+    public static function filterLogs(array $logs, $levels = 0, array $categories = [], array $except = []): array
     {
         foreach ($logs as $i => $message) {
             if ($levels && !($levels & $message[1])) {
@@ -154,7 +154,7 @@ abstract class AbstractHandler implements HandlerInterface
      * @param  int|string $level Level or level name
      * @return self
      */
-    public function setLevel($level)
+    public function setLevel($level): self
     {
         $this->level = Logger::toNumberLevel($level);
 
@@ -165,7 +165,7 @@ abstract class AbstractHandler implements HandlerInterface
      * Gets minimum logging level at which this handler will be triggered.
      * @return int
      */
-    public function getLevel()
+    public function getLevel(): int
     {
         return $this->level;
     }

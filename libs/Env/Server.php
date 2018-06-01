@@ -111,7 +111,7 @@ class Server extends AbstractEnv
      * @param   bool $full
      * @return  string
      */
-    public function getEntry($full = true)
+    public function getEntry($full = true): string
     {
         $key = $full ? 'scriptFilename' : 'scriptName';
 
@@ -135,7 +135,7 @@ class Server extends AbstractEnv
      * @param  boolean $full
      * @return string
      */
-    public function getRoot($full = true)
+    public function getRoot($full = true): string
     {
         return \dirname($this->getEntry($full));
     }
@@ -158,7 +158,7 @@ class Server extends AbstractEnv
      * @see  https://gist.github.com/asika32764/90e49a82c124858c9e1a
      * @return  bool
      */
-    public function isUnix()
+    public function isUnix(): bool
     {
         $uNames = array('CYG', 'DAR', 'FRE', 'HP-', 'IRI', 'LIN', 'NET', 'OPE', 'SUN', 'UNI');
 
@@ -170,7 +170,7 @@ class Server extends AbstractEnv
      * @param  string $str
      * @return boolean
      */
-    public function isUrl($str)
+    public function isUrl($str): bool
     {
         $rule = '/^(http|https|ftp):\/\/([A-Z0-9][A-Z0-9_-]*(?:\.[A-Z0-9][A-Z0-9_-]*)+):?(\d+)?\/?/i';
 

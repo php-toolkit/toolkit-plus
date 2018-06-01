@@ -8,7 +8,7 @@
 
 namespace ToolkitPlus\Task;
 
-use Inhere\Library\process\ProcessUtil;
+use Toolkit\Sys\ProcessUtil;
 
 /**
  * Class ProcessControlTrait
@@ -60,7 +60,7 @@ trait ProcessControlTrait
      * @param int $pid
      * @return bool
      */
-    protected function isRunning(int $pid)
+    protected function isRunning(int $pid): bool
     {
         if ($this->supportPC) {
             return ProcessUtil::isRunning($pid);
@@ -120,7 +120,7 @@ trait ProcessControlTrait
     /**
      * @return string
      */
-    public function getPidRole()
+    public function getPidRole(): string
     {
         return $this->isMaster ? 'Master' : 'Worker';
     }
@@ -149,7 +149,7 @@ trait ProcessControlTrait
      * @param string $pidFile
      * @return int
      */
-    protected function getPidFromFile($pidFile)
+    protected function getPidFromFile($pidFile): int
     {
         if ($pidFile && file_exists($pidFile)) {
             return (int)trim(file_get_contents($pidFile));

@@ -78,7 +78,7 @@ class Upload
      * @param string $dir
      * @return $this
      */
-    public function saveTo($name, $dir)
+    public function saveTo($name, $dir): self
     {
         return $this->fetch($name)->storeTo($dir);
     }
@@ -89,7 +89,7 @@ class Upload
      * @param string $file
      * @return $this
      */
-    public function saveAs($name, $file)
+    public function saveAs($name, $file): self
     {
         return $this->fetch($name)->storeAs($file);
     }
@@ -98,7 +98,7 @@ class Upload
      * @param $name
      * @return $this
      */
-    public function fetch($name)
+    public function fetch($name): self
     {
         if (!$name || !isset($this->_data[$name])) {
             $this->error = "name [$name] don't exists of the _FILES";
@@ -115,7 +115,7 @@ class Upload
      * @param $dir
      * @return $this
      */
-    public function storeTo($dir)
+    public function storeTo($dir): self
     {
         if (!$this->hasError()) {
             $this->moveToDir($this->result, $dir);
@@ -128,7 +128,7 @@ class Upload
      * @param $file
      * @return $this
      */
-    public function storeAs($file)
+    public function storeAs($file): self
     {
         if (!$this->hasError()) {
             $this->moveToFile($this->result, $file);
@@ -141,7 +141,7 @@ class Upload
      * @param array $sourceFile
      * @return array
      */
-    protected function handle($sourceFile)
+    protected function handle($sourceFile): array
     {
         if ($this->hasError()) {
             return [];
@@ -186,7 +186,7 @@ class Upload
      * @param string $targetDir 存储目录路径
      * @return Upload
      */
-    public function multi(array $names = [], $targetDir = '')
+    public function multi(array $names = [], $targetDir = ''): Upload
     {
         if (!$this->_data) {
             return $this;
@@ -211,7 +211,7 @@ class Upload
      * @param \Closure $nameHandler
      * @return array
      */
-    protected function _uploadHandle($sourceFile, $targetDir, \Closure $nameHandler = null)
+    protected function _uploadHandle($sourceFile, $targetDir, \Closure $nameHandler = null): array
     {
         if ($this->hasError()) {
             return [];
@@ -254,7 +254,7 @@ class Upload
      * @param   array $data The data array to decode.
      * @return  array
      */
-    protected function _decodeData(array $data)
+    protected function _decodeData(array $data): array
     {
         $result = [];
 
@@ -314,6 +314,7 @@ class Upload
      *      return date('Ymd'). '.' . $file['ext'];
      * };
      * @return bool|array
+     * @throws \Exception
      */
     private function moveToDir(array $file, $targetDir = '', \Closure $nameHandler = null)
     {
@@ -368,7 +369,7 @@ class Upload
      * @param $file
      * @return bool
      */
-    private function validateFile($file)
+    private function validateFile($file): bool
     {
         // check system error
         if ((int)$file['error'] !== 0) {
@@ -414,7 +415,7 @@ class Upload
     /**
      * @return bool
      */
-    public function hasError()
+    public function hasError(): bool
     {
         return $this->error !== null;
     }
@@ -422,7 +423,7 @@ class Upload
     /**
      * @return bool
      */
-    public function isOk()
+    public function isOk(): bool
     {
         return !$this->hasError();
     }
@@ -430,7 +431,7 @@ class Upload
     /**
      * @return bool
      */
-    public function isFail()
+    public function isFail(): bool
     {
         return $this->hasError();
     }
@@ -439,7 +440,7 @@ class Upload
      * 返回上传时发生的错误原因
      * @return string
      */
-    public function getError()
+    public function getError(): string
     {
         return $this->error;
     }
@@ -447,7 +448,7 @@ class Upload
     /**
      * @return array
      */
-    public function getConfig()
+    public function getConfig(): array
     {
         return $this->config;
     }
@@ -456,7 +457,7 @@ class Upload
      * @param array $config
      * @return $this
      */
-    public function setConfig(array $config)
+    public function setConfig(array $config): self
     {
         $this->config = array_merge($this->config, $config);
 
@@ -466,7 +467,7 @@ class Upload
     /**
      * @return array
      */
-    public function getUploadedFiles()
+    public function getUploadedFiles(): array
     {
         return $this->uploadedFiles;
     }

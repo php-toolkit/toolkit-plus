@@ -27,14 +27,13 @@ class ZipCompressor extends AbstractCompressor
     }
 
     /**
-     * @param string $sourcePath a dir will compress
+     * @param string|array $sourcePath a dir will compress
      * @param string $archiveFile zip file save path
      * @param bool $override
      * @return bool
      * @throws FileSystemException
      * @throws NotFoundException
-     * @throws \Inhere\Exceptions\IOException
-     * @throws \Inhere\Exceptions\InvalidArgumentException
+     * @throws \Toolkit\File\Exception\IOException
      */
     public function encode($sourcePath, $archiveFile, $override = true)
     {

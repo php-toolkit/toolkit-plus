@@ -33,6 +33,7 @@ class GzipCompressor extends AbstractCompressor
      * @param string $archiveFile zip file save path
      * @param bool $override
      * @return bool
+     * @throws \Toolkit\File\Exception\IOException
      * @throws FileSystemException
      * @throws NotFoundException
      * @throws \Inhere\Exceptions\IOException

@@ -108,6 +108,7 @@ class Pagination
     /**
      * @param array $options
      * @param array $text
+     * @throws \Inhere\Exceptions\InvalidConfigException
      */
     public function __construct(array $options = [], array $text = [])
     {
@@ -146,7 +147,7 @@ class Pagination
      * @param int $page
      * @return string
      */
-    public function getUrl($page = 1)
+    public function getUrl($page = 1): string
     {
         return $this->options['pageUrl'] . $this->separator . $this->options['pageKey'] . '=' . $page;
     }
@@ -196,7 +197,7 @@ class Pagination
     /**
      * @return array
      */
-    public function getOptions()
+    public function getOptions(): array
     {
         return $this->options;
     }
@@ -208,21 +209,21 @@ class Pagination
      */
     public function getOption($key, $default = null)
     {
-        return isset($this->options[$key]) ? $this->options[$key] : $default;
+        return $this->options[$key] ?? $default;
     }
 
     /**
      * @return string
      */
-    public function toString()
+    public function toString(): string
     {
-        return implode(' ', $this->html);
+        return \implode(' ', $this->html);
     }
 
     /**
      * @return array
      */
-    public function getHtml()
+    public function getHtml(): array
     {
         return $this->html;
     }
@@ -230,7 +231,7 @@ class Pagination
     /**
      * @return array
      */
-    public function getText()
+    public function getText(): array
     {
         return $this->text;
     }
@@ -238,7 +239,7 @@ class Pagination
     /**
      * @return array
      */
-    public function getData()
+    public function getData(): array
     {
         return [
             'pageTotal' => $this->pageTotal,

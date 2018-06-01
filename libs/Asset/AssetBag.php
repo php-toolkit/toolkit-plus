@@ -90,7 +90,7 @@ class AssetBag
     /**
      * @return string
      */
-    public function getName()
+    public function getName(): string
     {
         if (!$this->name) {
             $this->name = static::class;

@@ -115,6 +115,7 @@ class Picture
      * @param  array $waterOptions
      * @param  array $thumbOptions
      * @return static
+     * @throws \Inhere\Exceptions\ExtensionMissException
      */
     public static function make(array $waterOptions = [], array $thumbOptions = [])
     {
@@ -158,7 +159,7 @@ class Picture
      * @return Picture
      * @throws InvalidConfigException
      */
-    public function watermark($img, $outPath = '', $pos = '', $waterImg = '', $alpha = '', $text = '')
+    public function watermark($img, $outPath = '', $pos = '', $waterImg = '', $alpha = '', $text = ''): Picture
     {
         // 验证原图像 和 是否已有错误
         if (false === $this->_checkImage($img) || $this->hasError()) {
@@ -373,7 +374,7 @@ class Picture
      * @throws FileSystemException
      * @throws InvalidArgumentException
      */
-    public static function show($img)
+    public static function show($img): bool
     {
         if (!is_file($img) || !is_readable($img)) {
             throw new FileSystemException('image file don\'t exists or file is not readable!');
@@ -437,7 +438,7 @@ class Picture
      * @param string $img 图像路径
      * @return bool
      */
-    private function _checkImage($img)
+    private function _checkImage($img): bool
     {
         if (!file_exists($img)) {
             $this->_error = 'Image file dom\'t exists! file: ' . $img;
@@ -452,7 +453,7 @@ class Picture
      * @param $type
      * @return string
      */
-    private function _handleImageType($type)
+    private function _handleImageType($type): string
     {
         if ($type === self::IMAGE_JPG) {
             return self::IMAGE_JPEG;
@@ -461,7 +462,7 @@ class Picture
         return $type;
     }
 
-    protected function _calcWaterCoords($pos, $imgWidth, $waterWidth, $imgHeight, $waterHeight)
+    protected function _calcWaterCoords($pos, $imgWidth, $waterWidth, $imgHeight, $waterHeight): array
     {
         switch ($pos) {
             case 1 :
@@ -516,7 +517,7 @@ class Picture
      * @param string $thumbType 处理方式
      * @return array
      */
-    private function _calcThumbSize($imgWidth, $imgHeight, $thumbWidth, $thumbHeight, $thumbType)
+    private function _calcThumbSize($imgWidth, $imgHeight, $thumbWidth, $thumbHeight, $thumbType): array
     {
         //初始化缩略图尺寸
         $w = $thumbWidth;
@@ -575,7 +576,7 @@ class Picture
      * getter/setter
      *********************************************************************************/
 
-    public static function getImageTypes()
+    public static function getImageTypes(): array
     {
         return [
 //            self::IMAGE_BMP,
@@ -590,7 +591,7 @@ class Picture
      * @param string $type e.g. jpg
      * @return bool
      */
-    public static function isSupportedType($type)
+    public static function isSupportedType($type): bool
     {
         return \in_array($type, static::getImageTypes(), true);
     }
@@ -600,7 +601,7 @@ class Picture
      * @param  string $type water|cutting
      * @return string
      */
-    public function getOption($name, $type = 'water')
+    public function getOption($name, $type = 'water'): string
     {
         return $type === 'water' ? $this->getWaterOption($name) : $this->getThumbOption($name);
     }
@@ -610,14 +611,14 @@ class Picture
      * @param array $options
      * @return $this
      */
-    public function setWaterOptions(array $options)
+    public function setWaterOptions(array $options): self
     {
         $this->waterOptions = array_merge($this->waterOptions, $options);
 
         return $this;
     }
 
-    public function getWaterOptions()
+    public function getWaterOptions(): array
     {
         return $this->waterOptions;
     }
@@ -628,7 +629,7 @@ class Picture
      * @param  string|null $default
      * @return string
      */
-    public function getWaterOption($name, $default = null)
+    public function getWaterOption($name, $default = null): string
     {
         return array_key_exists($name, $this->waterOptions) ? $this->waterOptions[$name] : $default;
     }
@@ -638,14 +639,14 @@ class Picture
      * @param array $options
      * @return $this
      */
-    public function setThumbOptions(array $options)
+    public function setThumbOptions(array $options): self
     {
         $this->thumbOptions = array_merge($this->thumbOptions, $options);
 
         return $this;
     }
 
-    public function getThumbOptions()
+    public function getThumbOptions(): array
     {
         return $this->thumbOptions;
     }
@@ -656,7 +657,7 @@ class Picture
      * @param  string|null $default
      * @return string
      */
-    public function getThumbOption($name, $default = null)
+    public function getThumbOption($name, $default = null): string
     {
         return array_key_exists($name, $this->thumbOptions) ? $this->thumbOptions[$name] : $default;
     }
@@ -664,7 +665,7 @@ class Picture
     /**
      * @return bool
      */
-    public function hasError()
+    public function hasError(): bool
     {
         return $this->_error !== null;
     }
@@ -672,12 +673,12 @@ class Picture
     /**
      * @return string
      */
-    public function getError()
+    public function getError(): string
     {
         return $this->_error;
     }
 
-    public function getResult()
+    public function getResult(): array
     {
         return $this->_result;
     }

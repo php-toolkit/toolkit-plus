@@ -77,7 +77,7 @@ abstract class AbstractCompressor
      * @param array $options
      * @return FileFinder
      */
-    public function getFinder(array $options = [])
+    public function getFinder(array $options = []): FileFinder
     {
         if (!$this->finder) {
             $this->finder = new FileFinder($options);
@@ -97,7 +97,7 @@ abstract class AbstractCompressor
     /**
      * @return string
      */
-    public function getSuffix()
+    public function getSuffix(): string
     {
         return $this->suffix;
     }
@@ -105,7 +105,7 @@ abstract class AbstractCompressor
     /**
      * @return string
      */
-    public function getSourcePath()
+    public function getSourcePath(): string
     {
         return $this->sourcePath;
     }
@@ -129,7 +129,7 @@ abstract class AbstractCompressor
     /**
      * @return string
      */
-    public function getArchiveFile()
+    public function getArchiveFile(): string
     {
         return $this->archiveFile;
     }

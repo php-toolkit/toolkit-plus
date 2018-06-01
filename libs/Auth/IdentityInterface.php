@@ -65,7 +65,7 @@ interface IdentityInterface
      * @return string a key that is used to check the validity of a given identity ID.
      * @see validateAuthKey()
      */
-    public function getAuthKey();
+    public function getAuthKey(): string;
 
     /**
      * Validates the given auth key.
@@ -73,10 +73,10 @@ interface IdentityInterface
      * @return boolean whether the given auth key is valid.
      * @see getAuthKey()
      */
-    public function validateAuthKey($authKey);
+    public function validateAuthKey($authKey): bool;
 
     /**
      * @return array
      */
-    public function all();
+    public function all(): array;
 }

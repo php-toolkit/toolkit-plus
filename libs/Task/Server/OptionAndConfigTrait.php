@@ -91,7 +91,7 @@ trait OptionAndConfigTrait
      * @param $command
      * @return bool
      */
-    protected function dispatchCommand($command)
+    protected function dispatchCommand($command): bool
     {
         $masterPid = $this->getPidFromFile($this->pidFile);
         $isRunning = $this->isRunning($masterPid);
@@ -294,7 +294,7 @@ trait OptionAndConfigTrait
     /**
      * @return string
      */
-    public function getFullScript()
+    public function getFullScript(): string
     {
         return $this->fullScript;
     }
@@ -302,7 +302,7 @@ trait OptionAndConfigTrait
     /**
      * @return string
      */
-    public function getScript()
+    public function getScript(): string
     {
         return $this->script;
     }
@@ -310,7 +310,7 @@ trait OptionAndConfigTrait
     /**
      * @return string
      */
-    public function getCommand()
+    public function getCommand(): string
     {
         return $this->command;
     }

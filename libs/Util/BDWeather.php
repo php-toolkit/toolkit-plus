@@ -25,7 +25,7 @@ class BDWeather
      * @param $cityName
      * @return array
      */
-    public static function cityList($apikey, $cityName)
+    public static function cityList($apikey, $cityName): array
     {
         $url = self::WEATHER_API . '/citylist';
 
@@ -38,7 +38,7 @@ class BDWeather
      * @param string $apikey 百度apikey
      * @return array
      */
-    public static function byCityPinyin($cityPinyin, $apikey)
+    public static function byCityPinyin($cityPinyin, $apikey): array
     {
         $url = self::WEATHER_API . '/weather';
 
@@ -51,7 +51,7 @@ class BDWeather
      * @param string $apikey 百度apikey
      * @return array
      */
-    public static function byCityName($cityName, $apikey)
+    public static function byCityName($cityName, $apikey): array
     {
         $url = self::WEATHER_API . '/cityname';
 
@@ -65,7 +65,7 @@ class BDWeather
      * @param string $apikey 百度apikey
      * @return array
      */
-    public static function recentWeathers($cityName, $cityCode, $apikey)
+    public static function recentWeathers($cityName, $cityCode, $apikey): array
     {
         $url = self::WEATHER_API . '/recentweathers';
 
@@ -93,7 +93,7 @@ class BDWeather
      * @param string $apikey 百度apikey
      * @return array
      */
-    public static function cityInfo($cityName, $apikey)
+    public static function cityInfo($cityName, $apikey): array
     {
         $url = self::WEATHER_API . '/cityinfo';
 
@@ -105,7 +105,7 @@ class BDWeather
      * @param string $apikey 百度apikey
      * @return array
      */
-    public static function aqiCityList($apikey)
+    public static function aqiCityList($apikey): array
     {
         $url = self::AQI_API . '/citylist';
 
@@ -118,7 +118,7 @@ class BDWeather
      * @param string $apikey 百度apikey
      * @return array
      */
-    public static function aqi($cityName, $apikey)
+    public static function aqi($cityName, $apikey): array
     {
         $url = self::AQI_API . '/aqi';
 

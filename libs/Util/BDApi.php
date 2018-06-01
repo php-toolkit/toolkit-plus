@@ -24,7 +24,7 @@ class BDApi
      * @param string $apikey 百度apikey
      * @return array
      */
-    public static function ipInfo($ip, $apikey)
+    public static function ipInfo($ip, $apikey): array
     {
         $url = self::OPEN_API . '/iplookupservice/iplookup';
 
@@ -47,7 +47,7 @@ class BDApi
      * @param string $apikey 百度apikey
      * @return array
      */
-    public static function mobilePhoneInfo($mobilephone, $apikey)
+    public static function mobilePhoneInfo($mobilephone, $apikey): array
     {
         $url = self::OPEN_API . '/mobilephoneservice/mobilephone';
 
@@ -73,7 +73,7 @@ class BDApi
      * @param string $apikey 百度apikey
      * @return array
      */
-    public static function mobileNumberInfo($mobilenumber, $apikey)
+    public static function mobileNumberInfo($mobilenumber, $apikey): array
     {
         $url = self::OPEN_API . '/mobilenumber/mobilenumber';
 
@@ -91,7 +91,7 @@ class BDApi
      * @param string $apikey 百度apikey
      * @return array
      */
-    public static function lotteryList($lotteryType, $apikey)
+    public static function lotteryList($lotteryType, $apikey): array
     {
         $url = self::OPEN_API . '/lottery/lotterylist';
 
@@ -105,7 +105,7 @@ class BDApi
      * @param int $recordcnt 记录条数，范围为1~20
      * @return array
      */
-    public static function lotteryQuery($lotteryCode, $apikey, $recordcnt = 2)
+    public static function lotteryQuery($lotteryCode, $apikey, $recordcnt = 2): array
     {
         $url = self::OPEN_API . 'lottery/lotteryquery';
 

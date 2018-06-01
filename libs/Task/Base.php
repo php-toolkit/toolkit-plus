@@ -8,7 +8,7 @@
 
 namespace ToolkitPlus\Task;
 
-use Toolkit\Sys\Cli;
+use Toolkit\Cli\Cli;
 use Inhere\Library\process\ProcessLogger;
 use Inhere\Library\queue\QueueInterface;
 use Toolkit\Traits\Config\ConfigTrait;
@@ -77,7 +77,7 @@ abstract class Base
      * @param array $data
      * @return bool
      */
-    public function log($msg, $level = ProcessLogger::INFO, array $data = [])
+    public function log($msg, $level = ProcessLogger::INFO, array $data = []): bool
     {
         $msg = sprintf('[%s:%d] %s', $this->getPidRole(), $this->pid, $msg);
 
@@ -125,7 +125,7 @@ abstract class Base
     /**
      * @return string
      */
-    public function getName()
+    public function getName(): string
     {
         return $this->name;
     }
@@ -133,7 +133,7 @@ abstract class Base
     /**
      * @return string
      */
-    public function getShowName()
+    public function getShowName(): string
     {
         return $this->name ? "({$this->name})" : '';
     }
@@ -141,7 +141,7 @@ abstract class Base
     /**
      * @return bool
      */
-    public function isDaemon()
+    public function isDaemon(): bool
     {
         return $this->config['daemon'];
     }

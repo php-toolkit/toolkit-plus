@@ -100,6 +100,7 @@ class Telnet
     /**
      * @param string $host
      * @param string $port
+     * @throws \RuntimeException
      */
     protected function connect($host, $port)
     {
@@ -117,6 +118,7 @@ class Telnet
      * @param string $host
      * @param string $port
      * @param string $driver
+     * @throws \RuntimeException
      */
     protected function doConnect($host, $port, $driver)
     {
@@ -305,7 +307,7 @@ class Telnet
     /**
      * @return array
      */
-    public function getConfig()
+    public function getConfig(): array
     {
         return $this->config;
     }

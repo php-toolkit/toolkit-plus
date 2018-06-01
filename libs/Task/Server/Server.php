@@ -8,7 +8,7 @@
 
 namespace ToolkitPlus\Task\Server;
 
-use Inhere\Library\process\ProcessLogger;
+use ToolkitPlus\Log\ProcessLogger;
 use Inhere\Library\queue\QueueFactory;
 use Inhere\Library\queue\QueueInterface;
 use ToolkitPlus\Task\Base;
@@ -161,7 +161,7 @@ class Server extends Base
      * runTaskServer
      * @return int
      */
-    public function startTaskServer()
+    public function startTaskServer(): int
     {
         $bind = "udp://{$this->config['server']}";
         $socket = stream_socket_server($bind, $errNo, $errStr, STREAM_SERVER_BIND);

@@ -79,7 +79,7 @@ class AssetPublisher extends Configurable
         parent::__construct($config);
     }
 
-    public function defaultOptions()
+    public function defaultOptions(): array
     {
         return [
             /**
@@ -115,7 +115,7 @@ class AssetPublisher extends Configurable
      * @return $this
      * @throws InvalidArgumentException
      */
-    public function add($from, $to = '')
+    public function add($from, $to = ''): self
     {
         if (!$from) {
             return $this;
@@ -149,9 +149,10 @@ class AssetPublisher extends Configurable
      * target path is {@see $publishPath} + $path ( is param of the method `source($path)` )
      * @param bool|false $override
      * @return $this
+     * @throws \InvalidArgumentException
      * @throws FileSystemException
      */
-    public function publish($override = false)
+    public function publish($override = false): self
     {
         // publish files
         foreach ($this->publishAssets['files'] as $from => $to) {
@@ -175,6 +176,7 @@ class AssetPublisher extends Configurable
      * @param string $from The is full file path
      * @param string $to The is a relative path
      * @param bool|false $override
+     * @throws \Toolkit\File\Exception\FileNotFoundException
      * @throws FileSystemException
      */
     public function publishFile($from, $to, $override = false)
@@ -213,7 +215,7 @@ class AssetPublisher extends Configurable
         }
     }
 
-    public function hasAssetToPublish()
+    public function hasAssetToPublish(): bool
     {
         return 0 < \count($this->publishAssets['files']) || 0 < \count($this->publishAssets['dirs']);
     }
@@ -223,7 +225,7 @@ class AssetPublisher extends Configurable
     /**
      * @return FileFinder
      */
-    public function getFinder()
+    public function getFinder(): FileFinder
     {
         if (!$this->finder) {
             $this->finder = new FileFinder([
@@ -246,7 +248,7 @@ class AssetPublisher extends Configurable
     /**
      * @return string
      */
-    public function getSourcePath()
+    public function getSourcePath(): string
     {
         return $this->sourcePath;
     }
@@ -267,7 +269,7 @@ class AssetPublisher extends Configurable
     /**
      * @return string
      */
-    public function getPublishPath()
+    public function getPublishPath(): string
     {
         return $this->publishPath;
     }
@@ -285,7 +287,7 @@ class AssetPublisher extends Configurable
     /**
      * @return array
      */
-    public function getPublishedAssets()
+    public function getPublishedAssets(): array
     {
         return $this->publishedAssets;
     }
@@ -293,7 +295,7 @@ class AssetPublisher extends Configurable
     /**
      * @return array
      */
-    public function getPublishAssets()
+    public function getPublishAssets(): array
     {
         return $this->publishAssets;
     }

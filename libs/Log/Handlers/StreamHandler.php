@@ -82,6 +82,8 @@ class StreamHandler extends AbstractProcessingHandler
 
     /**
      * {@inheritdoc}
+     * @throws \LogicException
+     * @throws \UnexpectedValueException
      */
     protected function write(array $record)
     {
@@ -141,7 +143,7 @@ class StreamHandler extends AbstractProcessingHandler
             return \dirname($stream);
         }
 
-        if ('file://' === substr($stream, 0, 7)) {
+        if (0 === strpos($stream, 'file://')) {
             return \dirname(substr($stream, 7));
         }
 

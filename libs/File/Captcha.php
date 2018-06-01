@@ -46,6 +46,8 @@ class Captcha
     /**
      * @param array $config
      * @return static
+     * @throws \Inhere\Exceptions\NotFoundException
+     * @throws \Inhere\Exceptions\ExtensionMissException
      */
     public static function make(array $config = [])
     {
@@ -90,7 +92,7 @@ class Captcha
     /**
      * @return array
      */
-    public function defaultConfig()
+    public function defaultConfig(): array
     {
         return [
             // 字体文件
@@ -115,8 +117,9 @@ class Captcha
 
     /**
      * @return $this
+     * @throws \Exception
      */
-    public function drawPixel()
+    public function drawPixel(): self
     {
         for ($i = 1; $i <= $this->pixelNum; $i++) {
             //$pixelColor = imagecolorallocate( $this->img,rand(100,240), random_int(100,240), random_int(100,
@@ -136,8 +139,9 @@ class Captcha
     /**
      * 画干扰直线-可选
      * @return $this
+     * @throws \Exception
      */
-    public function drawLine()
+    public function drawLine(): self
     {
         for ($i = 1; $i <= $this->lineNum; $i++) {
             $lineColor = imagecolorallocate($this->img, random_int(150, 250), random_int(150, 250), random_int(150, 250));
@@ -154,8 +158,9 @@ class Captcha
     /**
      * 画干扰弧线-可选
      * @return $this
+     * @throws \Exception
      */
-    public function drawAec()
+    public function drawAec(): self
     {
         for ($i = 1; $i <= $this->aecNum; $i++) {
             $arcColor = imagecolorallocate($this->img, random_int(150, 250), random_int(150, 250), random_int(150, 250));
@@ -168,7 +173,10 @@ class Captcha
         return $this;
     }
 
-    // 产生随机字符,验证码,并写入图像
+    /**
+     * 产生随机字符,验证码,并写入图像
+     * @throws \Exception
+     */
     public function drawChar()
     {
         $x = ($this->width - 10) / $this->charNum;
@@ -194,7 +202,10 @@ class Captcha
         setcookie(static::$sessionKey, md5($this->captcha));
     }
 
-    //填充干扰字符-可选
+    /**
+     * 填充干扰字符-可选
+     * @throws \Exception
+     */
     public function drawChars()
     {
         for ($i = 0; $i < $this->fontNum; $i++) {
@@ -207,8 +218,12 @@ class Captcha
         }
     }
 
-    // 生成图像资源，Captcha-验证码
-    public function create()
+    /**
+     * 生成图像资源，Captcha-验证码
+     * @return $this
+     * @throws \Exception
+     */
+    public function create(): self
     {
         if ($this->bgImage && is_file($this->bgImage)) {
             // 从背景图片建立背景画布
@@ -244,8 +259,9 @@ class Captcha
     /**
      * 显示
      * @return bool
+     * @throws \Exception
      */
-    public function show()
+    public function show(): bool
     {
         $this->create();
 
@@ -281,12 +297,12 @@ class Captcha
      * @param $captcha
      * @return bool
      */
-    public static function verify($captcha)
+    public static function verify($captcha): bool
     {
         return isset($_SESSION[static::$sessionKey]) && md5($captcha) === $_SESSION[static::$sessionKey];
     }
 
-    private function checkGd()
+    private function checkGd(): bool
     {
         return \extension_loaded('gd') && \function_exists('imagepng');
     }

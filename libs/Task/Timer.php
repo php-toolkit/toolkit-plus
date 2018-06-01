@@ -111,7 +111,7 @@ class Timer
      */
     public static function add($interval, $func, $argv = [], $persist = false)
     {
-        if (\is_null($interval)) {
+        if (null === $interval) {
             return;
         }
         $time = time() + $interval;

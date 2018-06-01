@@ -181,6 +181,8 @@ abstract class AbstractLogger implements LoggerInterface
      * @param  string $message The log message
      * @param  array $context The log context
      * @return Boolean Whether the record has been processed
+     * @throws \InvalidArgumentException
+     * @throws \Exception
      */
     public function addRecord($level, $message, array $context = array())
     {
@@ -198,6 +200,7 @@ abstract class AbstractLogger implements LoggerInterface
      * @param  string $message The log message
      * @param  array $context The log context
      * @return Boolean Whether the record has been processed
+     * @throws \Exception
      */
     public function log($level, $message, array $context = array())
     {
@@ -252,12 +255,12 @@ abstract class AbstractLogger implements LoggerInterface
      * flush data to file.
      * @return bool
      */
-    public function save()
+    public function save(): bool
     {
         return $this->flush();
     }
 
-    public function flush($final = false)
+    public function flush($final = false): bool
     {
         if (!$this->logs) {
             return true;
@@ -306,7 +309,7 @@ abstract class AbstractLogger implements LoggerInterface
      * @param  HandlerInterface $handler
      * @return $this
      */
-    public function pushHandler(HandlerInterface $handler)
+    public function pushHandler(HandlerInterface $handler): self
     {
         array_unshift($this->handlers, $handler);
 
@@ -316,8 +319,9 @@ abstract class AbstractLogger implements LoggerInterface
     /**
      * Pops a handler from the stack
      * @return HandlerInterface
+     * @throws \LogicException
      */
-    public function popHandler()
+    public function popHandler(): HandlerInterface
     {
         if (!$this->handlers) {
             throw new \LogicException('You tried to pop from an empty handler stack.');
@@ -332,7 +336,7 @@ abstract class AbstractLogger implements LoggerInterface
      * @param  array $handlers
      * @return $this
      */
-    public function setHandlers(array $handlers)
+    public function setHandlers(array $handlers): self
     {
         $this->handlers = [];
 
@@ -346,7 +350,7 @@ abstract class AbstractLogger implements LoggerInterface
     /**
      * @return bool
      */
-    public function getUseMicroTime()
+    public function getUseMicroTime(): bool
     {
         return $this->useMicroTime;
     }
@@ -363,7 +367,7 @@ abstract class AbstractLogger implements LoggerInterface
      * @param array $record
      * @return string
      */
-    protected function recordFormat(array $record)
+    protected function recordFormat(array $record): string
     {
         $output = $this->format ?: self::DEFAULT_FORMAT;
         $record['level_name'] = strtoupper($record['level_name']);
@@ -391,7 +395,7 @@ abstract class AbstractLogger implements LoggerInterface
      * @return bool
      * @throws FileSystemException
      */
-    protected function write($str)
+    protected function write($str): bool
     {
         $file = $this->getLogPath() . $this->getFilename();
         $dir = \dirname($file);
@@ -433,7 +437,7 @@ abstract class AbstractLogger implements LoggerInterface
             return (string)$data;
         }
 
-        if (version_compare(PHP_VERSION, '5.4.0', '>=')) {
+        if (PHP_VERSION_ID >= 50400) {
             return json_encode($data);
         }
 
@@ -460,7 +464,7 @@ abstract class AbstractLogger implements LoggerInterface
     /**
      * @return array
      */
-    public function getHandlers()
+    public function getHandlers(): array
     {
         return $this->handlers;
     }
@@ -470,7 +474,7 @@ abstract class AbstractLogger implements LoggerInterface
      * @param bool $flip
      * @return array Assoc array with human-readable level names => level codes.
      */
-    public static function getLevels($flip = false)
+    public static function getLevels($flip = false): array
     {
         return $flip ? array_flip(self::$levels) : self::$levels;
     }
@@ -479,8 +483,9 @@ abstract class AbstractLogger implements LoggerInterface
      * Gets the name of the logging level.
      * @param  int $level
      * @return string
+     * @throws \InvalidArgumentException
      */
-    public static function getLevelName($level)
+    public static function getLevelName($level): string
     {
         if (!isset(static::$levels[$level])) {
             throw new \InvalidArgumentException('Level "' . $level . '" is not defined, use one of: ' . implode(', ', array_keys(static::$levels)));
@@ -494,7 +499,7 @@ abstract class AbstractLogger implements LoggerInterface
      * @param string|int Level number (monolog) or name (PSR-3)
      * @return int
      */
-    public static function toNumberLevel($level)
+    public static function toNumberLevel($level): int
     {
         if (\is_string($level) && \defined(__CLASS__ . '::' . strtoupper($level))) {
             return \constant(__CLASS__ . '::' . strtoupper($level));

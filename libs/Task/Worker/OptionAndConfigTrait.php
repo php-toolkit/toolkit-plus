@@ -8,7 +8,7 @@
 
 namespace ToolkitPlus\Task\Worker;
 
-use Toolkit\Sys\Cli;
+use Toolkit\Cli\Cli;
 
 /**
  * Class OptionAndConfigTrait
@@ -58,7 +58,7 @@ trait OptionAndConfigTrait
 
         // Debug option to dump the config and exit
         if (isset($result['D']) || isset($result['dump'])) {
-            $val = isset($result['D']) ? $result['D'] : (isset($result['dump']) ? $result['dump'] : '');
+            $val = $result['D'] ?? $result['dump'] ?? '';
             $this->dumpInfo($val === 'all');
         }
     }
@@ -73,7 +73,7 @@ trait OptionAndConfigTrait
         ]);
         $this->fullScript = implode(' ', $GLOBALS['argv']);
         $this->script = strpos($result[0], '.php') ? "php {$result[0]}" : $result[0];
-        $this->command = $command = isset($result[1]) ? $result[1] : 'start';
+        $this->command = $command = $result[1] ?? 'start';
 
         unset($result[0], $result[1]);
 
@@ -84,7 +84,7 @@ trait OptionAndConfigTrait
      * @param $command
      * @return bool
      */
-    protected function dispatchCommand($command)
+    protected function dispatchCommand($command): bool
     {
         $masterPid = $this->getPidFromFile($this->pidFile);
         $isRunning = $this->isRunning($masterPid);
@@ -116,7 +116,7 @@ trait OptionAndConfigTrait
                 $this->reloadWorkers($masterPid);
                 break;
             case 'status':
-                $cmd = isset($result['cmd']) ? $result['cmd'] : 'status';
+                $cmd = $result['cmd'] ?? 'status';
                 $this->showStatus($cmd, isset($result['watch-status']));
                 break;
             default:
@@ -287,7 +287,7 @@ trait OptionAndConfigTrait
     /**
      * @return string
      */
-    public function getFullScript()
+    public function getFullScript(): string
     {
         return $this->fullScript;
     }
@@ -295,7 +295,7 @@ trait OptionAndConfigTrait
     /**
      * @return string
      */
-    public function getScript()
+    public function getScript(): string
     {
         return $this->script;
     }
@@ -303,7 +303,7 @@ trait OptionAndConfigTrait
     /**
      * @return string
      */
-    public function getCommand()
+    public function getCommand(): string
     {
         return $this->command;
     }

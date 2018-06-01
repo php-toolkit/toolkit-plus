@@ -51,7 +51,7 @@ class ExtendedPagination extends Pagination
      * 得到回到第一页字符串
      * @return $this
      */
-    public function firstPage()
+    public function firstPage(): self
     {
         // return '<a href="'.$this->getUrl().'" class="number" title="1">'.$this->text['first'].'</a>';
         $first = Html::a($this->text['first'], $this->getUrl(1));
@@ -65,7 +65,7 @@ class ExtendedPagination extends Pagination
      * 得到上一页,当前页数大于1时，出现 ‘上一页’ 按钮
      * @return $this
      */
-    public function prevPage()
+    public function prevPage(): self
     {
         $page = (int)$this->getOption('page', 1);
 
@@ -75,7 +75,7 @@ class ExtendedPagination extends Pagination
             $prev = $this->hasListElement($prev);
         }
 
-        $this->html['prev'] = isset($prev) ? $prev : '';
+        $this->html['prev'] = $prev ?? '';
 
         return $this;
     }
@@ -84,7 +84,7 @@ class ExtendedPagination extends Pagination
      * 向上跳转 $this->btnNum 的页数
      * @return $this
      */
-    public function prevAcrossPages()
+    public function prevAcrossPages(): self
     {
         $prevAcrossPages = $this->options['page'] - $this->options['btnNum'];
 
@@ -95,7 +95,7 @@ class ExtendedPagination extends Pagination
             $prevs = $this->hasListElement($prevs);
         }
 
-        $this->html['prevs'] = isset($prevs) ? $prevs : '';
+        $this->html['prevs'] = $prevs ?? '';
 
         return $this;
     }
@@ -104,7 +104,7 @@ class ExtendedPagination extends Pagination
      * 得到数字按钮分页字符串
      * @return $this
      */
-    public function numberPageBtn()
+    public function numberPageBtn(): self
     {
         $numBtnPage = '';
         $page = (int)$this->getOption('page', 1);
@@ -131,7 +131,7 @@ class ExtendedPagination extends Pagination
      * 向下跳转 $this->btnNum 的页数
      * @return $this
      */
-    public function nextAcrossPages()
+    public function nextAcrossPages(): self
     {
         $nextAcrossPages = $this->options['page'] + $this->options['btnNum'];
 
@@ -141,7 +141,7 @@ class ExtendedPagination extends Pagination
             $nexts = $this->hasListElement($nexts);
         }
 
-        $this->html['nexts'] = isset($nexts) ? $nexts : '';
+        $this->html['nexts'] = $nexts ?? '';
 
         return $this;
     }
@@ -150,14 +150,14 @@ class ExtendedPagination extends Pagination
      * 得到下一页,当前页数小于总页数时，出现 ‘下一页’ 按钮
      * @return $this
      */
-    public function nextPage()
+    public function nextPage(): self
     {
         if ($this->options['page'] < $this->pageTotal) {
             $next = Html::a($this->text['next'], $this->getUrl($this->nextPage));
             $next = $this->hasListElement($next);
         }
 
-        $this->html['next'] = isset($next) ? $next : '';
+        $this->html['next'] = $next ?? '';
 
         return $this;
     }
@@ -166,7 +166,7 @@ class ExtendedPagination extends Pagination
      * 得到跳到尾页字符串
      * @return $this
      */
-    public function lastPage()
+    public function lastPage(): self
     {
         $last = Html::a($this->text['last'], $this->getUrl($this->pageTotal), ['title' => $this->text['last']]);
 
@@ -183,7 +183,7 @@ class ExtendedPagination extends Pagination
      * 得到总记录数或总记录字符串
      * @return $this
      */
-    public function totalStr()
+    public function totalStr(): self
     {
         $this->html['total'] = sprintf($this->text['totalStr'], $this->options['total']);
 
@@ -300,7 +300,7 @@ class ExtendedPagination extends Pagination
         if ($this->elements['box']['tag']) {
             $box = $this->elements['box'];
             $string = Html::tag($box['tag'], $string, [
-                'class' => isset($box['class']) ? $box['class'] : ''
+                'class' => $box['class'] ?? ''
             ]);
         }
 

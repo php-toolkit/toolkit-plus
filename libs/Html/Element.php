@@ -188,7 +188,7 @@ class Element extends Configurable implements \ArrayAccess, \IteratorAggregate
      * @param $name
      * @return bool
      */
-    public function isAloneTag($name)
+    public function isAloneTag($name): bool
     {
         return Html::isAloneTag($name);
     }
@@ -202,7 +202,7 @@ class Element extends Configurable implements \ArrayAccess, \IteratorAggregate
      * @param array $attrs
      * @return Element
      */
-    public function setParent($name = null, $content = null, array $attrs = [])
+    public function setParent($name = null, $content = null, array $attrs = []): Element
     {
         if ($name instanceof self) {
             $parent = $name;
@@ -235,7 +235,7 @@ class Element extends Configurable implements \ArrayAccess, \IteratorAggregate
      * @param string $rule
      * @return Element
      */
-    public function addChild($name = null, $content = null, array $attrs = [], $rule = self::AFTER_TEXT)
+    public function addChild($name = null, $content = null, array $attrs = [], $rule = self::AFTER_TEXT): Element
     {
         if ($name instanceof self) {
             $child = $name;
@@ -255,7 +255,7 @@ class Element extends Configurable implements \ArrayAccess, \IteratorAggregate
      * @param self[] $childs child list
      * @return $this
      */
-    public function setChilds(array $childs)
+    public function setChilds(array $childs): self
     {
         $this->childs = [];
 
@@ -266,7 +266,7 @@ class Element extends Configurable implements \ArrayAccess, \IteratorAggregate
      * @param self[] $childs
      * @return $this
      */
-    public function addChilds(array $childs)
+    public function addChilds(array $childs): self
     {
         foreach ($childs as $child) {
             if ($child instanceof self) {
@@ -285,7 +285,7 @@ class Element extends Configurable implements \ArrayAccess, \IteratorAggregate
      * @param $value
      * @return $this
      */
-    public function setDefaultAddRule($value)
+    public function setDefaultAddRule($value): self
     {
         if ($this->isValidRule($value)) {
             $this->defaultAddRule = $value;
@@ -297,7 +297,7 @@ class Element extends Configurable implements \ArrayAccess, \IteratorAggregate
     /**
      * @return string
      */
-    public function getDefaultAddRule()
+    public function getDefaultAddRule(): string
     {
         return $this->defaultAddRule;
     }
@@ -318,7 +318,7 @@ class Element extends Configurable implements \ArrayAccess, \IteratorAggregate
      * @param $value
      * @return bool
      */
-    protected function isValidRule($value)
+    protected function isValidRule($value): bool
     {
         return \in_array($value, $this->getChildAddRules());
     }
@@ -329,7 +329,7 @@ class Element extends Configurable implements \ArrayAccess, \IteratorAggregate
      * @param $value
      * @return $this
      */
-    public function setName($value)
+    public function setName($value): self
     {
         $this->name = $value;
 
@@ -349,7 +349,7 @@ class Element extends Configurable implements \ArrayAccess, \IteratorAggregate
      * @param $value
      * @return $this
      */
-    public function setContent($value)
+    public function setContent($value): self
     {
         $this->content = $value;
 
@@ -361,7 +361,7 @@ class Element extends Configurable implements \ArrayAccess, \IteratorAggregate
      * @param string $position
      * @return $this
      */
-    public function addContent($value, $position = 'after')
+    public function addContent($value, $position = 'after'): self
     {
         if ($position == 'after') {
             $this->content .= $value;
@@ -392,7 +392,7 @@ class Element extends Configurable implements \ArrayAccess, \IteratorAggregate
      * @param array $value
      * @return $this
      */
-    public function setAttrs(array $value)
+    public function setAttrs(array $value): self
     {
         $this->attrs = $value;
 
@@ -429,7 +429,7 @@ class Element extends Configurable implements \ArrayAccess, \IteratorAggregate
      * @param array $attrs
      * @return $this
      */
-    public function addAttrs(array $attrs)
+    public function addAttrs(array $attrs): self
     {
         foreach ($attrs as $name => $val) {
             $this->addAttr($name, $val);
@@ -442,7 +442,7 @@ class Element extends Configurable implements \ArrayAccess, \IteratorAggregate
      * @param $name
      * @return bool
      */
-    public function existsAttr($name)
+    public function existsAttr($name): bool
     {
         return isset($this->attrs[trim($name)]);
     }
@@ -455,7 +455,7 @@ class Element extends Configurable implements \ArrayAccess, \IteratorAggregate
     {
         $name = trim($name);
 
-        return isset($this->attrs[$name]) ? $this->attrs[$name] : null;
+        return $this->attrs[$name] ?? null;
     }
 
     /**
@@ -463,7 +463,7 @@ class Element extends Configurable implements \ArrayAccess, \IteratorAggregate
      * @param $value
      * @return $this
      */
-    public function setAttr($name, $value)
+    public function setAttr($name, $value): self
     {
         $this->attrs[trim($name)] = trim($value);
 
@@ -476,7 +476,7 @@ class Element extends Configurable implements \ArrayAccess, \IteratorAggregate
      * @param string $value
      * @return $this
      */
-    public function addAttr($name, $value)
+    public function addAttr($name, $value): self
     {
         $name = trim($name);
         $value = trim($value);
@@ -497,7 +497,7 @@ class Element extends Configurable implements \ArrayAccess, \IteratorAggregate
      * @param string $separator 追加的值与原有的值之间的分隔符 e.g. 两个class之间的空格
      * @return $this
      */
-    public function appendAttr($name, $value, $separator = '')
+    public function appendAttr($name, $value, $separator = ''): self
     {
         if ($this->existsAttr($name)) {
 
@@ -518,7 +518,7 @@ class Element extends Configurable implements \ArrayAccess, \IteratorAggregate
      * @param $value
      * @return Element
      */
-    public function setClass($value)
+    public function setClass($value): Element
     {
         return $this->setAttr('class', $value);
     }
@@ -527,7 +527,7 @@ class Element extends Configurable implements \ArrayAccess, \IteratorAggregate
      * @param $value
      * @return Element
      */
-    public function addClass($value)
+    public function addClass($value): Element
     {
         return $this->appendAttr('class', $value, ' ');
     }
@@ -537,7 +537,7 @@ class Element extends Configurable implements \ArrayAccess, \IteratorAggregate
      * @param null $value
      * @return Element
      */
-    public function addStyle($name, $value = null)
+    public function addStyle($name, $value = null): Element
     {
         if ($value) {
             $value = $name . ':' . $value;
@@ -570,7 +570,7 @@ class Element extends Configurable implements \ArrayAccess, \IteratorAggregate
      * @param  array $attrs [需要合并的属性]
      * @return array
      */
-    public function attrMerge($old, $new, array $attrs = [])
+    public function attrMerge($old, $new, array $attrs = []): array
     {
         if (!$old && !$new) {
             return [];

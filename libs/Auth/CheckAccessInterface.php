@@ -20,5 +20,5 @@ interface CheckAccessInterface
      * @param array $params
      * @return bool
      */
-    public function checkAccess($userId, $permission, $params = []);
+    public function checkAccess($userId, $permission, $params = []): bool ;
 }

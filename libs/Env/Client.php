@@ -156,7 +156,7 @@ class Client extends AbstractEnv
      * @param array $headers
      * @return $this
      */
-    public function setHeaders(array $headers)
+    public function setHeaders(array $headers): self
     {
         $this->_headers = $headers;
 
@@ -170,7 +170,7 @@ class Client extends AbstractEnv
      */
     public function getHeader($name, $default = null)
     {
-        return isset($this->_headers[$name]) ? $this->_headers[$name] : $default;
+        return $this->_headers[$name] ?? $default;
     }
 
     // HTTP_X_TOKEN => xToken
@@ -210,7 +210,7 @@ class Client extends AbstractEnv
      * user-Agent 信息分析
      * @return bool
      */
-    protected function _userAgentCheck()
+    protected function _userAgentCheck(): bool
     {
         if (empty($_SERVER['HTTP_USER_AGENT'])) {
             return true;
@@ -327,7 +327,7 @@ class Client extends AbstractEnv
      * @from web
      * @return string
      */
-    public function getIp()
+    public function getIp(): string
     {
         $ip = '';
 

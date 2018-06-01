@@ -200,6 +200,7 @@ class FileLogger implements LoggerInterface
      * @param string|array $config
      * @param string $name
      * @return static
+     * @throws \InvalidArgumentException
      */
     public static function make(array $config = [], $name = '')
     {
@@ -238,7 +239,7 @@ class FileLogger implements LoggerInterface
      * @param string $name
      * @return bool
      */
-    public static function has(string $name)
+    public static function has(string $name): bool
     {
         return isset(self::$loggers[$name]);
     }
@@ -247,7 +248,7 @@ class FileLogger implements LoggerInterface
      * exists logger instance
      * @return bool
      */
-    public static function count()
+    public static function count(): bool
     {
         return \count(self::$loggers) > 0;
     }
@@ -269,7 +270,7 @@ class FileLogger implements LoggerInterface
     /**
      * @return array
      */
-    public static function getLoggerNames()
+    public static function getLoggerNames(): array
     {
         return array_keys(self::$loggers);
     }
@@ -280,7 +281,7 @@ class FileLogger implements LoggerInterface
      * @param  bool|boolean $flush
      * @return bool
      */
-    public static function del(string $name, bool $flush = true)
+    public static function del(string $name, bool $flush = true): bool
     {
         if (isset(self::$loggers[$name])) {
             $logger = self::$loggers[$name];
@@ -319,7 +320,7 @@ class FileLogger implements LoggerInterface
      * Gets all supported logging levels.
      * @return array Assoc array with human-readable level names => level codes.
      */
-    public static function getLevelMap()
+    public static function getLevelMap(): array
     {
         return static::$levelMap;
     }
@@ -361,7 +362,7 @@ class FileLogger implements LoggerInterface
     /**
      * @return static[]
      */
-    public static function getLoggers()
+    public static function getLoggers(): array
     {
         return self::$loggers;
     }
@@ -374,6 +375,7 @@ class FileLogger implements LoggerInterface
      * create new logger instance
      * @param array $config
      * @param null|string $name
+     * @throws \InvalidArgumentException
      */
     public function __construct(array $config = [], $name = null)
     {
@@ -504,7 +506,7 @@ class FileLogger implements LoggerInterface
      * @param array $context
      * @return bool
      */
-    public function trace($message = '', array $context = [])
+    public function trace($message = '', array $context = []): bool
     {
         // 不在记录的级别内
         if ($this->isCanRecord(self::TRACE)) {
@@ -627,12 +629,12 @@ class FileLogger implements LoggerInterface
      * flush data to file.
      * @return bool
      */
-    public function save()
+    public function save(): bool
     {
         return $this->flush();
     }
 
-    public function flush()
+    public function flush(): bool
     {
         if (!$this->_records) {
             return true;
@@ -654,7 +656,7 @@ class FileLogger implements LoggerInterface
      * @param array $record
      * @return string
      */
-    protected function recordFormat(array $record)
+    protected function recordFormat(array $record): string
     {
         $output = $this->format ?: self::DEFAULT_FORMAT;
         $record['level_name'] = strtoupper($record['level_name']);
@@ -680,9 +682,10 @@ class FileLogger implements LoggerInterface
      * write log info to file
      * @param string $str
      * @return bool
+     * @throws \InvalidArgumentException
      * @throws FileSystemException
      */
-    protected function write($str)
+    protected function write($str): bool
     {
         $file = $this->getLogPath() . $this->getFilename();
         $dir = \dirname($file);
@@ -718,7 +721,7 @@ class FileLogger implements LoggerInterface
      * @param $level
      * @return bool
      */
-    protected function isCanRecord($level)
+    protected function isCanRecord($level): bool
     {
         // 不在记录的级别内
         return $this->levels && \in_array(self::getLevelName($level), $this->levels, true);
@@ -727,7 +730,7 @@ class FileLogger implements LoggerInterface
     /**
      * @return \array[]
      */
-    public function getRecords()
+    public function getRecords(): array
     {
         return $this->_records;
     }
@@ -735,7 +738,7 @@ class FileLogger implements LoggerInterface
     /**
      * @return string
      */
-    public function getName()
+    public function getName(): string
     {
         return $this->name;
     }
@@ -743,7 +746,7 @@ class FileLogger implements LoggerInterface
     /**
      * @return string
      */
-    public function getBasePath()
+    public function getBasePath(): string
     {
         return $this->basePath;
     }
@@ -751,7 +754,7 @@ class FileLogger implements LoggerInterface
     /**
      * @return array
      */
-    public function getLevels()
+    public function getLevels(): array
     {
         return $this->levels;
     }
@@ -761,7 +764,7 @@ class FileLogger implements LoggerInterface
      * @return string
      * @throws \InvalidArgumentException
      */
-    public function getLogPath()
+    public function getLogPath(): string
     {
         if (!$this->basePath) {
             throw new \InvalidArgumentException('The property basePath is required.');
@@ -775,7 +778,7 @@ class FileLogger implements LoggerInterface
      * @param \Closure $handler
      * @return $this
      */
-    public function setFilenameHandler(\Closure $handler)
+    public function setFilenameHandler(\Closure $handler): self
     {
         $this->filenameHandler = $handler;
 
@@ -786,7 +789,7 @@ class FileLogger implements LoggerInterface
      * 得到日志文件名
      * @return string
      */
-    public function getFilename()
+    public function getFilename(): string
     {
         if ($handler = $this->filenameHandler) {
             return $handler($this);
@@ -824,7 +827,7 @@ class FileLogger implements LoggerInterface
      * @param string $default
      * @return string
      */
-    public function getServer($name, $default = '')
+    public function getServer($name, $default = ''): string
     {
         return $_SERVER[$name] ?? $default;
     }
@@ -852,7 +855,7 @@ class FileLogger implements LoggerInterface
             return (string)$data;
         }
 
-        if (version_compare(PHP_VERSION, '5.4.0', '>=')) {
+        if (PHP_VERSION_ID >= 50400) {
             return json_encode($data);
         }
 
@@ -908,6 +911,7 @@ class FileLogger implements LoggerInterface
 
     /**
      * Rotates the files.
+     * @throws \InvalidArgumentException
      */
     protected function rotateFiles()
     {

@@ -2,9 +2,9 @@
 
 namespace ToolkitPlus\Task\Worker;
 
-use Toolkit\Sys\Cli;
+use Toolkit\Cli\Cli;
 use Toolkit\PhpUtil\PhpHelper;
-use Inhere\Library\process\ProcessLogger;
+use ToolkitPlus\Log\ProcessLogger;
 use Inhere\Library\queue\QueueFactory;
 use Inhere\Library\queue\SysVQueue;
 use ToolkitPlus\Task\Base;
@@ -223,7 +223,7 @@ class Manager extends Base
     public function handleTask($data)
     {
         if ($cb = $this->taskHandler) {
-            \call_user_func($cb, $data);
+            $cb($data);
         }
     }
 

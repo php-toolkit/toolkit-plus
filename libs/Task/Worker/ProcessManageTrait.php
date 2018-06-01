@@ -8,9 +8,10 @@
 
 namespace ToolkitPlus\Task\Worker;
 
-use Toolkit\Sys\Cli;
-use Inhere\Library\process\ProcessLogger;
-use Inhere\Library\process\ProcessUtil;
+use Toolkit\Cli\Cli;
+use Toolkit\Cli\Color;
+use ToolkitPlus\Log\ProcessLogger;
+use Toolkit\Sys\ProcessUtil;
 use Inhere\Library\queue\QueueInterface;
 
 /**
@@ -68,7 +69,7 @@ trait ProcessManageTrait
      * @param int $workerNum
      * @return array
      */
-    protected function startWorkers($workerNum)
+    protected function startWorkers($workerNum): array
     {
         return ProcessUtil::forks($workerNum, function ($id, $pid) {
             $this->runWorker($id, $pid);
@@ -81,7 +82,7 @@ trait ProcessManageTrait
      * @param bool $first
      * @return array
      */
-    protected function startWorker($tasks, $id, $first = true)
+    protected function startWorker($tasks, $id, $first = true): array
     {
         return ProcessUtil::fork($id, function ($id, $pid) use ($first) {
             $this->runWorker($id, $pid);
@@ -113,7 +114,7 @@ trait ProcessManageTrait
      * @param QueueInterface $queue
      * @return int
      */
-    protected function receiveTasks(QueueInterface $queue)
+    protected function receiveTasks(QueueInterface $queue): int
     {
         $eCode = 0;
 
@@ -212,10 +213,10 @@ trait ProcessManageTrait
     {
         $this->stdout("Stop the manager(PID:$pid)");
 
-        ProcessUtil::killAndWait($pid, SIGTERM, 'manager');
+        ProcessUtil::killAndWait($pid, $err, 'manager');
 
         // stop success
-        $this->stdout(sprintf("\n%s\n"), Cli::color('The manager process stopped', Cli::FG_GREEN));
+        $this->stdout(sprintf("\n%s\n", Cli::color('The manager process stopped', Color::FG_GREEN)));
 
         if ($quit) {
             $this->quit();
@@ -245,7 +246,7 @@ trait ProcessManageTrait
      * @param int $signal
      * @return bool
      */
-    protected function stopWorkers($signal = SIGTERM)
+    protected function stopWorkers($signal = SIGTERM): bool
     {
         if (!$this->workers) {
             $this->log('No child process(worker) need to stop', ProcessLogger::PROC_INFO);
@@ -296,7 +297,7 @@ trait ProcessManageTrait
      * @param  int $pid
      * @return int
      */
-    public function getWorkerId($pid)
+    public function getWorkerId($pid): int
     {
         return isset($this->workers[$pid]) ? $this->workers[$pid]['id'] : 0;
     }
@@ -306,7 +307,7 @@ trait ProcessManageTrait
      * @param  int $id
      * @return int
      */
-    public function getPidByWorkerId($id)
+    public function getPidByWorkerId($id): int
     {
         $thePid = 0;
 

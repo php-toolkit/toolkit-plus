@@ -87,16 +87,17 @@ class User extends SimpleCollection
     /**
      * don't allow set attribute
      * @param array $options
-     * @throws InvalidConfigException
+     * @throws \RuntimeException
+     * @throws \InvalidArgumentException
      */
     public function __construct($options = [])
     {
         parent::__construct();
 
-        Obj::setAttrs($this, $options);
+        Obj::init($this, $options);
 
         if ($this->identityClass === null) {
-            throw new InvalidConfigException('User::identityClass must be set.');
+            throw new \InvalidArgumentException('User::identityClass must be set.');
         }
 
         // if have already login
@@ -108,8 +109,9 @@ class User extends SimpleCollection
     /**
      * @param IdentityInterface $user
      * @return bool
+     * @throws \InvalidArgumentException
      */
-    public function login(IdentityInterface $user)
+    public function login(IdentityInterface $user): bool
     {
         $this->clear();
         $this->setIdentity($user);
@@ -158,7 +160,7 @@ class User extends SimpleCollection
      * @param bool|true $caching
      * @return bool
      */
-    public function can($permission, array $params = [], $caching = true)
+    public function can($permission, array $params = [], $caching = true): bool
     {
         return $this->canAccess($permission, $params, $caching);
     }
@@ -199,7 +201,7 @@ class User extends SimpleCollection
     /**
      * @return bool
      */
-    public function isLogin()
+    public function isLogin(): bool
     {
         return \count($this->data) !== 0;
     }
@@ -207,7 +209,7 @@ class User extends SimpleCollection
     /**
      * @return bool
      */
-    public function isGuest()
+    public function isGuest(): bool
     {
         return !$this->isLogin();
     }
@@ -222,6 +224,8 @@ class User extends SimpleCollection
 
     /**
      * @param bool|false $force
+     * @throws \InvalidArgumentException
+     * @throws \RuntimeException
      */
     public function refreshIdentity($force = false)
     {
@@ -261,7 +265,7 @@ class User extends SimpleCollection
      * @param array $data
      * @return CollectionInterface
      */
-    public function sets(array $data)
+    public function sets(array $data): CollectionInterface
     {
         // except column at set.
         foreach ($this->excepted as $column) {
@@ -276,7 +280,7 @@ class User extends SimpleCollection
     /**
      * @return CheckAccessInterface
      */
-    public function getAccessChecker()
+    public function getAccessChecker(): CheckAccessInterface
     {
         return $this->accessChecker; // ? : \Slim::get('accessChecker');
     }
@@ -284,7 +288,7 @@ class User extends SimpleCollection
     /**
      * @return string
      */
-    public function getLogoutTo()
+    public function getLogoutTo(): string
     {
         return $this->logoutTo;
     }
@@ -300,7 +304,7 @@ class User extends SimpleCollection
     /**
      * @return string
      */
-    public function getLoggedTo()
+    public function getLoggedTo(): string
     {
         return $this->loggedTo;
     }
@@ -316,7 +320,7 @@ class User extends SimpleCollection
     /**
      * @return StorageInterface
      */
-    public function getStorage()
+    public function getStorage(): StorageInterface
     {
         return $this->storage;
     }

@@ -24,7 +24,7 @@ class Environment extends SimpleCollection
      * @param  array $userData Array of custom environment keys and values
      * @return self
      */
-    public static function mock(array $userData = [])
+    public static function mock(array $userData = []): self
     {
         $data = array_merge([
             'SERVER_PROTOCOL' => 'HTTP/1.1',

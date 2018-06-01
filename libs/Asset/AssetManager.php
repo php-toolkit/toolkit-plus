@@ -135,7 +135,7 @@ class AssetManager extends Configurable
      * @param array $config 要添加的资源以及相关选项
      * @return $this
      */
-    public function loadAsset($name, array $config = [])
+    public function loadAsset($name, array $config = []): self
     {
         if ($name instanceof AssetBag) {
             $this->bags[$name->getName()] = $name;
@@ -155,6 +155,7 @@ class AssetManager extends Configurable
      * @param array $options
      * @param null|string $key
      * @return mixed
+     * @throws \InvalidArgumentException
      */
     public function addJsFile($asset, array $options = [], $key = null)
     {
@@ -171,6 +172,7 @@ class AssetManager extends Configurable
      * @param array $options
      * @param null|string $key
      * @return mixed
+     * @throws \InvalidArgumentException
      */
     public function addCssFile($asset, array $options = [], $key = null)
     {
@@ -188,9 +190,10 @@ class AssetManager extends Configurable
      * @param array $options
      * @param null|string $key
      * @return AssetManager
+     * @throws \RuntimeException
      * @throws InvalidArgumentException
      */
-    protected function loggingFileAsset($assets, $type = self::ASSET_CSS_FILE, array $options = [], $key = null)
+    protected function loggingFileAsset($assets, $type = self::ASSET_CSS_FILE, array $options = [], $key = null): AssetManager
     {
         if (!$assets) {
             throw new InvalidArgumentException('The 1th param [$assets] is can\'t empty.');
@@ -260,7 +263,7 @@ class AssetManager extends Configurable
      * @param array $options
      * @return $this
      */
-    protected function loggingCodeAsset($assets, $type = self::ASSET_CSS_FILE, array $options = [])
+    protected function loggingCodeAsset($assets, $type = self::ASSET_CSS_FILE, array $options = []): self
     {
         return $this;
     }
@@ -285,7 +288,7 @@ class AssetManager extends Configurable
      * @param  string $type
      * @return string
      */
-    public function buildTag($asset, $type)
+    public function buildTag($asset, $type): string
     {
         $attrs = $this->markSource ? $this->markAttr : [];
 
@@ -315,7 +318,7 @@ class AssetManager extends Configurable
      * @param  null|string $pos
      * @return bool
      */
-    public function exists($name, $pos = null)
+    public function exists($name, $pos = null): bool
     {
         if (!$pos) {
             foreach ($this->getAssetTypes() as $type) {
@@ -334,7 +337,7 @@ class AssetManager extends Configurable
         return false;
     }
 
-    public function getPositions()
+    public function getPositions(): array
     {
         return [
             self::POS_HEAD,
@@ -343,7 +346,7 @@ class AssetManager extends Configurable
         ];
     }
 
-    public function getAssetTypes()
+    public function getAssetTypes(): array
     {
         return [
             self::ASSET_CSS_FILE,
@@ -461,7 +464,7 @@ class AssetManager extends Configurable
      * @param int|string $pos
      * @return array
      */
-    public function getAssetsByPos($pos = self::POS_HEAD)
+    public function getAssetsByPos($pos = self::POS_HEAD): array
     {
         if (isset($this->assets[$pos])) {
             return $this->assets[$pos];
@@ -475,7 +478,7 @@ class AssetManager extends Configurable
      * @param string $baseUrl
      * @return $this
      */
-    public function setBaseUrl($baseUrl)
+    public function setBaseUrl($baseUrl): self
     {
         if ($baseUrl) {
             if (UrlHelper::isUrl($baseUrl)) {
@@ -492,7 +495,7 @@ class AssetManager extends Configurable
      * Gets the 资源基础URL
      * @return string
      */
-    public function getBaseUrl()
+    public function getBaseUrl(): string
     {
         return $this->baseUrl;
     }
@@ -501,7 +504,7 @@ class AssetManager extends Configurable
      * Gets the $baseUrl 对应的物理路径
      * @return string
      */
-    public function getBasePath()
+    public function getBasePath(): string
     {
         return $this->basePath;
     }
@@ -514,7 +517,7 @@ class AssetManager extends Configurable
      * @param string $basePath the base path
      * @return self
      */
-    protected function setBasePath($basePath)
+    protected function setBasePath($basePath): self
     {
         if (is_dir($basePath)) {
             $this->basePath = $basePath;

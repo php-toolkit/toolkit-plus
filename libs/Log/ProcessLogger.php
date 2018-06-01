@@ -215,7 +215,7 @@ class ProcessLogger implements ProcessLogInterface
         return true;
     }
 
-    protected function fileIsChanged()
+    protected function fileIsChanged(): bool
     {
         if (!$this->fileHandle || !($file = $this->file)) {
             return false;
@@ -232,6 +232,7 @@ class ProcessLogger implements ProcessLogInterface
 
     /**
      * update the log file name. If 'log_split' is not empty and manager running to long time.
+     * @throws \Toolkit\File\Exception\IOException
      */
     protected function updateLogFile()
     {
@@ -251,6 +252,7 @@ class ProcessLogger implements ProcessLogInterface
 
     /**
      * Opens the log file. If already open, closes it first.
+     * @throws \Toolkit\File\Exception\IOException
      */
     public function open()
     {
@@ -286,8 +288,9 @@ class ProcessLogger implements ProcessLogInterface
      * gen real LogFile
      * @param bool $createDir
      * @return string
+     * @throws \Toolkit\File\Exception\IOException
      */
-    public function genLogFile($createDir = false)
+    public function genLogFile($createDir = false): string
     {
         // log split type
         if (!($type = $this->spiltType) || !($file = $this->file)) {
@@ -311,7 +314,7 @@ class ProcessLogger implements ProcessLogInterface
     /**
      * @return string
      */
-    public function getLogFileDate()
+    public function getLogFileDate(): string
     {
         $str = '';
 
@@ -352,7 +355,7 @@ class ProcessLogger implements ProcessLogInterface
      * @param int $level
      * @return bool
      */
-    protected function sysLog($msg, $level)
+    protected function sysLog($msg, $level): bool
     {
         switch ($level) {
             case self::EMERG:
@@ -385,7 +388,7 @@ class ProcessLogger implements ProcessLogInterface
     /**
      * @return array
      */
-    public static function getLevels()
+    public static function getLevels(): array
     {
         return self::$levels;
     }
@@ -394,7 +397,7 @@ class ProcessLogger implements ProcessLogInterface
      * @param int|string $level
      * @return string
      */
-    public static function getLevelName($level)
+    public static function getLevelName($level): string
     {
         if (is_numeric($level)) {
             return self::$levels[$level] ?? 'Unknown';
@@ -407,7 +410,7 @@ class ProcessLogger implements ProcessLogInterface
      * getFile
      * @return string
      */
-    public function getFile()
+    public function getFile(): string
     {
         return $this->file;
     }

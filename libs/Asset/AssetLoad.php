@@ -112,7 +112,7 @@ class AssetLoad extends Configurable
      * @param array $config
      * @return AssetLoad
      */
-    public static function make(array $config = [])
+    public static function make(array $config = []): AssetLoad
     {
         return new static($config);
     }
@@ -122,8 +122,9 @@ class AssetLoad extends Configurable
      * @param  string|array $asset
      * @param  array $options
      * @return self
+     * @throws \InvalidArgumentException
      */
-    public static function css($asset, array $options = [])
+    public static function css($asset, array $options = []): self
     {
         return static::make($options)->handleLoad($asset, self::TYPE_CSS);
     }
@@ -133,6 +134,7 @@ class AssetLoad extends Configurable
      * @param $asset
      * @param array $options
      * @return $this|AssetLoad
+     * @throws \InvalidArgumentException
      */
     public static function js($asset, array $options = [])
     {
@@ -155,7 +157,7 @@ class AssetLoad extends Configurable
      * @return $this
      * @throws InvalidArgumentException
      */
-    protected function handleLoad($assets, $assetType = self::TYPE_CSS)
+    protected function handleLoad($assets, $assetType = self::TYPE_CSS): self
     {
         $this->setAssetType($assetType);
 
@@ -185,8 +187,9 @@ class AssetLoad extends Configurable
 
     /**
      * @return string
+     * @throws \RuntimeException
      */
-    public function dump()
+    public function dump(): string
     {
         $assets = $this->compressedAssets ?: $this->assets;
         $tags = [];
@@ -212,7 +215,7 @@ class AssetLoad extends Configurable
      * @throws InvalidOptionException
      * @throws NotFoundException
      */
-    public function compress(array $options = [])
+    public function compress(array $options = []): self
     {
         if ($this->compressed || !$this->assets) {
             return $this;
@@ -255,10 +258,11 @@ class AssetLoad extends Configurable
      * @param string $saveFile
      * @param string $webPath
      * @return string
+     * @throws \Toolkit\File\Exception\IOException
      * @throws FileNotFoundException
      * @throws FileSystemException
      */
-    public function compressAndMerge(array $assets, $saveFile, $webPath = '')
+    public function compressAndMerge(array $assets, $saveFile, $webPath = ''): string
     {
         $saveDir = \dirname($saveFile);
         $oldKey = '';
@@ -320,10 +324,11 @@ class AssetLoad extends Configurable
      * @param string $saveFile If is empty, will save to old file dir.
      * @param string $webPath
      * @return string
+     * @throws \Toolkit\File\Exception\IOException
      * @throws FileNotFoundException
      * @throws FileSystemException
      */
-    public function compressAndSave($url, $saveFile = '', $webPath = '')
+    public function compressAndSave($url, $saveFile = '', $webPath = ''): string
     {
         // is full url, have http ...
         if (!UrlHelper::isRelative($url)) {
@@ -415,7 +420,7 @@ class AssetLoad extends Configurable
      * @param $file
      * @return bool
      */
-    public static function isMinFile($file)
+    public static function isMinFile($file): bool
     {
         $regex = '/.[-.]min\.(css|js)$/i';
 
@@ -425,7 +430,7 @@ class AssetLoad extends Configurable
     /**
      * @return string
      */
-    public function getHostUrl()
+    public function getHostUrl(): string
     {
         if (!$this->hostUrl) {
             $this->hostUrl = $_SERVER['REQUEST_SCHEME'] . '/' . '/' . $_SERVER['HTTP_HOST'];
@@ -439,7 +444,7 @@ class AssetLoad extends Configurable
     /**
      * @return string
      */
-    public function getAssetType()
+    public function getAssetType(): string
     {
         return $this->assetType;
     }
@@ -462,7 +467,7 @@ class AssetLoad extends Configurable
     /**
      * @return boolean
      */
-    public function isCheckFileExists()
+    public function isCheckFileExists(): bool
     {
         return $this->checkFileExists;
     }
@@ -488,7 +493,7 @@ class AssetLoad extends Configurable
      * }
      * @return string
      */
-    public function getBasePath()
+    public function getBasePath(): string
     {
         //
         if ($this->resolvePath && $this->resolvePath instanceof \Closure) {

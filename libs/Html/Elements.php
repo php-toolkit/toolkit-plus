@@ -10,13 +10,13 @@
 
 namespace ToolkitPlus\Html;
 
-use Toolkit\ObjUtil\StdObject;
+use Toolkit\ObjUtil\Configurable;
 
 /**
  * Class Elements
  * @package ToolkitPlus\Html
  */
-class Elements extends StdObject implements \IteratorAggregate
+class Elements extends Configurable implements \IteratorAggregate
 {
     public $elements = [];
 
@@ -34,7 +34,7 @@ class Elements extends StdObject implements \IteratorAggregate
     /**
      * @return string
      */
-    public function getString()
+    public function getString(): string
     {
         $string = '';
 
@@ -53,7 +53,7 @@ class Elements extends StdObject implements \IteratorAggregate
     /**
      * @return \ArrayIterator
      */
-    public function getIterator()
+    public function getIterator(): \ArrayIterator
     {
         return new \ArrayIterator($this->elements);
     }
@@ -61,7 +61,7 @@ class Elements extends StdObject implements \IteratorAggregate
     /**
      * @return array
      */
-    public function getElements()
+    public function getElements(): array
     {
         return $this->elements;
     }
@@ -70,7 +70,7 @@ class Elements extends StdObject implements \IteratorAggregate
      * @param array $elements
      * @return $this
      */
-    public function setElements(array $elements)
+    public function setElements(array $elements): self
     {
         $this->elements = $elements;
 

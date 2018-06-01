@@ -53,7 +53,7 @@ final class TaskWrapper
      * @param int $index
      * @return string
      */
-    protected function genId($index)
+    protected function genId($index): string
     {
         return sprintf('T:%s:%s', gethostname(), $index);
     }
