@@ -11,15 +11,15 @@
 
 namespace ToolkitPlus\File;
 
-use Inhere\Exceptions\ExtensionMissException;
-use Inhere\Exceptions\NotFoundException;
-
 /**
  * Class Captcha
  * @package ToolkitPlus\File
  */
 class Captcha
 {
+    /**
+     * @var resource
+     */
     private $img;               // 资源
     public $width;              // 画布宽
     public $height;             // 画布高
@@ -35,10 +35,12 @@ class Captcha
     public $fontSize;           // 产生验证码字体大小
     public $charNum;            // 产生验证码字符个数
     public $codeStr;            // 产生验证码字符串, 验证码的随机种子
-    public $captcha;            // 产生的验证码
 
-    public $config = [];            // 配置
+    /** @var string 产生的验证码字符串 */
+    public $captcha = '';
 
+    /** @var array */
+    public $config = [];
 
     // 存入SESSION的键值
     protected static $sessionKey = 'app_captcha';
@@ -46,8 +48,8 @@ class Captcha
     /**
      * @param array $config
      * @return static
-     * @throws \Inhere\Exceptions\NotFoundException
-     * @throws \Inhere\Exceptions\ExtensionMissException
+     * @throws \InvalidArgumentException
+     * @throws \RuntimeException
      */
     public static function make(array $config = [])
     {
@@ -55,27 +57,40 @@ class Captcha
     }
 
     /**
+     * @param string $captcha
+     * @return bool
+     */
+    public static function verify(string $captcha): bool
+    {
+        if (!$captcha) {
+            return false;
+        }
+
+        return isset($_SESSION[self::$sessionKey]) && \md5($captcha) === $_SESSION[self::$sessionKey];
+    }
+
+    /**
      * @param array $config
-     * @throws ExtensionMissException
-     * @throws NotFoundException
+     * @throws \InvalidArgumentException
+     * @throws \RuntimeException
      */
     public function __construct(array $config = [])
     {
         if (!$this->checkGd()) {
-            throw new ExtensionMissException('This [gd] extension is required.');
+            throw new \RuntimeException('This php [gd] extension is required.');
         }
 
-        $config = array_merge($this->defaultConfig(), $config);
+        $config = \array_merge($this->defaultConfig(), $config);
 
         $this->config = $config;
         $this->font = $config['font'];
 
-        if (!is_file($this->font)) {
-            throw new NotFoundException('Verification code font file does not exist. FILE: ' . $this->font);
+        if (!\is_file($this->font)) {
+            throw new \InvalidArgumentException('Verification code font file does not exist. FILE: ' . $this->font);
         }
 
         if (!empty($config['sessionKey'])) {
-            static::$sessionKey = $config['sessionKey'];
+            self::$sessionKey = $config['sessionKey'];
         }
 
         $this->codeStr = $config['randStr'];
@@ -126,8 +141,9 @@ class Captcha
             //240) );//点颜色
             //imagesetpixel($this->img,rand(0,$this->width),rand(0,$this->height),$pixelColor);
             $char = '.';
-            $pixelColor = imagecolorallocate($this->img, random_int(140, 200), random_int(140, 200), random_int(140, 200));
-            imagefttext(
+            $pixelColor = \imagecolorallocate($this->img, random_int(140, 200), random_int(140, 200), random_int(140, 200));
+
+            \imagefttext(
                 $this->img, 8, random_int(-30, 30), random_int(6, $this->width), random_int(6, $this->height - 5),
                 $pixelColor, $this->font, $char
             );
@@ -144,9 +160,10 @@ class Captcha
     public function drawLine(): self
     {
         for ($i = 1; $i <= $this->lineNum; $i++) {
-            $lineColor = imagecolorallocate($this->img, random_int(150, 250), random_int(150, 250), random_int(150, 250));
+            $lineColor = \imagecolorallocate($this->img, random_int(150, 250), random_int(150, 250), random_int(150, 250));
+
             //($this->img,起点坐标x.y，终点坐标x.y，颜色)
-            imageline(
+            \imageline(
                 $this->img, random_int(0, $this->width), random_int(0, $this->height),
                 random_int(0, $this->width), random_int(0, $this->height), $lineColor
             );
@@ -163,8 +180,8 @@ class Captcha
     public function drawAec(): self
     {
         for ($i = 1; $i <= $this->aecNum; $i++) {
-            $arcColor = imagecolorallocate($this->img, random_int(150, 250), random_int(150, 250), random_int(150, 250));
-            imagearc(
+            $arcColor = \imagecolorallocate($this->img, random_int(150, 250), random_int(150, 250), random_int(150, 250));
+            \imagearc(
                 $this->img, random_int(0, $this->width), random_int(0, $this->height), random_int(0, 100),
                 random_int(0, 100), random_int(-90, 90), random_int(70, 360), $arcColor
             );
@@ -185,21 +202,24 @@ class Captcha
         for ($i = 0; $i < $this->charNum; $i++) {
             $char = $this->codeStr[random_int(0, \strlen($this->codeStr) - 1)];
             $captchaStr .= $char;
-            $fontColor = imagecolorallocate($this->img, random_int(80, 200), random_int(80, 200), random_int(80, 200));
-            imagefttext(
+            $fontColor = \imagecolorallocate($this->img, random_int(80, 200), random_int(80, 200), random_int(80, 200));
+
+            \imagefttext(
                 $this->img, $this->fontSize, random_int(-30, 30), $i * $x + random_int(6, 10),
                 random_int($this->height / 1.3, $this->height - 5), $fontColor,
                 $this->font, $char
             );
         }
 
-        $this->captcha = strtolower($captchaStr);
+        $this->captcha = \strtolower($captchaStr);
 
         //把纯的验证码字符串放置到SESSION中进行保存，便于后面进行验证对比
-        $_SESSION[static::$sessionKey] = md5($this->captcha);
+        if (\session_id()) {
+            $_SESSION[self::$sessionKey] = \md5($this->captcha);
 
-        //设置cookie到前端浏览器，可用于前端验证
-        setcookie(static::$sessionKey, md5($this->captcha));
+            //设置cookie到前端浏览器，可用于前端验证
+            \setcookie(self::$sessionKey, \md5($this->captcha));
+        }
     }
 
     /**
@@ -211,7 +231,8 @@ class Captcha
         for ($i = 0; $i < $this->fontNum; $i++) {
             $char = $this->codeStr[random_int(0, \strlen($this->codeStr) - 1)];
             $fontColor = imagecolorallocate($this->img, random_int(180, 240), random_int(180, 240), random_int(180, 240));
-            imagefttext(
+
+            \imagefttext(
                 $this->img, random_int(4, 8), random_int(-30, 40), random_int(8, $this->width - 10),
                 random_int(10, $this->height - 10), $fontColor, $this->font, $char
             );
@@ -225,28 +246,28 @@ class Captcha
      */
     public function create(): self
     {
-        if ($this->bgImage && is_file($this->bgImage)) {
+        if ($this->bgImage && \is_file($this->bgImage)) {
             // 从背景图片建立背景画布
-            $this->img = imagecreatefrompng($this->bgImage);
+            $this->img = \imagecreatefrompng($this->bgImage);
         } else {
             // 手动建立背景画布,图像资源
-            $this->img = imagecreatetruecolor($this->width, $this->height);
+            $this->img = \imagecreatetruecolor($this->width, $this->height);
 
             //给画布填充矩形的背景色rgb(230, 255, 230);
             $bgColor = $this->bgColor;
 
             //背景色
-            $bgColor = imagecolorallocate(
-                $this->img, hexdec(substr($bgColor, 1, 2)),
-                hexdec(substr($bgColor, 3, 2)), hexdec(substr($bgColor, 5, 2))
+            $bgColor = \imagecolorallocate(
+                $this->img, \hexdec(\substr($bgColor, 1, 2)),
+                \hexdec(substr($bgColor, 3, 2)), \hexdec(substr($bgColor, 5, 2))
             );
 
-            imagefilledrectangle($this->img, 0, 0, $this->width, $this->height, $bgColor);
+            \imagefilledrectangle($this->img, 0, 0, $this->width, $this->height, $bgColor);
         }
 
         //给资源画上边框-可选 rgb(153, 153, 255)
-//        $borderColor = imagecolorallocate($this->img, 153, 153, 255); // 0-255
-//        imagerectangle($this->img, 0, 0, $this->width-1, $this->height-1,$borderColor);
+       // $borderColor = imagecolorallocate($this->img, 153, 153, 255); // 0-255
+       // imagerectangle($this->img, 0, 0, $this->width-1, $this->height-1,$borderColor);
 
         $this->drawLine();
         $this->drawChar();
@@ -288,18 +309,9 @@ class Captcha
     /**
      * 返回验证码
      */
-    public function getCaptcha()
+    public function getCaptcha(): string
     {
         return $this->captcha;
-    }
-
-    /**
-     * @param $captcha
-     * @return bool
-     */
-    public static function verify($captcha): bool
-    {
-        return isset($_SESSION[static::$sessionKey]) && md5($captcha) === $_SESSION[static::$sessionKey];
     }
 
     private function checkGd(): bool

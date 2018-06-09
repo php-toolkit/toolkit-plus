@@ -193,16 +193,16 @@ class Download
         }
 
         $isImage = false;
-        $as = $as ?: basename($file);
+        $as = $as ?: \basename($file);
 
         // 文件扩展名
-        $fileExt = substr(strrchr($file, '.'), 1);
+        $fileExt = \substr(\strrchr($file, '.'), 1);
 
         // 文件类型
         $fileType = self::$MIMETypes[$fileExt] ?: 'application/octet-stream';
 
         // getimagesize() 判定某个文件是否为图片的有效手段, 常用在文件上传验证
-        $imgInfo = @getimagesize($file);
+        $imgInfo = @\getimagesize($file);
 
         if ($imgInfo[2] && $imgInfo['bits']) {
             $fileType = $imgInfo['mime'];       // 支持不标准扩展名
@@ -220,7 +220,7 @@ class Download
 
         //简述: ob_end_clean() 清空并关闭输出缓冲, 详见手册
         //说明: 关闭输出缓冲, 使文件片段内容读取至内存后即被送出, 减少资源消耗
-        ob_end_clean();
+        \ob_end_clean();
 
         // HTTP头信息: 指示客户机可以接收生存期不大于指定时间（秒）的响应
         header('Cache-control: max-age=31536000');
@@ -243,13 +243,13 @@ class Download
         header('Content-Disposition: ' . $attachment . '; filename="' . $as . '"');
 
         // 打开文件(二进制只读模式)
-//        $fp = fopen($file, 'rb');
+        // $fp = fopen($file, 'rb');
         // 输出文件
-//        fpassthru($fp);
+        // fpassthru($fp);
         // 关闭文件
-//        fclose($fp);
+        // fclose($fp);
 
-        return readfile($file);
+        return \readfile($file);
     }
 
     /**
@@ -273,22 +273,21 @@ class Download
         header('Pragma: no-cache');
         header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
         header('Content-Type: application/octet-stream');
-        header('Content-Length: ' . trim(shell_exec("stat -c%s \"\$file\"")));
+        header('Content-Length: ' . trim(shell_exec("stat -c%s \"$file\"")));
         header('Content-Description: File Download');
         header('Content-Disposition: attachment; filename="' . $as . '"');
         header('Content-Transfer-Encoding: binary');
         //@readfile($file);
 
         flush();
-        $fp = popen('tail -c ' . trim(shell_exec("stat -c%s \"\$file\"")) . ' ' . $file . ' 2>&1', 'r');
+        $fp = popen('tail -c ' . trim(shell_exec("stat -c%s \"$file\"")) . ' ' . $file . ' 2>&1', 'r');
 
         while (!feof($fp)) {
             // send the current file part to the browser
-//            print fread($fp, 1024);
+           // print fread($fp, 1024);
             print fread($fp, round($downRate * 1024));
             // flush the content to the browser
             flush();
-
             usleep(50000);
         }
 

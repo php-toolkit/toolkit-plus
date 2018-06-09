@@ -9,7 +9,7 @@
 
 namespace ToolkitPlus\Env;
 
-use Toolkit\PhpUtil\PhpHelper;
+use Toolkit\PhpUtil\PhpEnv;
 
 /**
  * 服务端信息 Server
@@ -95,8 +95,8 @@ class Server extends AbstractEnv
             'entry' => $this->getEntry(),
             'root' => $this->getRoot(),
 
-            'isCli' => PhpHelper::isCli(),
-            'isWeb' => PhpHelper::isWeb(),
+            'isCli' => PhpEnv::isCli(),
+            'isWeb' => PhpEnv::isWeb(),
 
             // operate system
             'os' => PHP_OS,
@@ -162,7 +162,7 @@ class Server extends AbstractEnv
     {
         $uNames = array('CYG', 'DAR', 'FRE', 'HP-', 'IRI', 'LIN', 'NET', 'OPE', 'SUN', 'UNI');
 
-        return \in_array($this->get('osShort'), $uNames);
+        return \in_array($this->get('osShort'), $uNames, true);
     }
 
     /**
