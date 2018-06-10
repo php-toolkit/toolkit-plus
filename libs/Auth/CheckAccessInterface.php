@@ -15,10 +15,10 @@ namespace ToolkitPlus\Auth;
 interface CheckAccessInterface
 {
     /**
-     * @param $userId
-     * @param $permission
+     * @param int|string $userId
+     * @param string $permission permission name OR uri path
      * @param array $params
      * @return bool
      */
-    public function checkAccess($userId, $permission, $params = []): bool ;
+    public function checkAccess($userId, $permission, array $params = []): bool ;
 }

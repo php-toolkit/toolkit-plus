@@ -44,6 +44,7 @@ interface IdentityInterface
      * Finds an identity by the given ID.
      * @param string|integer $id the ID to be looked for
      * @return IdentityInterface|null
+     * null  will not found user data
      */
     public static function findIdentity($id);
 
@@ -52,6 +53,7 @@ interface IdentityInterface
      * @param mixed $token the token to be looked for
      * @param mixed $type the type of the token.
      * @return IdentityInterface|null
+     * null  will not found user data
      */
     public static function findIdentityByAccessToken($token, $type = null);
 

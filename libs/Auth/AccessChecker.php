@@ -9,18 +9,18 @@
 namespace ToolkitPlus\Auth;
 
 /**
- * Class AccessChecker
+ * Class AccessChecker - access checker example
  * @package ToolkitPlus\Auth
  */
 class AccessChecker implements CheckAccessInterface
 {
     /**
-     * @param $userId
-     * @param $permission
+     * @param int|string $userId
+     * @param string $permission permission name OR uri path
      * @param array $params
      * @return bool
      */
-    public function checkAccess($userId, $permission, $params = []): bool
+    public function checkAccess($userId, $permission, array $params = []): bool
     {
         return true;
     }

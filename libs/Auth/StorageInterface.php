@@ -14,7 +14,29 @@ namespace ToolkitPlus\Auth;
  */
 interface StorageInterface
 {
-    public function get($key, $default = null);
+    /**
+     * @param string $key
+     * @param null $default
+     * @return mixed
+     */
+    public function get(string $key, $default = null);
 
-    public function set($key, $value);
+    /**
+     * @param string $key
+     * @param $value
+     * @return mixed
+     */
+    public function set(string $key, $value);
+
+    /**
+     * @param string $key
+     * @return bool
+     */
+    public function has(string $key): bool;
+
+    /**
+     * @param string $key
+     * @return bool
+     */
+    public function del(string $key): bool ;
 }

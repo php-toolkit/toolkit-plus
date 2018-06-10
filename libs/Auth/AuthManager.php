@@ -8,34 +8,26 @@
 
 namespace ToolkitPlus\Auth;
 
-use InvalidArgumentException;
 use Toolkit\Collection\CollectionInterface;
 use Toolkit\Collection\SimpleCollection;
 use Toolkit\ObjUtil\Obj;
 
 /**
- * Class User
+ * Class AuthManager
  * @package ToolkitPlus\Auth
  * @property int id
  */
-class User extends SimpleCollection
+class AuthManager extends SimpleCollection implements AuthManagerInterface
 {
     /**
-     * @var string
+     * @var string The session key
      */
-    protected static $saveKey = '_user_auth_data';
+    protected static $sessKey = '_user_auth_data';
 
     /**
-     * Exclude fields that don't need to be saved.
-     * @var array
-     */
-    protected $excepted = ['password'];
-
-    /**
-     * the identity [model] class name
      * @var string
      */
-    public $identityClass;
+    public $idColumn = 'id';
 
     /**
      * @var string
@@ -45,7 +37,7 @@ class User extends SimpleCollection
     /**
      * @var string
      */
-    protected $loggedTo = '/';
+    public $loggedTo = '/';
 
     /**
      * @var string
@@ -55,20 +47,26 @@ class User extends SimpleCollection
     /**
      * @var string
      */
-    protected $logoutTo = '/';
+    public $logoutTo = '/';
 
     /**
-     * @var CheckAccessInterface
-     */
-    public $accessChecker;
-
-    /**
+     * the identity [model] class name
      * @var string
      */
-    public $idColumn = 'id';
+    public $identityClass;
 
-    /** @var StorageInterface */
+    /**
+     * user data persistent storage driver Bridge
+     * @var StorageInterface
+     */
     private $storage;
+
+    /**
+     * @var bool
+     * true   Auto load logged user data from storage.
+     * false  You need manual load user data on before the first use
+     */
+    private $autoload = true;
 
     /**
      * checked permission caching list
@@ -81,6 +79,17 @@ class User extends SimpleCollection
      */
     private $_accesses = [];
 
+    /**
+     * Exclude fields that don't need to be saved.
+     * @var array
+     */
+    protected $excepted = ['password'];
+
+    /**
+     * @var CheckAccessInterface
+     */
+    private $accessChecker;
+
     const AFTER_LOGGED_TO_KEY = '_after_logged_to';
     const AFTER_LOGOUT_TO_KEY = '_after_logout_to';
 
@@ -90,18 +99,19 @@ class User extends SimpleCollection
      * @throws \RuntimeException
      * @throws \InvalidArgumentException
      */
-    public function __construct($options = [])
+    public function __construct(array $options = [])
     {
         parent::__construct();
 
         Obj::init($this, $options);
 
         if ($this->identityClass === null) {
-            throw new \InvalidArgumentException('User::identityClass must be set.');
+            throw new \InvalidArgumentException('The property "identityClass" must be set');
         }
 
-        // if have already login
-        if (isset($_SESSION[static::$saveKey])) {
+        // if enable autoload and user have already login
+        if ($this->autoload) {
+            $this->getStorage();
             $this->refreshIdentity();
         }
     }
@@ -119,39 +129,15 @@ class User extends SimpleCollection
         return $this->isLogin();
     }
 
+    /**
+     * logout
+     */
     public function logout()
     {
         $this->clear();
 
-        unset($_SESSION[static::$saveKey]);
+        unset($_SESSION[static::$sessKey]);
     }
-
-    /*
-     * @param Request $request
-     * @param Response $response
-     * @return ResponseInterface
-     * @throws InvalidConfigException
-     */
-    /*public function loginRequired(Request $request, Response $response)
-    {
-        $authUrl = Slim::get('config')->get('urls.login', $this->loginUrl);
-
-        if (!$authUrl) {
-            throw new InvalidConfigException("require config 'urls.login' !");
-        }
-
-        $this->setLoggedTo($request->getRequestUri());
-        $msg = Slim::$app->language->tran('needLogin');
-
-        // when is xhr
-        if ( $request->isXhr() ) {
-            $data = ['redirect' => $authUrl];
-
-            return $response->withJson($data, __LINE__, $msg);
-        }
-
-        return $response->withRedirect($authUrl)->withMessage($msg);
-    }*/
 
     /**
      * check user permission
@@ -166,7 +152,7 @@ class User extends SimpleCollection
     }
 
     /**
-     * @param $permission
+     * @param string $permission
      * @param array $params
      * @param bool $caching
      * @return bool|mixed
@@ -188,6 +174,14 @@ class User extends SimpleCollection
         }
 
         return $access;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function id()
+    {
+        return $this->getId();
     }
 
     /**
@@ -229,15 +223,19 @@ class User extends SimpleCollection
      */
     public function refreshIdentity($force = false)
     {
+        if (!$this->storage->has(self::$sessKey)) {
+            return;
+        }
+
         $id = $this->getId();
         $this->clear();
 
         /* @var $class IdentityInterface */
         $class = $this->identityClass;
 
-        if (!$force && ($data = session(self::$saveKey))) {
+        if (!$force && ($data = $this->storage->get(self::$sessKey))) {
             $this->sets($data);
-        } elseif ($user = $class::findIdentity($id)) {
+        } elseif ($id && ($user = $class::findIdentity($id))) {
             $this->setIdentity($user);
         } else {
             throw new \RuntimeException('The refresh auth data is failure!!');
@@ -246,18 +244,18 @@ class User extends SimpleCollection
 
     /**
      * @param IdentityInterface $identity
-     * @throws InvalidArgumentException
+     * @throws \InvalidArgumentException
      */
-    public function setIdentity(IdentityInterface $identity)
+    public function setIdentity(IdentityInterface $identity = null)
     {
         if ($identity instanceof IdentityInterface) {
             $this->sets((array)$identity);
-            session([self::$saveKey => $identity->all()]);
+            $this->storage->set(self::$sessKey, $this->all());
             $this->_accesses = [];
         } elseif ($identity === null) {
             $this->data = [];
         } else {
-            throw new InvalidArgumentException('The identity object must implement IdentityInterface.');
+            throw new \InvalidArgumentException('The identity object must implement IdentityInterface.');
         }
     }
 
@@ -283,6 +281,14 @@ class User extends SimpleCollection
     public function getAccessChecker(): CheckAccessInterface
     {
         return $this->accessChecker; // ? : \Slim::get('accessChecker');
+    }
+
+    /**
+     * @param CheckAccessInterface $accessChecker
+     */
+    public function setAccessChecker(CheckAccessInterface $accessChecker)
+    {
+        $this->accessChecker = $accessChecker;
     }
 
     /**
@@ -319,16 +325,21 @@ class User extends SimpleCollection
 
     /**
      * @return StorageInterface
+     * @throws \RuntimeException
      */
     public function getStorage(): StorageInterface
     {
+        if (!$this->storage) {
+            $this->storage = new SessionStorage();
+        }
+
         return $this->storage;
     }
 
     /**
      * @param StorageInterface $storage
      */
-    public function setStorage($storage)
+    public function setStorage(StorageInterface $storage)
     {
         $this->storage = $storage;
     }
@@ -357,10 +368,27 @@ class User extends SimpleCollection
     {
         $getter = 'get' . ucfirst($name);
 
-        if (method_exists($this, $getter)) {
+        if (\method_exists($this, $getter)) {
             return $this->$getter();
         }
 
         return parent::__get($name);
     }
+
+    /**
+     * @return bool
+     */
+    public function isAutoload(): bool
+    {
+        return $this->autoload;
+    }
+
+    /**
+     * @param bool $autoload
+     */
+    public function setAutoload($autoload)
+    {
+        $this->autoload = (bool)$autoload;
+    }
+
 }
