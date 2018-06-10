@@ -18,7 +18,7 @@ class PharCompressor extends AbstractCompressor
     /**
      * @return bool
      */
-    public function isSupported()
+    public function isSupported(): bool
     {
         return class_exists(\Phar::class, false);
     }

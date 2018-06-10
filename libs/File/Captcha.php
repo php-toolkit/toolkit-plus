@@ -286,14 +286,14 @@ class Captcha
     {
         $this->create();
 
-        header('Cache-Control: max-age=1, s-maxage=1, no-cache, must-revalidate');
-        header('Content-type: image/png;charset=utf8');//生成图片格式png jpeg 。。。
+        \header('Cache-Control: max-age=1, s-maxage=1, no-cache, must-revalidate');
+        \header('Content-type: image/png;charset=utf8');//生成图片格式png jpeg 。。。
 
         ob_clean();
         //生成图片,在浏览器中进行显示-格式png，与上面的header声明对应
-        $success = imagepng($this->img);
+        $success = \imagepng($this->img);
         // 已经显示图片后，可销毁，释放内存（可选）
-        imagedestroy($this->img);
+        \imagedestroy($this->img);
 
         return $success;
     }

@@ -8,9 +8,8 @@
 
 namespace ToolkitPlus\File\Compress;
 
-use Inhere\Exceptions\FileNotFoundException;
-use Inhere\Exceptions\FileSystemException;
-use Inhere\Exceptions\NotFoundException;
+use Toolkit\File\Exception\FileNotFoundException;
+use Toolkit\File\Exception\FileSystemException;
 use Toolkit\File\FileSystem;
 use Phar;
 use PharData;
@@ -23,33 +22,31 @@ class GzipCompressor extends AbstractCompressor
 {
     protected $suffix = 'tar.gz';
 
-    public function isSupported()
+    public function isSupported(): bool
     {
         return \extension_loaded('zlib') && 0 === ini_get('phar.readonly');
     }
 
     /**
-     * @param string $sourcePath a dir will compress
+     * @param string|array $sourcePath a dir will compress
      * @param string $archiveFile zip file save path
      * @param bool $override
      * @return bool
      * @throws \Toolkit\File\Exception\IOException
      * @throws FileSystemException
-     * @throws NotFoundException
-     * @throws \Inhere\Exceptions\IOException
-     * @throws \Inhere\Exceptions\InvalidArgumentException
+     * @throws \RuntimeException
      */
     public function encode($sourcePath, $archiveFile, $override = true)
     {
         if (!class_exists('ZipArchive')) {
-            throw new NotFoundException('The method is require class ZipArchive (by zip extension)');
+            throw new \RuntimeException('The method is require class ZipArchive (by zip extension)');
         }
 
         // 是一些指定文件
         if (\is_array($sourcePath)) {
             $files = new \ArrayObject($sourcePath);
         } else {
-            $files = $this->finder->findAll(true, $sourcePath)->getFiles();
+            $files = $this->finder->in($sourcePath)->files();
         }
 
         // no file

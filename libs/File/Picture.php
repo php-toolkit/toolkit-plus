@@ -21,10 +21,7 @@
 
 namespace ToolkitPlus\File;
 
-use Inhere\Exceptions\ExtensionMissException;
-use Inhere\Exceptions\FileSystemException;
-use Inhere\Exceptions\InvalidArgumentException;
-use Inhere\Exceptions\InvalidConfigException;
+use InvalidArgumentException;
 use Toolkit\File\Directory;
 
 /**
@@ -115,7 +112,7 @@ class Picture
      * @param  array $waterOptions
      * @param  array $thumbOptions
      * @return static
-     * @throws \Inhere\Exceptions\ExtensionMissException
+     * @throws \RuntimeException
      */
     public static function make(array $waterOptions = [], array $thumbOptions = [])
     {
@@ -125,12 +122,12 @@ class Picture
     /**
      * @param  array $waterOptions
      * @param  array $thumbOptions
-     * @throws ExtensionMissException
+     * @throws \RuntimeException
      */
     public function __construct(array $waterOptions = [], array $thumbOptions = [])
     {
         if (!\extension_loaded('gd')) {
-            throw new ExtensionMissException('This tool required extension [gd].');
+            throw new \RuntimeException('This tool required extension [gd].');
         }
 
         $this->waterOptions['fontFile'] = \dirname(__DIR__) . '/resources/fonts/Montserrat-Bold.ttf';
@@ -152,15 +149,21 @@ class Picture
      * 水印处理
      * @param string $img 操作的图像
      * @param string $outPath 另存的图像
-     * @param string $pos 水印位置
+     * @param int $pos 水印位置
      * @param string $waterImg 水印图片
      * @param string $alpha 透明度
      * @param string $text 文字水印内容
      * @return Picture
-     * @throws InvalidConfigException
+     * @throws InvalidArgumentException
      */
-    public function watermark($img, $outPath = '', $pos = '', $waterImg = '', $alpha = '', $text = ''): Picture
-    {
+    public function watermark(
+        string $img,
+        string $outPath = '',
+        int $pos = 1,
+        string $waterImg = '',
+        $alpha = '',
+        string $text = ''
+    ): self {
         // 验证原图像 和 是否已有错误
         if (false === $this->_checkImage($img) || $this->hasError()) {
             return $this;
@@ -168,7 +171,11 @@ class Picture
 
         $imgInfo = pathinfo($img);
         $imgType = $this->_handleImageType($imgInfo['extension']);
-        $outPath = $outPath ?: ($this->waterOptions['path'] ?: \dirname($img));
+
+        if (!$outPath) {
+            $outPath = $this->waterOptions['path'] ?: \dirname($img);
+        }
+
         $pos = $pos ?: $this->waterOptions['pos'];
         $alpha = $alpha ?: $this->waterOptions['alpha'];
         $waterImg = $waterImg ?: $this->waterOptions['img'];
@@ -193,17 +200,18 @@ class Picture
             }
 
             // create water image resource
-            $resWaterImg = \call_user_func("imagecreatefrom{$waterImgType}", $waterImg);
+            $func = "imagecreatefrom{$waterImgType}";
+            $resWaterImg = $func($waterImg);
         } else {
             //水印文字
             $text = $text ?: $this->waterOptions['text'];
 
             if (!is_file($this->waterOptions['fontFile'])) {
-                throw new InvalidConfigException('请配置正确的水印文字资源路径');
+                throw new InvalidArgumentException('请配置正确的水印文字资源路径');
             }
 
             if (!$text || \strlen($this->waterOptions['fontColor']) !== 6) {
-                throw new InvalidConfigException('The watermark font color length must equal to 6.');
+                throw new InvalidArgumentException('The watermark font color length must equal to 6.');
             }
 
             $textInfo = imagettfbbox($this->waterOptions['fontSize'], 0, $this->waterOptions['fontFile'], $text);
@@ -252,7 +260,8 @@ class Picture
         } elseif ($imgType === self::IMAGE_PNG) {
             imagepng($resImg, $outFile, ceil($this->waterOptions['quality'] / 10));
         } else {
-            \call_user_func("image{$imgType}", $resImg, $outFile);
+            $func = "image{$imgType}";
+            $func($resImg, $outFile);
         }
 
         imagedestroy($resImg);
@@ -281,8 +290,14 @@ class Picture
      * @param string $thumbType
      * @return static
      */
-    public function thumb($img, $outFile = '', $path = '', $thumbWidth = '', $thumbHeight = '', $thumbType = '')
-    {
+    public function thumb(
+        string $img,
+        string $outFile = '',
+        string $path = '',
+        $thumbWidth = '',
+        $thumbHeight = '',
+        $thumbType = ''
+    ) {
         return $this->thumbnail($img, $outFile, $path, $thumbWidth, $thumbHeight, $thumbType);
     }
 
@@ -296,8 +311,14 @@ class Picture
      * @param string $thumbType 裁切图片的方式
      * @return static
      */
-    public function thumbnail($img, $outPath = '', $outFilename = '', $thumbWidth = '', $thumbHeight = '', $thumbType = '')
-    {
+    public function thumbnail(
+        string $img,
+        string $outPath = '',
+        string $outFilename = '',
+        $thumbWidth = '',
+        $thumbHeight = '',
+        $thumbType = ''
+    ) {
         if (!$this->_checkImage($img) || $this->hasError()) {
             return $this;
         }
@@ -309,7 +330,10 @@ class Picture
         $thumbType = $thumbType ?: $this->thumbOptions['type'];
         $thumbWidth = $thumbWidth ?: $this->thumbOptions['width'];
         $thumbHeight = $thumbHeight ?: $this->thumbOptions['height'];
-        $outPath = $outPath ?: ($this->thumbOptions['path'] ?: \dirname($img));
+
+        if (!$outPath) {
+            $outPath = $this->thumbOptions['path'] ?: \dirname($img);
+        }
 
         //获得图像信息
         list($imgWidth, $imgHeight) = getimagesize($img);
@@ -320,7 +344,8 @@ class Picture
 
         //原始图像资源
         // imagecreatefromgif() imagecreatefrompng() imagecreatefromjpeg() imagecreatefromwbmp()
-        $resImg = \call_user_func("imagecreatefrom{$imgType}", $img);
+        $func = "imagecreatefrom{$imgType}";
+        $resImg = $func($img);
 
         //缩略图的资源
         if ($imgType === static::IMAGE_GIF) {
@@ -335,9 +360,11 @@ class Picture
 
         // 绘制缩略图X
         if (\function_exists('imagecopyresampled')) {
-            imagecopyresampled($resThumb, $resImg, 0, 0, 0, 0, $thumbSize[0], $thumbSize[1], $thumbSize[2], $thumbSize[3]);
+            imagecopyresampled($resThumb, $resImg, 0, 0, 0, 0, $thumbSize[0], $thumbSize[1], $thumbSize[2],
+                $thumbSize[3]);
         } else {
-            imagecopyresized($resThumb, $resImg, 0, 0, 0, 0, $thumbSize[0], $thumbSize[1], $thumbSize[2], $thumbSize[3]);
+            imagecopyresized($resThumb, $resImg, 0, 0, 0, 0, $thumbSize[0], $thumbSize[1], $thumbSize[2],
+                $thumbSize[3]);
         }
 
         //配置输出文件名
@@ -351,7 +378,8 @@ class Picture
         }
 
         // generate image to dst file. imagepng(), imagegif(), imagejpeg(), imagewbmp()
-        \call_user_func("image{$imgType}", $resThumb, $outFile);
+        $func = "image{$imgType}";
+        $func($resThumb, $outFile);
 
         imagedestroy($resImg);
         imagedestroy($resThumb);
@@ -371,13 +399,12 @@ class Picture
      * 显示 image file 到浏览器
      * @param string $img 图片文件
      * @return bool
-     * @throws FileSystemException
      * @throws InvalidArgumentException
      */
-    public static function show($img): bool
+    public static function show(string $img): bool
     {
-        if (!is_file($img) || !is_readable($img)) {
-            throw new FileSystemException('image file don\'t exists or file is not readable!');
+        if (!\is_file($img) || !\is_readable($img)) {
+            throw new InvalidArgumentException('image file don\'t exists or file is not readable!');
         }
 
         $type = pathinfo($img, PATHINFO_EXTENSION);
@@ -414,19 +441,19 @@ class Picture
     /**
      * @param string $img
      */
-    public static function display($img)
+    public static function display(string $img)
     {
         // 以二进制格式打开文件
-        $fp = fopen($img, 'rb');
+        $fp = \fopen($img, 'rb');
 
-        $mimeType = finfo_file(finfo_open(FILEINFO_MIME_TYPE), $img);
+        $mimeType = \finfo_file(\finfo_open(\FILEINFO_MIME_TYPE), $img);
 
         // 发送合适的报头
         header("Content-Type: $mimeType");
-        header('Content-Length: ' . filesize($img));
+        header('Content-Length: ' . \filesize($img));
 
         // 发送图片
-        fpassthru($fp);
+        \fpassthru($fp);
     }
 
     /*********************************************************************************
@@ -438,11 +465,11 @@ class Picture
      * @param string $img 图像路径
      * @return bool
      */
-    private function _checkImage($img): bool
+    private function _checkImage(string $img): bool
     {
-        if (!file_exists($img)) {
+        if (!\file_exists($img)) {
             $this->_error = 'Image file dom\'t exists! file: ' . $img;
-        } elseif (!($type = pathinfo($img, PATHINFO_EXTENSION)) || !self::isSupportedType($type)) {
+        } elseif (!($type = \pathinfo($img, \PATHINFO_EXTENSION)) || !self::isSupportedType($type)) {
             $this->_error = "Image type [$type] is not supported.";
         }
 
@@ -453,7 +480,7 @@ class Picture
      * @param $type
      * @return string
      */
-    private function _handleImageType($type): string
+    private function _handleImageType(string $type): string
     {
         if ($type === self::IMAGE_JPG) {
             return self::IMAGE_JPEG;
@@ -464,7 +491,7 @@ class Picture
 
     protected function _calcWaterCoords($pos, $imgWidth, $waterWidth, $imgHeight, $waterHeight): array
     {
-        switch ($pos) {
+        switch ((int)$pos) {
             case 1 :
                 $x = $y = 25;
                 break;
@@ -501,8 +528,8 @@ class Picture
                 $y = $imgHeight - $waterHeight;
                 break;
             default :
-                $x = random_int(25, $imgWidth - $waterWidth);
-                $y = random_int(25, $imgHeight - $waterHeight);
+                $x = \random_int(25, $imgWidth - $waterWidth);
+                $y = \random_int(25, $imgHeight - $waterHeight);
         }
 
         return [$x, $y];
@@ -553,19 +580,23 @@ class Picture
                 //缩放最大边 原图不裁切
                 if (($imgWidth / $thumbWidth) > ($imgHeight / $thumbHeight)) {
                     $h = $thumbWidth / $imgWidth * $imgHeight;
-                } else if (($imgWidth / $thumbWidth) < ($imgHeight / $thumbHeight)) {
-                    $w = $thumbHeight / $imgHeight * $imgWidth;
                 } else {
-                    $w = $thumbWidth;
-                    $h = $thumbHeight;
+                    if (($imgWidth / $thumbWidth) < ($imgHeight / $thumbHeight)) {
+                        $w = $thumbHeight / $imgHeight * $imgWidth;
+                    } else {
+                        $w = $thumbWidth;
+                        $h = $thumbHeight;
+                    }
                 }
                 break;
             default:
                 //缩略图尺寸不变，自动裁切图片
                 if (($imgHeight / $thumbHeight) < ($imgWidth / $thumbWidth)) {
                     $oldThumbWidth = $imgHeight / $thumbHeight * $thumbWidth;
-                } else if (($imgHeight / $thumbHeight) > ($imgWidth / $thumbWidth)) {
-                    $oldThumbHeight = $imgWidth / $thumbWidth * $thumbHeight;
+                } else {
+                    if (($imgHeight / $thumbHeight) > ($imgWidth / $thumbWidth)) {
+                        $oldThumbHeight = $imgWidth / $thumbWidth * $thumbHeight;
+                    }
                 }
         }
 
@@ -576,10 +607,13 @@ class Picture
      * getter/setter
      *********************************************************************************/
 
+    /**
+     * @return array
+     */
     public static function getImageTypes(): array
     {
         return [
-//            self::IMAGE_BMP,
+            // self::IMAGE_BMP,
             self::IMAGE_JPEG,
             self::IMAGE_JPG,
             self::IMAGE_GIF,
@@ -591,7 +625,7 @@ class Picture
      * @param string $type e.g. jpg
      * @return bool
      */
-    public static function isSupportedType($type): bool
+    public static function isSupportedType(string $type): bool
     {
         return \in_array($type, static::getImageTypes(), true);
     }
@@ -601,7 +635,7 @@ class Picture
      * @param  string $type water|cutting
      * @return string
      */
-    public function getOption($name, $type = 'water'): string
+    public function getOption(string $name, string $type = 'water'): string
     {
         return $type === 'water' ? $this->getWaterOption($name) : $this->getThumbOption($name);
     }
@@ -691,7 +725,7 @@ class Picture
      * @param $pngImg
      * @param string $outPath
      */
-    public function png2gif($pngImg, $outPath = '')
+    public function png2gif(string $pngImg, string $outPath = '')
     {
         // Load the PNG
         $png = imagecreatefrompng($pngImg);

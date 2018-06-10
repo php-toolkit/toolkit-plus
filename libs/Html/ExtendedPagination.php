@@ -192,12 +192,12 @@ class ExtendedPagination extends Pagination
 
     /**
      * 输入页数跳转
-     * @return $this|string
+     * @return $this
      */
-    public function jumpPage()
+    public function jumpPage(): self
     {
         if ($this->pageTotal <= 1) {
-            return '';
+            return $this;
         }
 
         $jumpPage = ' <input type="button" class="button jump-page-btn" value="' . $this->text['jumpTo'] . '"
@@ -218,12 +218,12 @@ class ExtendedPagination extends Pagination
 
     /**
      * select  下拉选择框跳转
-     * @return $this|string
+     * @return $this
      */
-    public function selectPage()
+    public function selectPage(): self
     {
         if ($this->pageTotal <= 1) {
-            return '';
+            return $this;
         }
 
         $page = (int)$this->getOption('page', 1);
@@ -245,8 +245,12 @@ class ExtendedPagination extends Pagination
 
 ////////////////////////////////////////// get paging string ///////////////////////////////////////
 
-    //得到组装后的分页字符串
-    public function useStyle($type = 'full')
+    /**
+     * 得到组装后的分页字符串
+     * @param string $type
+     * @return $this
+     */
+    public function useStyle(string $type = 'full'): self
     {
         switch (trim($type)) {
             case 'mini'://最简单
@@ -293,7 +297,7 @@ class ExtendedPagination extends Pagination
     /**
      * @return string
      */
-    public function toString()
+    public function toString(): string
     {
         $string = parent::toString();
 

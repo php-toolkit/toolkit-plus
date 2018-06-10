@@ -8,8 +8,6 @@
 
 namespace ToolkitPlus\Html;
 
-use Inhere\Exceptions\InvalidConfigException;
-
 /**
  * Class Pagination
  * @package ToolkitPlus\Html
@@ -100,6 +98,12 @@ class Pagination
 
     private $separator = '?';
 
+    /**
+     * @param array $options
+     * @param array $text
+     * @return static
+     * @throws \InvalidArgumentException
+     */
     public static function make(array $options = [], array $text = [])
     {
         return new static($options, $text);
@@ -108,7 +112,7 @@ class Pagination
     /**
      * @param array $options
      * @param array $text
-     * @throws \Inhere\Exceptions\InvalidConfigException
+     * @throws \InvalidArgumentException
      */
     public function __construct(array $options = [], array $text = [])
     {
@@ -118,10 +122,16 @@ class Pagination
         $this->handleLogic();
     }
 
-    protected function handleOptions($options, $text)
+    /**
+     * @param $options
+     * @param $text
+     * @return $this
+     * @throws \InvalidArgumentException
+     */
+    protected function handleOptions($options, $text): self
     {
         if (!isset($options['total'])) {
-            throw new InvalidConfigException('请传入必要的参数 total ');
+            throw new \InvalidArgumentException('请传入必要的参数 total ');
         }
 
         $this->options = array_merge($this->options, $options);
@@ -259,7 +269,6 @@ class Pagination
     public function get($key, $default = null)
     {
         return property_exists($this, $key) ? $this->$key : $default;
-
         // return isset($this->data[$key]) ? $this->data[$key] : $default;
     }
 

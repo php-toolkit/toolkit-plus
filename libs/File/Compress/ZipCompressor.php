@@ -8,8 +8,7 @@
 
 namespace ToolkitPlus\File\Compress;
 
-use Inhere\Exceptions\FileSystemException;
-use Inhere\Exceptions\NotFoundException;
+use Toolkit\File\Exception\FileSystemException;
 use Toolkit\File\FileSystem;
 use ZipArchive;
 
@@ -21,7 +20,7 @@ class ZipCompressor extends AbstractCompressor
 {
     protected $suffix = 'zip';
 
-    public function isSupported()
+    public function isSupported(): bool
     {
         return class_exists('ZipArchive');
     }
@@ -31,21 +30,21 @@ class ZipCompressor extends AbstractCompressor
      * @param string $archiveFile zip file save path
      * @param bool $override
      * @return bool
+     * @throws \RuntimeException
      * @throws FileSystemException
-     * @throws NotFoundException
      * @throws \Toolkit\File\Exception\IOException
      */
     public function encode($sourcePath, $archiveFile, $override = true)
     {
         if (!class_exists('ZipArchive')) {
-            throw new NotFoundException('The method is require class ZipArchive (by zip extension)');
+            throw new \RuntimeException('The method is require class ZipArchive (by zip extension)');
         }
 
         // 是一些指定文件
         if (\is_array($sourcePath)) {
             $files = new \ArrayObject();
         } else {
-            $files = $this->finder->findAll(true, $sourcePath)->getFiles();
+            $files = $this->finder->in($sourcePath)->files();
         }
 
         // no file

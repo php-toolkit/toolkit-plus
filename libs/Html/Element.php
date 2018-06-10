@@ -38,6 +38,10 @@ class Element extends Configurable implements \ArrayAccess, \IteratorAggregate
 {
     use ArrayAccessByPropertyTrait;
 
+    const BEFORE_TEXT = 'before';
+    const AFTER_TEXT = 'after';
+    const REPLACE_TEXT = 'replace';
+
     /**
      * tag name
      * @var string
@@ -58,19 +62,19 @@ class Element extends Configurable implements \ArrayAccess, \IteratorAggregate
      * tag content
      * @var string
      */
-    protected $content = null;
+    protected $content;
 
     /**
      * current tag's parent element
      * @var null|self
      */
-    protected $parent = null;
+    protected $parent;
 
     /**
      * current tag's child elements
-     * @var self[]
+     * @var array[]
      */
-    protected $childs = [];
+    protected $children = [];
 
     /**
      * 如果当前元素有内容的话，添加子元素位置默认规则
@@ -80,17 +84,14 @@ class Element extends Configurable implements \ArrayAccess, \IteratorAggregate
      */
     protected $defaultAddRule = 'after';
 
-    const BEFORE_TEXT = 'before';
-    const AFTER_TEXT = 'after';
-    const REPLACE_TEXT = 'replace';
-
     public function __construct($name = null, $content = null, array $attrs = [])
     {
         $this->name = $name;
         $this->content = $content;
         $this->attrs = $attrs;
 
-        $this->childs = new \SplObjectStorage();
+        // $this->children = new \SplObjectStorage();
+        $this->children = [];
 
         parent::__construct();
     }
@@ -147,34 +148,34 @@ class Element extends Configurable implements \ArrayAccess, \IteratorAggregate
      */
     protected function _handleChildAndContent()
     {
-        if (!($childs = $this->childs)) {
+        if (!($children = $this->children)) {
             return $this->content;
         }
 
         $content = $this->content;
 
         // 替换 直接占有 内容的位置
-        if (isset($childs[self::REPLACE_TEXT])) {
+        if (isset($children[self::REPLACE_TEXT])) {
             $string = '';
-            foreach ($childs[self::REPLACE_TEXT] as $child) {
+            foreach ($children[self::REPLACE_TEXT] as $child) {
                 $string .= rtrim((string)$child);
             }
 
             $content = $string . "\n";
         }
 
-        if (isset($childs[self::BEFORE_TEXT])) {
+        if (isset($children[self::BEFORE_TEXT])) {
             $string = '';
-            foreach ($childs[self::BEFORE_TEXT] as $child) {
+            foreach ($children[self::BEFORE_TEXT] as $child) {
                 $string .= rtrim((string)$child);
             }
 
             $content = $string . $content;
         }
 
-        if (isset($childs[self::AFTER_TEXT])) {
+        if (isset($children[self::AFTER_TEXT])) {
             $string = '';
-            foreach ($childs[self::AFTER_TEXT] as $child) {
+            foreach ($children[self::AFTER_TEXT] as $child) {
                 $string .= rtrim((string)$child);
             }
 
@@ -192,7 +193,6 @@ class Element extends Configurable implements \ArrayAccess, \IteratorAggregate
     {
         return Html::isAloneTag($name);
     }
-
 
 ///////////////////////////////////////// parent element /////////////////////////////////////////
 
@@ -245,32 +245,31 @@ class Element extends Configurable implements \ArrayAccess, \IteratorAggregate
         }
 
         $rule = $this->isValidRule($rule) ? $rule : $this->defaultAddRule;
-
-        $this->childs[$rule][] = $child;
+        $this->children[$rule][] = $child;
 
         return $child;
     }
 
     /**
-     * @param self[] $childs child list
+     * @param self[] $children child list
      * @return $this
      */
-    public function setChilds(array $childs): self
+    public function setChildren(array $children): self
     {
-        $this->childs = [];
+        $this->children = [];
 
-        return $this->addChilds($childs);
+        return $this->addChildren($children);
     }
 
     /**
-     * @param self[] $childs
+     * @param self[] $children
      * @return $this
      */
-    public function addChilds(array $childs): self
+    public function addChildren(array $children): self
     {
-        foreach ($childs as $child) {
+        foreach ($children as $child) {
             if ($child instanceof self) {
-                $this->childs[$this->defaultAddRule][] = $child;
+                $this->children[$this->defaultAddRule][] = $child;
             }
         }
 
@@ -318,9 +317,9 @@ class Element extends Configurable implements \ArrayAccess, \IteratorAggregate
      * @param $value
      * @return bool
      */
-    protected function isValidRule($value): bool
+    protected function isValidRule(string $value): bool
     {
-        return \in_array($value, $this->getChildAddRules());
+        return \in_array($value, $this->getChildAddRules(), true);
     }
 
 ///////////////////////////////////////// property /////////////////////////////////////////
@@ -329,7 +328,7 @@ class Element extends Configurable implements \ArrayAccess, \IteratorAggregate
      * @param $value
      * @return $this
      */
-    public function setName($value): self
+    public function setName(string $value): self
     {
         $this->name = $value;
 
@@ -363,7 +362,7 @@ class Element extends Configurable implements \ArrayAccess, \IteratorAggregate
      */
     public function addContent($value, $position = 'after'): self
     {
-        if ($position == 'after') {
+        if ($position === 'after') {
             $this->content .= $value;
         } else {
             $this->content = $value . $this->content;
@@ -584,7 +583,7 @@ class Element extends Configurable implements \ArrayAccess, \IteratorAggregate
 
         if ($attrs) {
             array_map(function ($value) use (&$default) {
-                if (!\in_array($value, $default)) {
+                if (!\in_array($value, $default, true)) {
                     $default[] = $value;
                 }
             }, $attrs);
@@ -597,15 +596,13 @@ class Element extends Configurable implements \ArrayAccess, \IteratorAggregate
         $intersectAttrs = array_keys(array_intersect_key($old, $new));
 
         foreach ($attrs as $attr) {
-
-            if (\in_array($attr, $intersectAttrs)) {
+            if (\in_array($attr, $intersectAttrs, true)) {
                 $merges[$attr] = $old[$attr] . ' ' . $new[$attr];
             }
         }
 
         return array_merge($old, $new, $merges);
     }
-
 
     /**
      * Retrieve an external iterator
@@ -614,9 +611,9 @@ class Element extends Configurable implements \ArrayAccess, \IteratorAggregate
      * <b>Traversable</b>
      * @since 5.0.0
      */
-    public function getIterator()
+    public function getIterator(): \Traversable
     {
-        // TODO: Implement getIterator() method.
+        return new \ArrayIterator($this->attrs);
     }
 }// end class Element
 

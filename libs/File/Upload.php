@@ -9,6 +9,8 @@
 
 namespace ToolkitPlus\File;
 
+use Toolkit\File\Directory;
+
 /**
  * Class Upload
  * @package ToolkitPlus\File
@@ -19,7 +21,7 @@ class Upload
      * $_FILES
      * @var array
      */
-    private $_data = [];
+    private $_data;
 
     /**
      * 错误信息
@@ -56,19 +58,27 @@ class Upload
 
     /**
      * @param array $config
+     * @param array $files
      * @return static
      */
-    public static function make(array $config = [])
+    public static function make(array $config = [], array $files = [])
     {
         return new static($config);
     }
 
     /**
      * @param array $config
+     * @param array $files
      */
-    public function __construct(array $config = [])
+    public function __construct(array $config = [], array $files = [])
     {
-        $this->_data = &$_FILES;
+        if ($files) {
+            $this->_data = $files;
+
+        } else {
+            $this->_data = &$_FILES;
+        }
+
         $this->setConfig($config);
     }
 
@@ -77,8 +87,9 @@ class Upload
      * @param string $name
      * @param string $dir
      * @return $this
+     * @throws \Exception
      */
-    public function saveTo($name, $dir): self
+    public function saveTo(string $name, string $dir): self
     {
         return $this->fetch($name)->storeTo($dir);
     }
@@ -114,6 +125,7 @@ class Upload
     /**
      * @param $dir
      * @return $this
+     * @throws \Exception
      */
     public function storeTo($dir): self
     {
@@ -141,7 +153,7 @@ class Upload
      * @param array $sourceFile
      * @return array
      */
-    protected function handle($sourceFile): array
+    protected function handle(array $sourceFile): array
     {
         if ($this->hasError()) {
             return [];
@@ -185,8 +197,9 @@ class Upload
      * @param array $names 取指定的name对应的文件
      * @param string $targetDir 存储目录路径
      * @return Upload
+     * @throws \Exception
      */
-    public function multi(array $names = [], $targetDir = ''): Upload
+    public function multi(array $names = [], string $targetDir = ''): Upload
     {
         if (!$this->_data) {
             return $this;
@@ -195,7 +208,7 @@ class Upload
         !$targetDir && ($targetDir = $this->config['path']);
 
         foreach ($this->_data as $key => $file) {
-            if ($names && !\in_array($key, $names)) {
+            if ($names && !\in_array($key, $names, true)) {
                 continue;
             }
 
@@ -210,6 +223,7 @@ class Upload
      * @param string $targetDir
      * @param \Closure $nameHandler
      * @return array
+     * @throws \Exception
      */
     protected function _uploadHandle($sourceFile, $targetDir, \Closure $nameHandler = null): array
     {
@@ -287,13 +301,13 @@ class Upload
     {
         $dir = \dirname($targetFile);
 
-        if (!$this->_makeDir($dir)) {
+        if (!Directory::create($dir)) {
             $this->error = "目录创建失败或者不可写. DIR: [$dir]";
 
             return false;
         }
 
-        if (!move_uploaded_file($file['tmp_name'], $targetFile)) {
+        if (!\move_uploaded_file($file['tmp_name'], $targetFile)) {
             $this->error = '移动上传文件失败！';
 
             return false;
@@ -327,13 +341,13 @@ class Upload
         $filePath = ($targetDir ?: $this->config['path']) . DIRECTORY_SEPARATOR . $nowName;
         $dir = \dirname($filePath);
 
-        if (!$this->_makeDir($dir)) {
+        if (!Directory::create($dir)) {
             $this->error = "目录创建失败或者不可写.[$dir]";
 
             return false;
         }
 
-        if (!move_uploaded_file($file['tmp_name'], $filePath)) {
+        if (!\move_uploaded_file($file['tmp_name'], $filePath)) {
             $this->error = '移动上传文件失败！';
 
             return false;
@@ -349,27 +363,17 @@ class Upload
      * @param $name
      * @return bool
      */
-    public function hasFile($name): bool
+    public function hasFile(string $name): bool
     {
         return isset($this->_data[$name]);
     }
 
     /**
-     * 目录创建 目录验证
-     * @param $path
-     * @return bool
-     */
-    protected function _makeDir($path): bool
-    {
-        return $path && (is_dir($path) || @mkdir($path, 0664, true)) && is_writable($path);
-    }
-
-    /**
      * 验证上传文件,是否有文件、上传类型、文件大小
-     * @param $file
+     * @param array $file
      * @return bool
      */
-    private function validateFile($file): bool
+    private function validateFile(array $file): bool
     {
         // check system error
         if ((int)$file['error'] !== 0) {
@@ -401,11 +405,11 @@ class Upload
         $extList = $this->config['ext'];
         $fileExt = strtolower($file['ext']);
 
-        if ($extList && !\in_array($fileExt, $extList)) {
+        if ($extList && !\in_array($fileExt, $extList, true)) {
             $this->error = '不允许的上传文件类型！';
         } elseif ($maxSize && $file['size'] > $maxSize) {
             $this->error = '上传文件超出允许大小！';
-        } elseif (!is_uploaded_file($file['tmp_name'])) {
+        } elseif (!\is_uploaded_file($file['tmp_name'])) {
             $this->error = '非法文件！';
         }
 

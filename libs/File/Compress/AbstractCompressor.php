@@ -50,7 +50,7 @@ abstract class AbstractCompressor
     /**
      * @return bool
      */
-    abstract public function isSupported();
+    abstract public function isSupported(): bool ;
 
     /**
      * @param string $sourcePath
@@ -80,7 +80,7 @@ abstract class AbstractCompressor
     public function getFinder(array $options = []): FileFinder
     {
         if (!$this->finder) {
-            $this->finder = new FileFinder($options);
+            $this->finder = FileFinder::fromArray($options);
         }
 
         return $this->finder;

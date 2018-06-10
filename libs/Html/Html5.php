@@ -20,7 +20,7 @@ class Html5 extends Html
      * @param array $attrs
      * @return string
      */
-    public static function style($content, array $attrs = []): string
+    public static function style(string $content, array $attrs = []): string
     {
         // $attrs = array_merge( ['type' =>"text/css"], $attrs );
 
@@ -32,7 +32,7 @@ class Html5 extends Html
      * @param array $attrs
      * @return string
      */
-    public static function css($href, array $attrs = []): string
+    public static function css(string $href, array $attrs = []): string
     {
         $attrs = array_merge([
             'href' => $href,
@@ -47,7 +47,7 @@ class Html5 extends Html
      * @param array $attrs
      * @return string
      */
-    public static function scriptCode($content = null, array $attrs = []): string
+    public static function scriptCode(string $content = null, array $attrs = []): string
     {
         return static::tag('script', PHP_EOL . trim($content) . PHP_EOL, $attrs);
     }
@@ -58,7 +58,7 @@ class Html5 extends Html
      * @param array $attrs
      * @return string
      */
-    public static function script($src, array $attrs = []): string
+    public static function script(string $src, array $attrs = []): string
     {
         $attrs = array_merge([
             'src' => $src
