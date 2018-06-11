@@ -8,8 +8,6 @@
 
 namespace ToolkitPlus\Auth;
 
-use Toolkit\Collection\CollectionInterface;
-use Toolkit\Collection\SimpleCollection;
 use Toolkit\ObjUtil\Obj;
 
 /**
@@ -17,13 +15,8 @@ use Toolkit\ObjUtil\Obj;
  * @package ToolkitPlus\Auth
  * @property int id
  */
-class AuthManager extends SimpleCollection implements AuthManagerInterface
+class AuthManager implements AuthManagerInterface
 {
-    /**
-     * @var string The session key
-     */
-    protected static $sessKey = '_user_auth_data';
-
     /**
      * @var string
      */
@@ -42,6 +35,11 @@ class AuthManager extends SimpleCollection implements AuthManagerInterface
     /**
      * @var string
      */
+    public $guestTo = '/';
+
+    /**
+     * @var string
+     */
     public $logoutUrl = '/logout';
 
     /**
@@ -56,10 +54,9 @@ class AuthManager extends SimpleCollection implements AuthManagerInterface
     public $identityClass;
 
     /**
-     * user data persistent storage driver Bridge
-     * @var StorageInterface
+     * @var array
      */
-    private $storage;
+    private $data = [];
 
     /**
      * @var bool
@@ -67,6 +64,17 @@ class AuthManager extends SimpleCollection implements AuthManagerInterface
      * false  You need manual load user data on before the first use
      */
     private $autoload = true;
+
+    /**
+     * @var string The session key
+     */
+    private $sessKey = '_user_auth_data';
+
+    /**
+     * user data persistent storage driver Bridge
+     * @var StorageInterface
+     */
+    private $_storage;
 
     /**
      * checked permission caching list
@@ -80,18 +88,15 @@ class AuthManager extends SimpleCollection implements AuthManagerInterface
     private $_accesses = [];
 
     /**
-     * Exclude fields that don't need to be saved.
-     * @var array
-     */
-    protected $excepted = ['password'];
-
-    /**
      * @var CheckAccessInterface
      */
     private $accessChecker;
 
-    const AFTER_LOGGED_TO_KEY = '_after_logged_to';
-    const AFTER_LOGOUT_TO_KEY = '_after_logout_to';
+    /**
+     * Exclude fields that don't need to be saved.
+     * @var array
+     */
+    protected $excepted = ['password'];
 
     /**
      * don't allow set attribute
@@ -101,15 +106,13 @@ class AuthManager extends SimpleCollection implements AuthManagerInterface
      */
     public function __construct(array $options = [])
     {
-        parent::__construct();
-
         Obj::init($this, $options);
 
         if ($this->identityClass === null) {
             throw new \InvalidArgumentException('The property "identityClass" must be set');
         }
 
-        // if enable autoload and user have already login
+        // if enable autoload and user have already login, reload user info from storage
         if ($this->autoload) {
             $this->getStorage();
             $this->refreshIdentity();
@@ -136,11 +139,11 @@ class AuthManager extends SimpleCollection implements AuthManagerInterface
     {
         $this->clear();
 
-        unset($_SESSION[static::$sessKey]);
+        $this->_storage->del($this->sessKey);
     }
 
     /**
-     * check user permission
+     * alias of the canAccess()
      * @param string $permission a permission name or a url
      * @param array $params
      * @param bool|true $caching
@@ -152,6 +155,8 @@ class AuthManager extends SimpleCollection implements AuthManagerInterface
     }
 
     /**
+     * check current user can access the permission
+     * @see PermManager::canAccess()
      * @param string $permission
      * @param array $params
      * @param bool $caching
@@ -209,21 +214,13 @@ class AuthManager extends SimpleCollection implements AuthManagerInterface
     }
 
     /**
-     * clear
-     */
-    public function clear()
-    {
-        $this->data = $this->_accesses = [];
-    }
-
-    /**
      * @param bool|false $force
      * @throws \InvalidArgumentException
      * @throws \RuntimeException
      */
     public function refreshIdentity($force = false)
     {
-        if (!$this->storage->has(self::$sessKey)) {
+        if (!$this->_storage->has($this->sessKey)) {
             return;
         }
 
@@ -233,7 +230,7 @@ class AuthManager extends SimpleCollection implements AuthManagerInterface
         /* @var $class IdentityInterface */
         $class = $this->identityClass;
 
-        if (!$force && ($data = $this->storage->get(self::$sessKey))) {
+        if (!$force && ($data = $this->_storage->get($this->sessKey))) {
             $this->sets($data);
         } elseif ($id && ($user = $class::findIdentity($id))) {
             $this->setIdentity($user);
@@ -249,8 +246,8 @@ class AuthManager extends SimpleCollection implements AuthManagerInterface
     public function setIdentity(IdentityInterface $identity = null)
     {
         if ($identity instanceof IdentityInterface) {
-            $this->sets((array)$identity);
-            $this->storage->set(self::$sessKey, $this->all());
+            $this->sets($identity->all());
+            $this->_storage->set($this->sessKey, $this->all());
             $this->_accesses = [];
         } elseif ($identity === null) {
             $this->data = [];
@@ -261,9 +258,9 @@ class AuthManager extends SimpleCollection implements AuthManagerInterface
 
     /**
      * @param array $data
-     * @return CollectionInterface
+     * @return void
      */
-    public function sets(array $data): CollectionInterface
+    protected function sets(array $data)
     {
         // except column at set.
         foreach ($this->excepted as $column) {
@@ -272,7 +269,33 @@ class AuthManager extends SimpleCollection implements AuthManagerInterface
             }
         }
 
-        return parent::sets($data);
+        $this->data = $data;
+    }
+
+    /**
+     * get all data
+     */
+    public function all(): array
+    {
+        return $this->data;
+    }
+
+    /**
+     * clear
+     */
+    public function clear()
+    {
+        $this->data = $this->_accesses = [];
+    }
+
+    /**
+     * @param string $key
+     * @param null $default
+     * @return mixed|null
+     */
+    public function get(string $key, $default = null)
+    {
+        return $this->data[$key] ?? $default;
     }
 
     /**
@@ -329,19 +352,19 @@ class AuthManager extends SimpleCollection implements AuthManagerInterface
      */
     public function getStorage(): StorageInterface
     {
-        if (!$this->storage) {
-            $this->storage = new SessionStorage();
+        if (!$this->_storage) {
+            $this->_storage = new SessionStorage();
         }
 
-        return $this->storage;
+        return $this->_storage;
     }
 
     /**
-     * @param StorageInterface $storage
+     * @param StorageInterface $_storage
      */
-    public function setStorage(StorageInterface $storage)
+    public function setStorage(StorageInterface $_storage)
     {
-        $this->storage = $storage;
+        $this->_storage = $_storage;
     }
 
     /**
@@ -364,16 +387,16 @@ class AuthManager extends SimpleCollection implements AuthManagerInterface
      * @param $name
      * @return mixed
      */
-    public function __get($name)
-    {
-        $getter = 'get' . ucfirst($name);
-
-        if (\method_exists($this, $getter)) {
-            return $this->$getter();
-        }
-
-        return parent::__get($name);
-    }
+    // public function __get($name)
+    // {
+    //     $getter = 'get' . ucfirst($name);
+    //
+    //     if (\method_exists($this, $getter)) {
+    //         return $this->$getter();
+    //     }
+    //
+    //     return parent::__get($name);
+    // }
 
     /**
      * @return bool
@@ -389,6 +412,38 @@ class AuthManager extends SimpleCollection implements AuthManagerInterface
     public function setAutoload($autoload)
     {
         $this->autoload = (bool)$autoload;
+    }
+
+    /**
+     * @return array
+     */
+    public function getExcepted(): array
+    {
+        return $this->excepted;
+    }
+
+    /**
+     * @param array $excepted
+     */
+    public function setExcepted(array $excepted)
+    {
+        $this->excepted = $excepted;
+    }
+
+    /**
+     * @return string
+     */
+    public function getSessKey(): string
+    {
+        return $this->sessKey;
+    }
+
+    /**
+     * @param string $sessKey
+     */
+    public function setSessKey(string $sessKey)
+    {
+        $this->sessKey = $sessKey;
     }
 
 }

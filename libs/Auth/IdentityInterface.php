@@ -78,6 +78,7 @@ interface IdentityInterface
     public function validateAuthKey($authKey): bool;
 
     /**
+     * return all data of the auth user
      * @return array
      */
     public function all(): array;

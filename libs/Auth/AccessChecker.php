@@ -15,7 +15,7 @@ namespace ToolkitPlus\Auth;
 class AccessChecker implements CheckAccessInterface
 {
     /**
-     * @param int|string $userId
+     * @param int|string|mixed $userId
      * @param string $permission permission name OR uri path
      * @param array $params
      * @return bool

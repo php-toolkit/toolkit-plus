@@ -15,7 +15,7 @@ namespace ToolkitPlus\Auth;
 interface CheckAccessInterface
 {
     /**
-     * @param int|string $userId
+     * @param int|string|mixed $userId more please see PermManager::canAccess
      * @param string $permission permission name OR uri path
      * @param array $params
      * @return bool
